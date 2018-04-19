@@ -1,0 +1,17 @@
+server:
+  port: 8801
+spring:
+  profiles:
+    active: dev
+  application:
+    name: doctor-server
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/pra
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+
+# mybatis
+mybatis:
+  mapper-locations:  classpath:mapping/*/*.xml
+  type-aliases-package: com.prostate.*.entity
