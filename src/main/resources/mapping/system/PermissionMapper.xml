@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prostate.system.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.prostate.system.entity.Permission">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="permission_type" jdbcType="INTEGER" property="permissionType" />
+    <result column="permission_value" jdbcType="VARCHAR" property="permissionValue" />
+    <result column="permission_uri" jdbcType="VARCHAR" property="permissionUri" />
+    <result column="permission_icon" jdbcType="VARCHAR" property="permissionIcon" />
+    <result column="permission_status" jdbcType="INTEGER" property="permissionStatus" />
+    <result column="permission_orders" jdbcType="VARCHAR" property="permissionOrders" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_user" jdbcType="VARCHAR" property="deleteUser" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <insert id="insert" parameterType="com.prostate.system.entity.Permission">
+    insert into sys_permission (id, permission_name, permission_type, 
+      permission_value, permission_uri, permission_icon, 
+      permission_status, permission_orders, create_user, 
+      create_time, update_user, update_time, 
+      delete_user, delete_time, del_flag
+      )
+    values (#{id,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, #{permissionType,jdbcType=INTEGER}, 
+      #{permissionValue,jdbcType=VARCHAR}, #{permissionUri,jdbcType=VARCHAR}, #{permissionIcon,jdbcType=VARCHAR}, 
+      #{permissionStatus,jdbcType=INTEGER}, #{permissionOrders,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleteUser,jdbcType=VARCHAR}, #{deleteTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prostate.system.entity.Permission">
+    insert into sys_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="permissionType != null">
+        permission_type,
+      </if>
+      <if test="permissionValue != null">
+        permission_value,
+      </if>
+      <if test="permissionUri != null">
+        permission_uri,
+      </if>
+      <if test="permissionIcon != null">
+        permission_icon,
+      </if>
+      <if test="permissionStatus != null">
+        permission_status,
+      </if>
+      <if test="permissionOrders != null">
+        permission_orders,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteUser != null">
+        delete_user,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null">
+        #{permissionType,jdbcType=INTEGER},
+      </if>
+      <if test="permissionValue != null">
+        #{permissionValue,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionUri != null">
+        #{permissionUri,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionIcon != null">
+        #{permissionIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionStatus != null">
+        #{permissionStatus,jdbcType=INTEGER},
+      </if>
+      <if test="permissionOrders != null">
+        #{permissionOrders,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteUser != null">
+        #{deleteUser,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
