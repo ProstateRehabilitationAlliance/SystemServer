@@ -176,7 +176,7 @@ public class User {
     /**
      * @Author: bianyakun
      * @Date: 2018/4/19 11:12
-     * @todo:  便于用户注册信息
+     * @todo:  便于用户注册/查询信息
      * @param:   参数分别是用户名,密码,真实姓名,头像,电话,邮箱,性别
      */
     public User(String username, String password, String realname, String avatar, String phone, String email, String sex) {
@@ -187,5 +187,39 @@ public class User {
         this.phone = phone;
         this.email = email;
         this.sex = sex;
+    }
+
+
+
+    public User(String id, String username, String password, String salt, String realname, String avatar, String phone, String email, String sex, String locked, String createUser, Date createTime, String updateUser, Date updateTime, String deleteUser, Date deleteTime, String delFlag) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.realname = realname;
+        this.avatar = avatar;
+        this.phone = phone;
+        this.email = email;
+        this.sex = sex;
+        this.locked = locked;
+        this.createUser = createUser;
+        this.createTime = createTime;
+        this.updateUser = updateUser;
+        this.updateTime = updateTime;
+        this.deleteUser = deleteUser;
+        this.deleteTime = deleteTime;
+        this.delFlag = delFlag;
+    }
+
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
     }
 }

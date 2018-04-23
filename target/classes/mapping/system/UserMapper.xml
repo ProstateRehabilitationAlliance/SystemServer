@@ -21,7 +21,6 @@
     <result column="del_flag" jdbcType="CHAR" property="delFlag" />
   </resultMap>
 
-
   <insert id="insert" parameterType="com.prostate.system.entity.User">
     insert into sys_user (id, username, password, 
       salt, realname, avatar, 
@@ -150,10 +149,18 @@
     </trim>
   </insert>
 
-
   <!-- 验证用户密码是否正确-->
   <select id="selectUserByUsernameAndPassword" resultType="com.prostate.system.entity.User">
-    select * from sys_user u where  1=1 and u.dr = 0 and u.state = 0 and u.username = #{0} and u.password = #{1}
+    select * from sys_user u where  1=1 and u.username = #{0} and u.password = #{1}
   </select>
 
+  <!-- 根据用户名查询用户信息-->
+  <select id="findUserWihtUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select u.username,u.password,u.sex,u.phone,u.email,u.realname,u.avatar from sys_user u where  1=1 AND u.username = #{username}
+  </select>
+  <!-- findUserIdByName -->
+  <!-- 根据用户名查询用户id-->
+  <select id="findUserIdByName" resultMap="BaseResultMap">
+    select u.id from sys_user u where  1=1 AND u.username = #{0}
+  </select>
 </mapper>
