@@ -79,19 +79,19 @@ public class UserController extends BaseController{
             subject.getPrincipal();
             resultMap.put("data",null);
             resultMap.put("msg","登录成功");
-            resultMap.put("status",20000);
+            resultMap.put("status","20000");
         }catch (IncorrectCredentialsException ice){
             resultMap.put("data",null);
             resultMap.put("msg","密码错误");
-           resultMap.put("status",20004);
+           resultMap.put("status","20004");
         }catch (UnknownAccountException uae) {
             resultMap.put("data",null);
             resultMap.put("msg","用户名错误");
-            resultMap.put("status",20004);
+            resultMap.put("status","20004");
         }catch (ExcessiveAttemptsException eae) {
             resultMap.put("data",null);
             resultMap.put("msg","token失效");
-            resultMap.put("status",20008);
+            resultMap.put("status","20008");
         }
         return resultMap;
     }

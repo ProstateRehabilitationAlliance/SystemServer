@@ -6,9 +6,9 @@ spring:
   application:
     name: system-server
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/fdc
+    url: jdbc:mysql://192.168.0.130/pra?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
-    password: 1234
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
 
 # mybatis
