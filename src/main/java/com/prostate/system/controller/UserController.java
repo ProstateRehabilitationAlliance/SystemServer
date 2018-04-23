@@ -71,26 +71,29 @@ public class UserController extends BaseController{
      * @return
      */
     @PostMapping(value="/login")
-    public String login(@RequestParam("username")String username, @RequestParam("password") String password){
+    public Map<String,Object> login(@RequestParam("username")String username, @RequestParam("password") String password){
         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
         Subject subject= SecurityUtils.getSubject();
         try {
             subject.login(usernamePasswordToken);
             subject.getPrincipal();
+            resultMap.put("data",null);
+            resultMap.put("msg","登录成功");
+            resultMap.put("status",20000);
         }catch (IncorrectCredentialsException ice){
-            //ice.printStackTrace();
-            resultMap.put("error","password error");
-            return "error";
+            resultMap.put("data",null);
+            resultMap.put("msg","密码错误");
+           resultMap.put("status",20004);
         }catch (UnknownAccountException uae) {
-           // uae.printStackTrace();
-            resultMap.put("error","userName error");
-            return "error";
+            resultMap.put("data",null);
+            resultMap.put("msg","用户名错误");
+            resultMap.put("status",20004);
         }catch (ExcessiveAttemptsException eae) {
-            //eae.printStackTrace();
-            resultMap.put("error","time error");
-            return "error";
+            resultMap.put("data",null);
+            resultMap.put("msg","token失效");
+            resultMap.put("status",20008);
         }
-        return "index";
+        return resultMap;
     }
 
 
