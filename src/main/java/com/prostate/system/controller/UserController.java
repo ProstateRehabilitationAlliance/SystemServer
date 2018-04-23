@@ -2,6 +2,7 @@ package com.prostate.system.controller;
 
 import com.prostate.system.entity.User;
 import com.prostate.system.service.UserService;
+import com.prostate.system.util.MD5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -65,24 +66,27 @@ public class UserController extends BaseController{
 
     /**
      *  登陆认证，检查账号密码是否正确。成功则跳转到index.html，错误则跳转到对应的error.html
-     * @param userName
+     * @param username
      * @param password
      * @return
      */
     @PostMapping(value="/login")
-    public String login(@RequestParam("userName")String userName, @RequestParam("password") String password){
-        UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(userName,password);
+    public String login(@RequestParam("username")String username, @RequestParam("password") String password){
+        UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
         Subject subject= SecurityUtils.getSubject();
-
         try {
             subject.login(usernamePasswordToken);
+            subject.getPrincipal();
         }catch (IncorrectCredentialsException ice){
+            //ice.printStackTrace();
             resultMap.put("error","password error");
             return "error";
         }catch (UnknownAccountException uae) {
+           // uae.printStackTrace();
             resultMap.put("error","userName error");
             return "error";
         }catch (ExcessiveAttemptsException eae) {
+            //eae.printStackTrace();
             resultMap.put("error","time error");
             return "error";
         }

@@ -52,7 +52,6 @@ public class UserRealm extends AuthorizingRealm {
         //服务类传递的是list集合,但是此处为set集合,
         List<String>  roleSet=new ArrayList<String>();
         Set<String>  roleSetResult=new HashSet<>(roleSet);
-
         Set<String>  pemissionSet=new HashSet<>();
         List<String>  pemissionIdSet=new ArrayList<>();
 
@@ -88,8 +87,8 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         log.info("---------------------------->登陆验证:");
         String userName=(String)authenticationToken.getPrincipal();
-        User user=userService.findUserWihtUserName(userName).get(0);
-        if(user==null) {
+        List<User> users=userService.findUserWihtUserName(userName);
+        if(users.isEmpty()) {
             //用户不存在就抛出异常
             throw new UnknownAccountException();
         }
@@ -99,11 +98,13 @@ public class UserRealm extends AuthorizingRealm {
 //        }
         //密码可以通过SimpleHash加密，然后保存进数据库。
         //此处是获取数据库内的账号、密码、盐值，保存到登陆信息info中
+        User user = users.get(0);
         SimpleAuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(user.getUsername(),
                 user.getPassword(),
-                ByteSource.Util.bytes(user.getSalt())   ,
-                getName());                   //realm name
-
+                ByteSource.Util.bytes(user.getUsername()+user.getSalt()),
+                getName());
         return authenticationInfo;
+        //realm name
+//        return new SimpleAuthenticationInfo(user, user.getPassword(),this.getClass().getName());
     }
 }

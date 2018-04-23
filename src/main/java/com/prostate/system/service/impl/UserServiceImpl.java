@@ -45,11 +45,7 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public List<User> findUserWihtUserName(String username) {
-        //System.out.println("service====="+username);
-        //System.out.println("进入服务类");
         List<User> users = userMapper.findUserWihtUserName(username);
-        //System.out.println("执行完dao");
-        //System.out.println("service====="+user);
         return users;
     }
 
@@ -62,23 +58,25 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public int insertSelective(User user) {
-        //获取输入的密码
-        String oldpassword = user.getPassword();
-        //生成盐值并保存到user.salt()中
-        long date = new Date().getTime();
-        String salt = String.valueOf(date);
-        user.setSalt(salt);
-        String newpassword = oldpassword+salt;
-        //将用户密码和盐值加密
-        String saltpassword = MD5Util.toMD5(newpassword);
-        //将加密之后的密码set到user.password();
-        user.setPassword(saltpassword);
+        //获取输入的密码和用户名
+        String password = user.getPassword();
+        String username = user.getUsername();
+        User user1= MD5Util.md5Password(username,password);
         //user调用服务方法
-        System.out.println("=============注册的信息是"+user);
-        int r = userMapper.insertSelective(user);
-
+        int r = userMapper.insertSelective(user1);
         return r;
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
