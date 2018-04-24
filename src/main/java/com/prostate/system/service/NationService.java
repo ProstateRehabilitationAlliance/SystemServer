@@ -1,7 +1,7 @@
 package com.prostate.system.service;
 
 import com.prostate.system.entity.Nation;
-import com.prostate.system.entity.Profession;
+
 
 import java.util.List;
 

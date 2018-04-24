@@ -2,7 +2,6 @@ package com.prostate.system.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.prostate.system.entity.Nation;
-import com.prostate.system.entity.Profession;
 import com.prostate.system.service.NationService;
 import com.prostate.system.shiro.UserTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +26,6 @@ public class NationController extends  BaseController{
     @Autowired
     private NationService nationService;
 
-    //***base_profession 表***
-//        **民族管理**
-//        1. 民族列表展示
-//        2. 民族添加
-//        3. 民族修改
-//        4. 民族删除
-
 
     /**
      * @Author: bianyakun
@@ -42,7 +34,7 @@ public class NationController extends  BaseController{
      * @param:  分页信息
      */
     @GetMapping(value = "/list")
-    public  Map<String,Object>  queryAllNation(@RequestParam(defaultValue = "0") int pageNum,
+    public  Map<String,Object>  queryAllNation(@RequestParam(defaultValue = "1") int pageNum,
                                                    @RequestParam(defaultValue = "10") int pageSize){
 
         PageHelper.startPage(pageNum, pageSize);
@@ -126,7 +118,6 @@ public class NationController extends  BaseController{
     public  Map<String, Object> deleteNation(String nationID) {
         //int r = professionService.deleteById(professionID);
         String userid = UserTokenManager.getToken().getId();
-
         Nation nation = nationService.selectById(nationID);
         if(nation != null){
             nation.setDeleteUser(userid);

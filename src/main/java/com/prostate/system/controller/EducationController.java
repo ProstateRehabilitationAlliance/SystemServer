@@ -40,7 +40,7 @@ public class EducationController extends BaseController{
      * @param:null
      */
     @GetMapping(value = "/select")
-    public Map<String, Object> queryAllEducation(@RequestParam(defaultValue = "0") int pageNum,
+    public Map<String, Object> queryAllEducation(@RequestParam(defaultValue = "1") int pageNum,
                                                  @RequestParam(defaultValue = "10") int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Education> educations = educationservice.selectByParams();
