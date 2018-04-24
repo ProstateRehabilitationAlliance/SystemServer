@@ -75,11 +75,20 @@ public class UserController extends BaseController{
     @PostMapping(value="/login")
     public Map<String, Object> login(@RequestParam("userName")String userName, @RequestParam("password") String password){
         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(userName,password);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 42287036f10bc516500e76fe8123e95c7ca6d0dc
         User user =new User();
         user.setUsername(userName);
         user.setPassword(password);
         try {
             UserTokenManager.login(user,false);
+<<<<<<< HEAD
+=======
+
+            System.out.println( UserTokenManager.getToken());
+>>>>>>> 42287036f10bc516500e76fe8123e95c7ca6d0dc
             resultMap.put("data",null);
             resultMap.put("msg","登录成功");
             resultMap.put("status","20000");
