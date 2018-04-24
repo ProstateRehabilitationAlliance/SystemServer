@@ -2,7 +2,6 @@ package com.prostate.system.controller;
 
 import com.prostate.system.entity.User;
 import com.prostate.system.service.UserService;
-import com.prostate.system.util.MD5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;

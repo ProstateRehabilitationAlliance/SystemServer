@@ -4,9 +4,14 @@ package com.prostate.system.controller;
 import com.prostate.system.entity.Education;
 import com.prostate.system.service.Educationservice;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.apache.shiro.subject.Subject;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,10 +109,14 @@ public class EducationController extends BaseController{
      * @Author: bianyakun
      * @Date: 2018/4/23 15:55
      * @todo: 修改学历信息
-     * @param:   新的学历对象
+     * @param: 新的学历对象
      */
     @PostMapping(value = "/update")
     public Map<String, Object> updateEducation(Education education) {
+//        Subject subject= SecurityUtils.getSubject().;
+
+//        //String id = (String) request.getSession().getAttribute("id");
+//        System.out.println("============当前用户的id是"+id);
         int r  = educationservice.updateSelective(education);
         if (r == 0){
             resultMap.put("msg","修改学历信息失败");
