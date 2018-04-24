@@ -13,6 +13,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -99,7 +101,7 @@ public class UserRealm extends AuthorizingRealm {
         //此处是获取数据库内的账号、密码、盐值，保存到登陆信息info中
         SimpleAuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(user.getUsername(),
                 user.getPassword(),
-                ByteSource.Util.bytes(user.getUsername()+user.getSalt())   ,
+                ByteSource.Util.bytes(user.getSalt())   ,
                 getName());                   //realm name
 
         return authenticationInfo;
