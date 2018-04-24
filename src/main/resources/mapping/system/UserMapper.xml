@@ -156,7 +156,7 @@
 
   <!-- 根据用户名查询用户信息-->
   <select id="findUserWihtUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select u.username,u.password,u.sex,u.phone,u.email,u.realname,u.avatar,u.salt from sys_user u where  1=1 AND u.username = #{username}
+    select u.id,u.username,u.password,u.sex,u.phone,u.email,u.realname,u.avatar,u.salt from sys_user u where  1=1 AND u.username = #{username}
   </select>
   <!-- findUserIdByName -->
   <!-- 根据用户名查询用户id-->

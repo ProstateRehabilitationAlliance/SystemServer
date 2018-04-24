@@ -2,6 +2,7 @@ package com.prostate.system.controller;
 
 import com.prostate.system.entity.User;
 import com.prostate.system.service.UserService;
+import com.prostate.system.shiro.UserTokenManager;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -70,26 +71,38 @@ public class UserController extends BaseController{
      * @return
      */
     @PostMapping(value="/login")
-    public String login(@RequestParam("userName")String userName, @RequestParam("password") String password){
+    public Map<String, Object> login(@RequestParam("userName")String userName, @RequestParam("password") String password){
         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(userName,password);
-        Subject subject= SecurityUtils.getSubject();
-
+        //UsernamePasswordToken
+        User user =new User();
+        user.setUsername(userName);
+        user.setPassword(password);
         try {
-            subject.login(usernamePasswordToken);
-            SecurityUtils.getSubject().getPrincipal();
-            
-            //System.out.println(user);
+            UserTokenManager.login(user,false);
+
+         //   subject.login(usernamePasswordToken);
+//            SecurityUtils.getSubject().login(usernamePasswordToken);
+//            SecurityUtils.getSubject().getPrincipal();
+//            User user = (User) SecurityUtils.getSubject().getPrincipal();
+            System.out.println( UserTokenManager.getToken());
+            resultMap.put("data",null);
+            resultMap.put("msg","登录成功");
+            resultMap.put("status","20000");
         }catch (IncorrectCredentialsException ice){
-            resultMap.put("error","password error");
-            return "error";
+            resultMap.put("data",null);
+            resultMap.put("msg","密码错误");
+            resultMap.put("status","20004");
         }catch (UnknownAccountException uae) {
-            resultMap.put("error","userName error");
-            return "error";
+            resultMap.put("data",null);
+            resultMap.put("msg","用户名错误");
+            resultMap.put("status","20004");
         }catch (ExcessiveAttemptsException eae) {
-            resultMap.put("error","time error");
-            return "error";
+            resultMap.put("data",null);
+            resultMap.put("msg","token失效");
+            resultMap.put("status","20008");
         }
-        return "index";
+
+        return resultMap;
     }
 
 

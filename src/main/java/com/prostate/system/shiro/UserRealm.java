@@ -85,9 +85,11 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         log.info("---------------------------->登陆验证:");
+        ShiroToken token = (ShiroToken) authenticationToken;
         String userName=(String)authenticationToken.getPrincipal();
-        User user=userService.findUserWihtUserName(userName).get(0);
-        if(user==null) {
+       List<User> list=userService.findUserWihtUserName(userName);
+        System.out.println("=====>"+list.get(0));
+        if(list.isEmpty()) {
             //用户不存在就抛出异常
             throw new UnknownAccountException();
         }
@@ -97,10 +99,11 @@ public class UserRealm extends AuthorizingRealm {
 //        }
         //密码可以通过SimpleHash加密，然后保存进数据库。
         //此处是获取数据库内的账号、密码、盐值，保存到登陆信息info中
-        SimpleAuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(user.getUsername(),
-                user.getPassword(),
-                ByteSource.Util.bytes(user.getUsername()+user.getSalt())   ,
-                getName());                   //realm name
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(list.get(0), list.get(0).getPassword(), getName());
+        authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(token.getUsername() + list.get(0).getSalt()));
+//        SimpleAuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(
+//                ByteSource.Util.bytes(user.getUsername()+user.getSalt())   ,
+//                getName());                   //realm name
 
         return authenticationInfo;
     }

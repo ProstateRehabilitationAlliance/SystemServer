@@ -97,6 +97,7 @@ public class ProvinceController extends BaseController{
             User user = (User) SecurityUtils.getSubject().getPrincipal();
             System.out.println(user);
             //city.setCreateUser();
+            //设置
             city.setCreateTime(new Date());
             int result=cityService.insertSelective(city);
             if(result>0){
@@ -161,7 +162,6 @@ public class ProvinceController extends BaseController{
 
         City city= cityService.selectById(id);
         if (city==null){
-
             city.setDeleteUser(userid);
             city.setDeleteTime(new Date());
             city.setDelFlag("1");
