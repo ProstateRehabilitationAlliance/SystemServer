@@ -76,6 +76,9 @@ public class UserController extends BaseController{
 
         try {
             subject.login(usernamePasswordToken);
+            SecurityUtils.getSubject().getPrincipal();
+            
+            //System.out.println(user);
         }catch (IncorrectCredentialsException ice){
             resultMap.put("error","password error");
             return "error";
