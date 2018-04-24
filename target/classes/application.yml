@@ -1,17 +1,24 @@
 server:
-  port: 8800
+  port: 8801
 spring:
   profiles:
     active: dev
   application:
     name: system-server
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/fdc
+    url: jdbc:mysql://127.0.0.1:3306/pra
     username: root
-    password: 1234
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
 
 # mybatis
 mybatis:
   mapper-locations:  classpath:mapping/**/*.xml
   type-aliases-package: com.prostate.*.*.entity
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
