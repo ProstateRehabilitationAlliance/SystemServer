@@ -1,8 +1,10 @@
 package com.prostate.system.controller;
 
 
+import com.github.pagehelper.PageHelper;
 import com.prostate.system.entity.Education;
 import com.prostate.system.service.Educationservice;
+import com.prostate.system.shiro.UserTokenManager;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -38,7 +40,9 @@ public class EducationController extends BaseController{
      * @param:null
      */
     @GetMapping(value = "/select")
-    public Map<String, Object> queryAllEducation() {
+    public Map<String, Object> queryAllEducation(@RequestParam(defaultValue = "0") int pageNum,
+                                                 @RequestParam(defaultValue = "10") int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         List<Education> educations = educationservice.selectByParams();
         if (educations.isEmpty()){
             resultMap.put("msg","没有学历信息");
@@ -85,6 +89,8 @@ public class EducationController extends BaseController{
         //首先判断所插入的大学是否已经存在
         List<Education> educations = educationservice.selectByName(education.getEducationName());
             if (educations.isEmpty()){
+                //获取当前登录用户信息并设置为education的createID
+                education.setCreateUser(UserTokenManager.getToken().getId());
                 int r  = educationservice.insertSelective(education);
                 if (r == 0){
                     resultMap.put("msg","插入学历信息失败");
@@ -113,10 +119,8 @@ public class EducationController extends BaseController{
      */
     @PostMapping(value = "/update")
     public Map<String, Object> updateEducation(Education education) {
-//        Subject subject= SecurityUtils.getSubject().;
-
-//        //String id = (String) request.getSession().getAttribute("id");
-//        System.out.println("============当前用户的id是"+id);
+        String userID = UserTokenManager.getToken().getId();
+        education.setUpdateUser(userID);
         int r  = educationservice.updateSelective(education);
         if (r == 0){
             resultMap.put("msg","修改学历信息失败");
@@ -134,12 +138,20 @@ public class EducationController extends BaseController{
     /**
      * @Author: bianyakun
      * @Date: 2018/4/23 15:57
-     * @todo: 根据id删除学历信息
+     * @todo: 根据id删除学历信息  此处的删除是假删除,只是把del_flag改变,因此是update操作
    * @param:  学历id
      */
     @PostMapping(value = "/delete")
     public Map<String, Object> deleteEducation(String educationID) {
-        int r  = educationservice.deleteById(educationID);
+        String userID = UserTokenManager.getToken().getId();
+        //先根据id查询学历信息,
+        Education education = educationservice.selectById(educationID);
+        //将education相关的信息重新设置
+        education.setDeleteUser(userID);
+        education.setDelFlag("1");
+        //将education重新写入
+        int r  = educationservice.updateSelective(education);
+        //int r  = educationservice.deleteById(educationID);
         if (r == 0){
             resultMap.put("msg","删除学历信息失败");
             resultMap.put("status","20005");
