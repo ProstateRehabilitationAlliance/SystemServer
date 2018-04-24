@@ -73,17 +73,13 @@ public class UserController extends BaseController{
     @PostMapping(value="/login")
     public Map<String, Object> login(@RequestParam("userName")String userName, @RequestParam("password") String password){
         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(userName,password);
-        //UsernamePasswordToken
+
         User user =new User();
         user.setUsername(userName);
         user.setPassword(password);
         try {
             UserTokenManager.login(user,false);
 
-         //   subject.login(usernamePasswordToken);
-//            SecurityUtils.getSubject().login(usernamePasswordToken);
-//            SecurityUtils.getSubject().getPrincipal();
-//            User user = (User) SecurityUtils.getSubject().getPrincipal();
             System.out.println( UserTokenManager.getToken());
             resultMap.put("data",null);
             resultMap.put("msg","登录成功");

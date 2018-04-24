@@ -6,10 +6,11 @@ spring:
   application:
     name: system-server
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/pra
+    url: jdbc:mysql://127.0.0.1:3306/pra?useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+
 
 # mybatis
 mybatis:
