@@ -45,6 +45,8 @@ public class UserController extends BaseController{
         //根据用户名判断用户是否已经存在
         List<User> list = userService.findUserWihtUserName(user.getUsername());
         if (list.isEmpty()){
+            //将当前登录的用户信息作为create_user加入user中
+            user.setCreateUser(UserTokenManager.getToken().getId());
             int r = userService.insertSelective(user);  //调用注册服务,如果注册成功返回1,如果注册时报返回0.
             //根据返回的数值判断是否注册成功,并返回不同的map结果.
             if (r == 1){
@@ -73,14 +75,20 @@ public class UserController extends BaseController{
     @PostMapping(value="/login")
     public Map<String, Object> login(@RequestParam("userName")String userName, @RequestParam("password") String password){
         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(userName,password);
+<<<<<<< HEAD
+=======
 
+>>>>>>> 42287036f10bc516500e76fe8123e95c7ca6d0dc
         User user =new User();
         user.setUsername(userName);
         user.setPassword(password);
         try {
             UserTokenManager.login(user,false);
+<<<<<<< HEAD
+=======
 
             System.out.println( UserTokenManager.getToken());
+>>>>>>> 42287036f10bc516500e76fe8123e95c7ca6d0dc
             resultMap.put("data",null);
             resultMap.put("msg","登录成功");
             resultMap.put("status","20000");

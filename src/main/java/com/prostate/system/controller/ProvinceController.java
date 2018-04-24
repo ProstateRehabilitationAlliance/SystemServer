@@ -3,7 +3,6 @@ package com.prostate.system.controller;
 import com.prostate.system.entity.City;
 import com.prostate.system.entity.User;
 import com.prostate.system.service.CityService;
-import com.prostate.system.shiro.UserTokenManager;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,7 +86,7 @@ public class ProvinceController extends BaseController{
      /**
          *    @Description:  省级地区添加
          *    @Date:  16:11  2018/4/23
-         *    @Params:   * @param 传一个  parent_city_id  +   cityname
+         *    @Params:   * @param null
          */
 
     @RequestMapping(value = "/addprovince",method = RequestMethod.POST)
@@ -96,27 +95,23 @@ public class ProvinceController extends BaseController{
         List<City> list = cityService.selectByCityName(city.getCityName());
         if (list==null||list.size()==0){
             User user = (User) SecurityUtils.getSubject().getPrincipal();
-            city.setCityType("1");
-            //设置创建更新时间及日期
-            if (UserTokenManager.getToken()!=null){
-                city.setUpdateUser(UserTokenManager.getToken().getId());
-            }
+            System.out.println(user);
+            //city.setCreateUser();
+            //设置
             city.setCreateTime(new Date());
-            city.setUpdateUser(UserTokenManager.getToken().getId());
-            city.setUpdateTime(new Date());
             int result=cityService.insertSelective(city);
             if(result>0){
                 resultMap.put("status",20000);
-                resultMap.put("msg","省份录入成功");
+                resultMap.put("msg","城市录入成功");
                 resultMap.put("data",false);
             }else{
                 resultMap.put("status",20005);
-                resultMap.put("msg","省份录入失败");
+                resultMap.put("msg","城市录入失败");
                 resultMap.put("data",false);
             }
         }else {
             resultMap.put("status",20001);
-            resultMap.put("msg","省份数据已经存在");
+            resultMap.put("msg","数据不可用");
             resultMap.put("data",false);
         }
         return resultMap;
@@ -125,7 +120,7 @@ public class ProvinceController extends BaseController{
      /**
          *    @Description:  省级地区修改
          *    @Date:  16:30  2018/4/23
-         *    @Params:   * @param 传一个  parent_city_id  +   cityname+id
+         *    @Params:   * @param null
          */
 
     @RequestMapping(value = "/updprovince",method = RequestMethod.POST)
@@ -133,24 +128,21 @@ public class ProvinceController extends BaseController{
 
         City city01= cityService.selectById(city.getId());
         if (city01==null){
+
                 resultMap.put("status",20005);
                 resultMap.put("msg","没有数据");
                 resultMap.put("data",false);
 
         }else{
-            city.setParentCityId(city01.getParentCityId());
-            if (UserTokenManager.getToken()!=null){
-                city.setUpdateUser(UserTokenManager.getToken().getId());
-            }
-            city.setUpdateTime(new Date());
             int result=cityService.updateSelective(city);
+
             if(result>0){
                 resultMap.put("status",20000);
-                resultMap.put("msg","省份修改成功");
+                resultMap.put("msg","城市修改成功");
                 resultMap.put("data",false);
             }else{
                 resultMap.put("status",20005);
-                resultMap.put("msg","省份修改失败");
+                resultMap.put("msg","城市修改失败");
                 resultMap.put("data",false);
             }
 
@@ -166,13 +158,11 @@ public class ProvinceController extends BaseController{
      */
 
     @RequestMapping(value = "/delprovince",method = RequestMethod.POST)
-    public Map delProvince(@RequestParam String id) {
+    public Map delProvince(@RequestParam String id,@RequestParam String userid) {
 
         City city= cityService.selectById(id);
-        if (city!=null){
-            if (UserTokenManager.getToken()!=null){
-                city.setUpdateUser(UserTokenManager.getToken().getId());
-            }
+        if (city==null){
+            city.setDeleteUser(userid);
             city.setDeleteTime(new Date());
             city.setDelFlag("1");
             int result=cityService.updateSelective(city);
