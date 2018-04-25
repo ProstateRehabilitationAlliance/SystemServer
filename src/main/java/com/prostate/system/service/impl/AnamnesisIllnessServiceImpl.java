@@ -29,7 +29,7 @@ public class AnamnesisIllnessServiceImpl implements AnamnesisIllnessService {
 
     @Override
     public AnamnesisIllness selectById(String id) {
-        return selectById(id);
+        return anamnesisIllnessMapper.selectByPrimaryKey(id);
     }
 
     @Override

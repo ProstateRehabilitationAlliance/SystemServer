@@ -63,7 +63,7 @@ public class AnamnesisIllnessController extends BaseController{
      *    @Params:   * @param null
      */
 
-    @RequestMapping(value = "/findAll",method = RequestMethod.GET)
+    @RequestMapping(value = "/findall",method = RequestMethod.GET)
     public Map findByPage() {
         List<AnamnesisIllness> list=anamnesisIllnessService.findAll();
         if(list==null|list.size()==0){
@@ -92,10 +92,10 @@ public class AnamnesisIllnessController extends BaseController{
         if (list==null||list.size()==0){
             if (UserTokenManager.getToken()!=null){
                 anamnesisIllness.setCreateUser(UserTokenManager.getToken().getId());
-                anamnesisIllness.setDeleteUser(UserTokenManager.getToken().getId());
+                anamnesisIllness.setUpdateUser(UserTokenManager.getToken().getId());
             }
             anamnesisIllness.setCreateTime(new Date());
-            anamnesisIllness.setDeleteTime(new Date());
+            anamnesisIllness.setUpdateTime(new Date());
             anamnesisIllness.setDelFlag("0");
             int result=anamnesisIllnessService.insertSelective(anamnesisIllness);
             if(result>0){
