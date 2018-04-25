@@ -177,7 +177,7 @@ public class ProvinceController extends BaseController{
             }
         }else {
             resultMap.put("status",20005);
-            resultMap.put("msg","没有数据");
+            resultMap.put("msg","没有数据1");
             resultMap.put("data",false);
         }
         return resultMap;
