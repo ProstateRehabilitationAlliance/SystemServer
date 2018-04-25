@@ -1,11 +1,12 @@
 package com.prostate.system.controller;
 
 import com.github.pagehelper.PageHelper;
-import com.prostate.system.entity.AnamnesisAllergyDrug;
-import com.prostate.system.service.AnamnesisAllergyDrugService;
+import com.prostate.system.entity.Hospital;
+import com.prostate.system.service.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.prostate.system.shiro.UserTokenManager;
+
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,15 +14,15 @@ import java.util.Map;
 
 /**
  * @Author: bianyakun
- * @Date: 2018/4/25 8:57
- * @Todo:  过敏药品管理
+ * @Date: 2018/4/25 13:09
+ * @Todo:医院管理控制
  */
 @RestController
-@RequestMapping("/drug/allergy")
-public class AnamnesisAllergyDrugController extends BaseController {
+@RequestMapping("/hospital")
+public class HospitalController extends  BaseController{
 
     @Autowired
-    private AnamnesisAllergyDrugService anamnesisAllergyDrugService;
+    private HospitalService hospitalService;
 
     public static Map<String,Object> resultMap = new LinkedHashMap<>();
 
@@ -29,21 +30,21 @@ public class AnamnesisAllergyDrugController extends BaseController {
     /**
      * @Author: bianyakun
      * @Date: 2018/4/25 9:42
-     * @todo: 展示药品信息列表
+     * @todo: 展示医院信息列表
      * @param:   * @param null
      */
     @GetMapping("/list")
     public  Map<String, Object> getAllDrug(@RequestParam(defaultValue = "1") int pageNumber,
                                            @RequestParam(defaultValue = "10") int pageSize) {
         PageHelper.startPage(pageNumber, pageSize);
-        List<AnamnesisAllergyDrug> anamnesisAllergyDrugs = anamnesisAllergyDrugService.selectAll();
+        List<Hospital> anamnesisAllergyDrugs = hospitalService.selectAll();
         if (anamnesisAllergyDrugs.isEmpty()){
-            resultMap.put("msg","没有药品信息");
+            resultMap.put("msg","没有医院信息");
             resultMap.put("status","20007");
             resultMap.put("data",null);
         }else {
             resultMap.put("msg","20000");
-            resultMap.put("status","成功查询到药品信息");
+            resultMap.put("status","成功查询到医院信息");
             resultMap.put("data",anamnesisAllergyDrugs);
         }
         return resultMap;
@@ -53,23 +54,22 @@ public class AnamnesisAllergyDrugController extends BaseController {
      * @Author: bianyakun
      * @Date: 2018/4/24 17:48
      * @todo: 增加记录
-     * @param:   药品名称和编号,权重
+     * @param:   医院对象
      */
     @PostMapping("/insert")
-    public  Map<String, Object> insertDrug(AnamnesisAllergyDrug anamnesisAllergyDrug) {
+    public  Map<String, Object> insertDrug(Hospital hospital) {
         //先检查是否存在,然后再添加
-        List<AnamnesisAllergyDrug> anamnesisAllergyDrugs =
-                anamnesisAllergyDrugService.selectByName(anamnesisAllergyDrug.getAllergyDrugName());
-        if (anamnesisAllergyDrugs.isEmpty()){
-            anamnesisAllergyDrug.setCreateUser(UserTokenManager.getToken().getId());
-            int r = anamnesisAllergyDrugService.insertSelective(anamnesisAllergyDrug);
+        List<Hospital> hospitals = hospitalService.selectByName(hospital.getHospitalName());
+        if (hospitals.isEmpty()){
+            hospital.setCreateUser(UserTokenManager.getToken().getId());
+            int r = hospitalService.insertSelective(hospital);
             if (r == 0){
-                resultMap.put("msg","插入药品信息失败");
+                resultMap.put("msg","插入医院信息失败");
                 resultMap.put("status","20005");
                 resultMap.put("data",null);
             }else {
                 resultMap.put("msg","20000");
-                resultMap.put("status","成功插入药品信息");
+                resultMap.put("status","成功插入医院信息");
                 resultMap.put("data",null);
             }
         }else {
@@ -83,20 +83,20 @@ public class AnamnesisAllergyDrugController extends BaseController {
     /**
      * @Author: bianyakun
      * @Date: 2018/4/24 17:49
-     * @todo: 修改药品信息
+     * @todo: 修改医院信息
      * @param:   * @param null
      */
     @PostMapping("/update")
-    public  Map<String, Object> updateDrug(AnamnesisAllergyDrug anamnesisAllergyDrug) {
-        anamnesisAllergyDrug.setUpdateUser(UserTokenManager.getToken().getId());
-        int r = anamnesisAllergyDrugService.updateSelective(anamnesisAllergyDrug);
+    public  Map<String, Object> updateDrug(Hospital hospital) {
+        hospital.setUpdateUser(UserTokenManager.getToken().getId());
+        int r = hospitalService.updateSelective(hospital);
         if (r == 0){
-            resultMap.put("msg","修改过敏药品信息失败");
+            resultMap.put("msg","修改医院信息失败");
             resultMap.put("status","20005");
             resultMap.put("data",null);
         }else {
             resultMap.put("msg","20000");
-            resultMap.put("status","成功修改过敏药品信息");
+            resultMap.put("status","成功修改医院信息");
             resultMap.put("data",null);
         }
         return resultMap;
@@ -110,18 +110,18 @@ public class AnamnesisAllergyDrugController extends BaseController {
      */
     @PostMapping("/delete")
     public  Map<String, Object> deleteDrug(String id) {
-        AnamnesisAllergyDrug anamnesisAllergyDrug = anamnesisAllergyDrugService.selectById(id);
-        if(anamnesisAllergyDrug != null){
-            anamnesisAllergyDrug.setDeleteUser(UserTokenManager.getToken().getId());
-            anamnesisAllergyDrug.setDelFlag("1");
-            int r = anamnesisAllergyDrugService.updateSelective(anamnesisAllergyDrug);
+        Hospital hospital = hospitalService.selectById(id);
+        if(hospital != null){
+            hospital.setDeleteUser(UserTokenManager.getToken().getId());
+            hospital.setDelFlag("1");
+            int r = hospitalService.updateSelective(hospital);
             if (r == 0){
-                resultMap.put("msg","删除药品信息失败");
+                resultMap.put("msg","删除医院信息失败");
                 resultMap.put("status","20005");
                 resultMap.put("data",null);
             }else {
                 resultMap.put("msg","20000");
-                resultMap.put("status","删除药品信息成功");
+                resultMap.put("status","删除医院信息成功");
                 resultMap.put("data",null);
             }
         }else {
@@ -139,16 +139,16 @@ public class AnamnesisAllergyDrugController extends BaseController {
      * @param:   * @param null
      */
     @GetMapping("/selectbyname")
-    public  Map<String, Object> selectDrugByName(String allergyDrugName) {
-        List<AnamnesisAllergyDrug> anamnesisAllergyDrugs = anamnesisAllergyDrugService.selectByName(allergyDrugName);
-        if (anamnesisAllergyDrugs.isEmpty()){
+    public  Map<String, Object> selectDrugByName(String hospitalName) {
+        List<Hospital> hospitals = hospitalService.selectByName(hospitalName);
+        if (hospitals.isEmpty()){
             resultMap.put("msg","查询失败");
             resultMap.put("status","20005");
             resultMap.put("data",null);
         }else {
             resultMap.put("msg","20000");
             resultMap.put("status","查询成功");
-            resultMap.put("data",anamnesisAllergyDrugs.get(0));
+            resultMap.put("data",hospitals.get(0));
         }
         return resultMap;
     }
