@@ -152,6 +152,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.prostate.system.entity.City">
     update base_city
     <set>
@@ -164,6 +165,9 @@
       <if test="cityType != null">
         city_type = #{cityType,jdbcType=CHAR},
       </if>
+      <if test="orderWeight != null">
+        order_weight =  #{orderWeight,jdbcType=VARCHAR},
+      </if>
       <if test="createUser != null">
         create_user = #{createUser,jdbcType=VARCHAR},
       </if>
@@ -172,9 +176,6 @@
       </if>
       <if test="cityWeight != null">
         city_weight = #{cityWeight,jdbcType=INTEGER},
-      </if>
-      <if test="orderWeight != null">
-        #{orderWeight,jdbcType=VARCHAR},
       </if>
       <if test="updateUser != null">
         update_user = #{updateUser,jdbcType=VARCHAR},
