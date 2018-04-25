@@ -3,11 +3,25 @@ package com.prostate.system.entity;
 import java.util.Date;
 
 public class Nation {
+
+
+
+
     private String id;
 
     private String nationName;
 
     private String nationNumber;
+
+    private String orderWeight;
+
+    public String getOrderWeight() {
+        return orderWeight;
+    }
+
+    public void setOrderWeight(String orderWeight) {
+        this.orderWeight = orderWeight;
+    }
 
     private String createUser;
 
@@ -106,7 +120,8 @@ public class Nation {
     @Override
     public String toString() {
         return "Nation{" +
-                "id='" + id + '\'' +
+                "orderWeight='" + orderWeight + '\'' +
+                ", id='" + id + '\'' +
                 ", nationName='" + nationName + '\'' +
                 ", nationNumber='" + nationNumber + '\'' +
                 ", createUser='" + createUser + '\'' +

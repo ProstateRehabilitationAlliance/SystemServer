@@ -39,6 +39,7 @@ public class NationController extends  BaseController{
 
         PageHelper.startPage(pageNum, pageSize);
         List<Nation> nations = nationService.queryAllNation();
+        System.out.println(nations.get(0));
         if (nations.isEmpty()){
             resultMap.put("msg","没有民族信息");
             resultMap.put("status","20007");

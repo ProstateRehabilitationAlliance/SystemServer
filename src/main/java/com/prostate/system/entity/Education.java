@@ -3,11 +3,23 @@ package com.prostate.system.entity;
 import java.util.Date;
 
 public class Education {
+
+
+
     private String id;
 
     private String educationName;
 
     private String educationNumber;
+    private String orderWeight;
+
+    public String getOrderWeight() {
+        return orderWeight;
+    }
+
+    public void setOrderWeight(String orderWeight) {
+        this.orderWeight = orderWeight;
+    }
 
     private String createUser;
 

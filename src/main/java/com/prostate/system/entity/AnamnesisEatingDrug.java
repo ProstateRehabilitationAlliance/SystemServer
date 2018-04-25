@@ -9,6 +9,16 @@ public class AnamnesisEatingDrug {
 
     private String eatingDrugNumber;
 
+    private String orderWeight;
+
+    public String getOrderWeight() {
+        return orderWeight;
+    }
+
+    public void setOrderWeight(String orderWeight) {
+        this.orderWeight = orderWeight;
+    }
+
     private String createName;
 
     private Date createTime;
@@ -22,6 +32,9 @@ public class AnamnesisEatingDrug {
     private Date deleteTime;
 
     private String delFlag;
+
+
+
 
     public String getId() {
         return id;
@@ -116,6 +129,7 @@ public class AnamnesisEatingDrug {
                 ", deleteName='" + deleteName + '\'' +
                 ", deleteTime=" + deleteTime +
                 ", delFlag='" + delFlag + '\'' +
+                ", orderWeight='" + orderWeight + '\'' +
                 '}';
     }
 }
