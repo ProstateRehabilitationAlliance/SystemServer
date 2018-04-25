@@ -138,11 +138,11 @@ public class ProvinceController extends BaseController{
 
             if(result>0){
                 resultMap.put("status",20000);
-                resultMap.put("msg","城市修改成功");
+                resultMap.put("msg","省级地区修改成功");
                 resultMap.put("data",false);
             }else{
                 resultMap.put("status",20005);
-                resultMap.put("msg","城市修改失败");
+                resultMap.put("msg","省级地区修改失败");
                 resultMap.put("data",false);
             }
 

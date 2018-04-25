@@ -106,13 +106,13 @@ public class CityController extends BaseController{
     }
 
     /**
-     *    @Description:  省级地区修改
+     *    @Description:  城市修改
      *    @Date:  16:30  2018/4/23
      *    @Params:   * @param null
      */
 
-    @RequestMapping(value = "/updprovince",method = RequestMethod.POST)
-    public Map updProvince(City city) {
+    @RequestMapping(value = "/updcity",method = RequestMethod.POST)
+    public Map updCity(City city) {
 
         List<City> list = cityService.selectByCityName(city.getCityName());
         if (list==null||list.size()==0){
@@ -124,7 +124,7 @@ public class CityController extends BaseController{
         }else if(list.size()==1){
             int result=cityService.updateSelective(city);
             resultMap.put("status",20000);
-            resultMap.put("msg","密码修改成功");
+            resultMap.put("msg","城市修改成功");
             resultMap.put("data",null);
 
         }else {
