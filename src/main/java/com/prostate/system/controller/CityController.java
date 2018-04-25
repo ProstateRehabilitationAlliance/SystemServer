@@ -2,14 +2,12 @@ package com.prostate.system.controller;
 
 import com.prostate.system.entity.City;
 import com.prostate.system.service.CityService;
-import com.prostate.system.shiro.UserTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -84,21 +82,11 @@ public class CityController extends BaseController{
      *    @Params:   * @param null
      */
 
-    @RequestMapping(value = "/addcity",method = RequestMethod.POST)
-    public Map addcity(City city) {
+    @RequestMapping(value = "/addprovince",method = RequestMethod.POST)
+    public Map addprovince(City city) {
 
         List<City> list = cityService.selectByCityName(city.getCityName());
         if (list==null||list.size()==0){
-
-            city.setCityType("1");
-            city.setCreateTime(new Date());
-            if (UserTokenManager.getToken()!=null){
-                city.setCreateUser(UserTokenManager.getToken().getId());
-                city.setUpdateUser(UserTokenManager.getToken().getId());
-            }
-            city.setCreateTime(new Date());
-            city.setUpdateTime(new Date());
-            city.setDelFlag("0");
             int result=cityService.insertSelective(city);
             if(result>0){
                 resultMap.put("status",20000);
@@ -118,40 +106,31 @@ public class CityController extends BaseController{
     }
 
     /**
-     *    @Description:  市级修改
+     *    @Description:  省级地区修改
      *    @Date:  16:30  2018/4/23
      *    @Params:   * @param null
      */
 
-    @RequestMapping(value = "/updcity",method = RequestMethod.POST)
-    public Map updcity(City city) {
+    @RequestMapping(value = "/updprovince",method = RequestMethod.POST)
+    public Map updProvince(City city) {
 
-        City city01= cityService.selectById(city.getId());
-        if (city01==null){
+        List<City> list = cityService.selectByCityName(city.getCityName());
+        if (list==null||list.size()==0){
 
             resultMap.put("status",20005);
             resultMap.put("msg","没有数据");
             resultMap.put("data",false);
 
-        }else{
-
-            city.setCreateTime(new Date());
-            if (UserTokenManager.getToken()!=null){
-                city.setUpdateUser(UserTokenManager.getToken().getId());
-            }
-            city.setUpdateTime(new Date());
+        }else if(list.size()==1){
             int result=cityService.updateSelective(city);
+            resultMap.put("status",20000);
+            resultMap.put("msg","密码修改成功");
+            resultMap.put("data",null);
 
-            if(result>0){
-                resultMap.put("status",20000);
-                resultMap.put("msg","市级修改成功");
-                resultMap.put("data",false);
-            }else{
-                resultMap.put("status",20005);
-                resultMap.put("msg","市级修改失败");
-                resultMap.put("data",false);
-            }
-
+        }else {
+            resultMap.put("status",20006);
+            resultMap.put("msg","数据多条");
+            resultMap.put("data",false);
         }
         return resultMap;
     }
@@ -163,17 +142,13 @@ public class CityController extends BaseController{
      *    @Params:   * @param null
      */
 
-    @RequestMapping(value = "/delcity",method = RequestMethod.POST)
-    public Map delCity(@RequestParam String id) {
+    @RequestMapping(value = "/delprovince",method = RequestMethod.POST)
+    public Map delProvince(@RequestParam String id) {
 
         City city= cityService.selectById(id);
-        if (city!=null){
-            if (UserTokenManager.getToken()!=null){
-                city.setDeleteUser(UserTokenManager.getToken().getId());
-            }
-            city.setDeleteTime(new Date());
-            city.setDelFlag("1");
-            int result=cityService.updateSelective(city);
+        if (city==null){
+
+            int result=cityService.insertSelective(city);
             if(result>0){
                 resultMap.put("status",20000);
                 resultMap.put("msg","城市删除成功");
