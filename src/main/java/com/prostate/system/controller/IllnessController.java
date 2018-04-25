@@ -1,7 +1,7 @@
 package com.prostate.system.controller;
 
-import com.prostate.system.entity.AnamnesisIllness;
-import com.prostate.system.service.AnamnesisIllnessService;
+import com.prostate.system.entity.Illness;
+import com.prostate.system.service.IllnessService;
 import com.prostate.system.shiro.UserTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +15,17 @@ import java.util.Map;
 
 /**
  * @Author: developerfengrui
- * @Description:  病史疾病管理
- * @Date: Created in 19:03 2018/4/24
+ * @Description:   ICD疾病管理
+ * @Date: Created in 13:50 2018/4/25
  */
 @RestController
-@RequestMapping("/anamnesisIllness")
-public class AnamnesisIllnessController extends BaseController{
+@RequestMapping("/illness")
+public class IllnessController extends BaseController{
 
-        @Autowired
-    private AnamnesisIllnessService anamnesisIllnessService;
+
+
+    @Autowired
+    private IllnessService illnessService;
 
     /**
      *    @Description:  检查数据接口
@@ -32,13 +34,11 @@ public class AnamnesisIllnessController extends BaseController{
      */
 
     @RequestMapping(value = "/check",method = RequestMethod.POST)
-    public Map checkCityName(@RequestParam("param") String param, @RequestParam("type") Integer type){
-        //1.判断手机号是否可用
+    public Map check(@RequestParam("param") String param, @RequestParam(value = "type",defaultValue = "1") Integer type){
+        //1.判断该类型是否可用
         if (type == 1) {
-            List<AnamnesisIllness> list = anamnesisIllnessService.selectByAnamnesisIllnessName(param);
-            //System.out.println(param);
+            List<Illness> list = illnessService.selectByIllnessName(param);
             if (list==null||list.size()==0){
-
                 resultMap.put("status",20000);
                 resultMap.put("msg","OK,数据可用");
                 resultMap.put("data",true);
@@ -58,14 +58,14 @@ public class AnamnesisIllnessController extends BaseController{
 
 
     /**
-     *    @Description:  病史类型列表展示
+     *    @Description:  1. 疾病列表展示
      *    @Date:  14:43  2018/4/23
      *    @Params:   * @param null
      */
 
     @RequestMapping(value = "/findall",method = RequestMethod.GET)
     public Map findByPage() {
-        List<AnamnesisIllness> list=anamnesisIllnessService.findAll();
+        List<Illness> list=illnessService.findAll();
         if(list==null|list.size()==0){
 
             resultMap.put("status",20007);
@@ -79,25 +79,26 @@ public class AnamnesisIllnessController extends BaseController{
         }
         return resultMap;
     }
+
     /**
-     *    @Description:  病史类型添加
+     *    @Description:  2. 疾病添加
      *    @Date:  16:11  2018/4/23
      *    @Params:   * @param null
      */
 
-    @RequestMapping(value = "/addanamnesistype",method = RequestMethod.POST)
-    public Map addanamnesistype(AnamnesisIllness anamnesisIllness) {
+    @RequestMapping(value = "/addillness",method = RequestMethod.POST)
+    public Map addIllness(Illness illness) {
 
-        List<AnamnesisIllness> list = anamnesisIllnessService.selectByAnamnesisIllnessName(anamnesisIllness.getAnamnesisIllnessName());
+        List<Illness> list = illnessService.selectByIllnessName(illness.getIllnessName());
         if (list==null||list.size()==0){
             if (UserTokenManager.getToken()!=null){
-                anamnesisIllness.setCreateUser(UserTokenManager.getToken().getId());
-                anamnesisIllness.setUpdateUser(UserTokenManager.getToken().getId());
+                illness.setCreateUser(UserTokenManager.getToken().getId());
+                illness.setUpdateUser(UserTokenManager.getToken().getId());
             }
-            anamnesisIllness.setCreateTime(new Date());
-            anamnesisIllness.setUpdateTime(new Date());
-            anamnesisIllness.setDelFlag("0");
-            int result=anamnesisIllnessService.insertSelective(anamnesisIllness);
+            illness.setCreateTime(new Date());
+            illness.setUpdateTime(new Date());
+            illness.setDelFlag("0");
+            int result=illnessService.insertSelective(illness);
             if(result>0){
                 resultMap.put("status",20000);
                 resultMap.put("msg","病史类型添加成功");
@@ -121,17 +122,17 @@ public class AnamnesisIllnessController extends BaseController{
      *    @Params:   * @param null
      */
 
-    @RequestMapping(value = "/updanamnesistype",method = RequestMethod.POST)
-    public Map updAnamnesisType(AnamnesisIllness anamnesisIllness) {
+    @RequestMapping(value = "/updillness",method = RequestMethod.POST)
+    public Map updAnamnesisType(Illness illness) {
 
-        AnamnesisIllness anamnesisIllness01= anamnesisIllnessService.selectById(anamnesisIllness.getId());
-        if (anamnesisIllness01!=null){
+        Illness illness01= illnessService.selectById(illness.getId());
+        if (illness01!=null){
             if (UserTokenManager.getToken()!=null){
-                anamnesisIllness.setUpdateUser(UserTokenManager.getToken().getId());
+                illness.setUpdateUser(UserTokenManager.getToken().getId());
 
             }
-            anamnesisIllness.setUpdateTime(new Date());
-            int result=anamnesisIllnessService.updateSelective(anamnesisIllness);
+            illness.setUpdateTime(new Date());
+            int result=illnessService.updateSelective(illness);
             if(result>0){
                 resultMap.put("status",20000);
                 resultMap.put("msg","病史类型修改成功");
@@ -152,32 +153,32 @@ public class AnamnesisIllnessController extends BaseController{
 
 
     /**
-     *    @Description:  病史类型删除
+     *    @Description:  疾病类型删除
      *    @Date:  16:30  2018/4/23
      *    @Params:   * @param null
      */
 
-    @RequestMapping(value = "/delanamnesistype",method = RequestMethod.POST)
+    @RequestMapping(value = "/delillness",method = RequestMethod.POST)
     public Map delAnamnesisType(@RequestParam String id) {
 
-        AnamnesisIllness anamnesisIllness= anamnesisIllnessService.selectById(id);
-        if (anamnesisIllness!=null){
+        Illness illness= illnessService.selectById(id);
+        if (illness!=null){
             if (UserTokenManager.getToken()!=null){
-                anamnesisIllness.setUpdateUser(UserTokenManager.getToken().getId());
-                anamnesisIllness.setDeleteUser(UserTokenManager.getToken().getId());
+                illness.setUpdateUser(UserTokenManager.getToken().getId());
+                illness.setDeleteUser(UserTokenManager.getToken().getId());
 
             }
-            anamnesisIllness.setDeleteTime(new Date());
-            anamnesisIllness.setUpdateTime(new Date());
-            anamnesisIllness.setDelFlag("1");
-            int result=anamnesisIllnessService.updateSelective(anamnesisIllness);
+            illness.setDeleteTime(new Date());
+            illness.setUpdateTime(new Date());
+            illness.setDelFlag("1");
+            int result=illnessService.updateSelective(illness);
             if(result>0){
                 resultMap.put("status",20000);
-                resultMap.put("msg","病史类型删除成功");
+                resultMap.put("msg","疾病删除成功");
                 resultMap.put("data",false);
             }else{
                 resultMap.put("status",20005);
-                resultMap.put("msg","病史类型删除失败");
+                resultMap.put("msg","疾病删除失败");
                 resultMap.put("data",false);
             }
         }else {
@@ -187,5 +188,4 @@ public class AnamnesisIllnessController extends BaseController{
         }
         return resultMap;
     }
-
 }
