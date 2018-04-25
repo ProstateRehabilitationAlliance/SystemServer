@@ -2,7 +2,6 @@ package com.prostate.system.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.prostate.system.entity.AnamnesisEatingDrug;
-import com.prostate.system.entity.Nation;
 import com.prostate.system.service.AnamnesisEatingDrugService;
 import com.prostate.system.shiro.UserTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;

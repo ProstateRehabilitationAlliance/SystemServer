@@ -146,20 +146,26 @@ public class EducationController extends BaseController{
         String userID = UserTokenManager.getToken().getId();
         //先根据id查询学历信息,
         Education education = educationservice.selectById(educationID);
-        //将education相关的信息重新设置
-        education.setDeleteUser(userID);
-        education.setDelFlag("1");
-        //将education重新写入
-        int r  = educationservice.updateSelective(education);
-        //int r  = educationservice.deleteById(educationID);
-        if (r == 0){
-            resultMap.put("msg","删除学历信息失败");
+        if (education == null){
+            resultMap.put("msg","信息不存在");
             resultMap.put("status","20005");
             resultMap.put("data",null);
         }else {
-            resultMap.put("msg","20000");
-            resultMap.put("status","删除学历成功");
-            resultMap.put("data",null);
+            //将education相关的信息重新设置
+            education.setDeleteUser(userID);
+            education.setDelFlag("1");
+            //将education重新写入
+            int r  = educationservice.updateSelective(education);
+            //int r  = educationservice.deleteById(educationID);
+            if (r == 0){
+                resultMap.put("msg","删除学历信息失败");
+                resultMap.put("status","20005");
+                resultMap.put("data",null);
+            }else {
+                resultMap.put("msg","20000");
+                resultMap.put("status","删除学历成功");
+                resultMap.put("data",null);
+            }
         }
         return resultMap;
     }

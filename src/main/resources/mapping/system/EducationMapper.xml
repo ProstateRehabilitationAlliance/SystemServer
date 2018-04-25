@@ -5,6 +5,7 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="education_name" jdbcType="VARCHAR" property="educationName" />
     <result column="education_number" jdbcType="VARCHAR" property="educationNumber" />
+    <result column="order_weight" jdbcType="VARCHAR" property="orderWeight" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
@@ -14,7 +15,7 @@
     <result column="del_flag" jdbcType="CHAR" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, education_name, education_number, create_user, create_time, update_user, update_time, 
+    id, education_name, education_number,order_weight, create_user, create_time, update_user, update_time,
     delete_user, delete_time, del_flag
   </sql>
   <!--根据id查询学历信息-->
@@ -48,11 +49,11 @@
   </delete>
   <insert id="insert" parameterType="com.prostate.system.entity.Education">
     insert into base_education (id, education_name, education_number, 
-      create_user, create_time, update_user, 
+      order_weight,create_user, create_time, update_user,
       update_time, delete_user, delete_time, 
       del_flag)
     values (#{id,jdbcType=VARCHAR}, #{educationName,jdbcType=VARCHAR}, #{educationNumber,jdbcType=VARCHAR}, 
-      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{orderWeight,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteUser,jdbcType=VARCHAR}, #{deleteTime,jdbcType=TIMESTAMP}, 
       #{delFlag,jdbcType=CHAR})
   </insert>
@@ -70,6 +71,9 @@
       </if>
       <if test="educationNumber != null">
         education_number,
+      </if>
+      <if test="orderWeight != null">
+        order_weight,
       </if>
       <if test="createUser != null">
         create_user,
@@ -102,6 +106,9 @@
       </if>
       <if test="educationNumber != null">
         #{educationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderWeight != null">
+        #{orderWeight,jdbcType=VARCHAR},
       </if>
       <if test="createUser != null">
         #{createUser,jdbcType=VARCHAR},
