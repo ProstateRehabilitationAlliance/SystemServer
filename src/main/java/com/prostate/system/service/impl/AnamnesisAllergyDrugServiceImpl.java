@@ -5,6 +5,7 @@ import com.prostate.system.mapper.AnamnesisAllergyDrugMapper;
 import com.prostate.system.service.AnamnesisAllergyDrugService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @Date: 2018/4/25 9:08
  * @Todo:  过敏药品的服务接口实现类
  */
+@Transactional
 @Service
 public class AnamnesisAllergyDrugServiceImpl  implements AnamnesisAllergyDrugService {
 
