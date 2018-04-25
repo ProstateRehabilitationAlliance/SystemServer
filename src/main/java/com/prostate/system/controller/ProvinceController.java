@@ -65,8 +65,8 @@ public class ProvinceController extends BaseController{
 
         @RequestMapping(value = "/findbypage")
         public Map findByPage(@RequestParam(defaultValue ="0" ) Integer pageNum ,
-                              @RequestParam(defaultValue = "10")  Integer pageSize
-                                     , @RequestParam String parentCityId) {
+                              @RequestParam(defaultValue = "10")  Integer pageSize) {
+                        String parentCityId="0";
             List<City> list=cityService.findByPage(pageNum,pageSize,parentCityId);
             if(list==null|list.size()==0){
 
@@ -93,6 +93,10 @@ public class ProvinceController extends BaseController{
         List<City> list = cityService.selectByCityName(city.getCityName());
         if (list==null||list.size()==0){
             city.setCityType("1");
+            //这里通过查询此图citytype等于0的id作为省区的pid,前台不用传
+            if(cityService.selectByCityType("0")!=null){
+                city.setParentCityId(cityService.selectByCityType("0").getParentCityId());
+            }
             city.setCreateTime(new Date());
             if (UserTokenManager.getToken()!=null){
                 city.setCreateUser(UserTokenManager.getToken().getId());
@@ -104,11 +108,11 @@ public class ProvinceController extends BaseController{
             int result=cityService.insertSelective(city);
             if(result>0){
                 resultMap.put("status",20000);
-                resultMap.put("msg","省级地区成功");
+                resultMap.put("msg","省名插入成功");
                 resultMap.put("data",false);
             }else{
                 resultMap.put("status",20005);
-                resultMap.put("msg","省级地区失败");
+                resultMap.put("msg","省名插入失败");
                 resultMap.put("data",false);
             }
         }else {
@@ -146,11 +150,11 @@ public class ProvinceController extends BaseController{
 
             if(result>0){
                 resultMap.put("status",20000);
-                resultMap.put("msg","城市修改成功");
+                resultMap.put("msg","省名修改成功");
                 resultMap.put("data",false);
             }else{
                 resultMap.put("status",20005);
-                resultMap.put("msg","城市修改失败");
+                resultMap.put("msg","省名修改失败");
                 resultMap.put("data",false);
             }
 
@@ -178,11 +182,11 @@ public class ProvinceController extends BaseController{
             int result=cityService.updateSelective(city);
             if(result>0){
                 resultMap.put("status",20000);
-                resultMap.put("msg","省级地区成功");
+                resultMap.put("msg","省名删除成功");
                 resultMap.put("data",false);
             }else{
                 resultMap.put("status",20005);
-                resultMap.put("msg","省级地区失败");
+                resultMap.put("msg","省名删除失败");
                 resultMap.put("data",false);
             }
         }else {

@@ -16,6 +16,7 @@ public class City {
     private Date createTime;
 
     private Integer cityWeight;
+    private String orderWeight;
 
     private String updateUser;
 
@@ -26,6 +27,14 @@ public class City {
     private Date deleteTime;
 
     private String delFlag;
+
+    public String getOrderWeight() {
+        return orderWeight;
+    }
+
+    public void setOrderWeight(String orderWeight) {
+        this.orderWeight = orderWeight;
+    }
 
     public String getId() {
         return id;

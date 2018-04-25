@@ -36,8 +36,8 @@ public class AnamnesisTypeController extends BaseController {
      */
 
     @RequestMapping(value = "/check",method = RequestMethod.POST)
-    public Map checkCityName(@RequestParam("param") String param, @RequestParam("type") Integer type){
-        //1.判断手机号是否可用
+    public Map checkCityName(@RequestParam("param") String param, @RequestParam(value = "type",defaultValue = "1") Integer type){
+        //1.判断数据是否可用
         if (type == 1) {
             List<AnamnesisType> list = anamnesisTypeService.selectByAnamnesisTypeName(param);
             //System.out.println(param);

@@ -23,4 +23,6 @@ public interface CityMapper {
 
 
     public List<City> selectByCityName(String param);
+
+    City selectByCityType(String cityTape);
 }

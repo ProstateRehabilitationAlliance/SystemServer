@@ -25,6 +25,7 @@ public class AnamnesisType {
 
     private String delFlag;
 
+
     public String getId() {
         return id;
     }

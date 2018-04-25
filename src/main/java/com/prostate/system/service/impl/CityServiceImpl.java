@@ -57,4 +57,9 @@ public class CityServiceImpl implements CityService {
 
         return cityMapper.selectByCityName(param);
     }
+
+    @Override
+    public City selectByCityType(String cityTape) {
+        return cityMapper.selectByCityType(cityTape);
+    }
 }

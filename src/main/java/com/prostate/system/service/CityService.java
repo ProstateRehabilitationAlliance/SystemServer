@@ -15,4 +15,6 @@ public interface CityService extends BaseService<City>{
 
 
     List<City> selectByCityName(String param);
+
+    City selectByCityType(String cityTape);
 }
