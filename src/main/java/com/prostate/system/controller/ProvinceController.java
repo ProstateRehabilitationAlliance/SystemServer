@@ -3,6 +3,7 @@ package com.prostate.system.controller;
 import com.prostate.system.entity.City;
 import com.prostate.system.entity.User;
 import com.prostate.system.service.CityService;
+import com.prostate.system.shiro.UserTokenManager;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +37,7 @@ public class ProvinceController extends BaseController{
      */
 
     @RequestMapping(value = "/check",method = RequestMethod.POST)
-    public Map checkCityName(@RequestParam("param") String param,@RequestParam("type") Integer type){
+    public Map checkProvinceName(@RequestParam("param") String param,@RequestParam("type") Integer type){
         //1.判断手机号是否可用
         if (type == 1) {
             List<City> list = cityService.selectByCityName(param);
@@ -94,19 +95,23 @@ public class ProvinceController extends BaseController{
 
         List<City> list = cityService.selectByCityName(city.getCityName());
         if (list==null||list.size()==0){
-            User user = (User) SecurityUtils.getSubject().getPrincipal();
-            System.out.println(user);
-            //city.setCreateUser();
-            //设置
+            city.setCityType("1");
             city.setCreateTime(new Date());
+            if (UserTokenManager.getToken()!=null){
+                city.setCreateUser(UserTokenManager.getToken().getId());
+                city.setUpdateUser(UserTokenManager.getToken().getId());
+            }
+            city.setCreateTime(new Date());
+            city.setUpdateTime(new Date());
+            city.setDelFlag("0");
             int result=cityService.insertSelective(city);
             if(result>0){
                 resultMap.put("status",20000);
-                resultMap.put("msg","城市录入成功");
+                resultMap.put("msg","省级地区成功");
                 resultMap.put("data",false);
             }else{
                 resultMap.put("status",20005);
-                resultMap.put("msg","城市录入失败");
+                resultMap.put("msg","省级地区失败");
                 resultMap.put("data",false);
             }
         }else {
@@ -134,6 +139,12 @@ public class ProvinceController extends BaseController{
                 resultMap.put("data",false);
 
         }else{
+
+            city.setCreateTime(new Date());
+            if (UserTokenManager.getToken()!=null){
+                city.setUpdateUser(UserTokenManager.getToken().getId());
+            }
+            city.setUpdateTime(new Date());
             int result=cityService.updateSelective(city);
 
             if(result>0){
@@ -158,21 +169,23 @@ public class ProvinceController extends BaseController{
      */
 
     @RequestMapping(value = "/delprovince",method = RequestMethod.POST)
-    public Map delProvince(@RequestParam String id,@RequestParam String userid) {
+    public Map delProvince(@RequestParam String id) {
 
         City city= cityService.selectById(id);
-        if (city==null){
-            city.setDeleteUser(userid);
+        if (city!=null){
+            if (UserTokenManager.getToken()!=null){
+                city.setDeleteUser(UserTokenManager.getToken().getId());
+            }
             city.setDeleteTime(new Date());
             city.setDelFlag("1");
             int result=cityService.updateSelective(city);
             if(result>0){
                 resultMap.put("status",20000);
-                resultMap.put("msg","城市删除成功");
+                resultMap.put("msg","省级地区成功");
                 resultMap.put("data",false);
             }else{
                 resultMap.put("status",20005);
-                resultMap.put("msg","城市删除失败");
+                resultMap.put("msg","省级地区失败");
                 resultMap.put("data",false);
             }
         }else {
