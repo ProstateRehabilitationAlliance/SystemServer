@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prostate.system.mapper.IpssMapper">
+  <resultMap id="BaseResultMap" type="com.prostate.system.entity.Ipss">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="ipss_title" jdbcType="VARCHAR" property="ipssTitle" />
+    <result column="ipss_score" jdbcType="VARCHAR" property="ipssScore" />
+    <result column="ipss_weight" jdbcType="VARCHAR" property="ipssWeight" />
+    <result column="order_weight" jdbcType="VARCHAR" property="orderWeight" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="delete_user" jdbcType="VARCHAR" property="deleteUser" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, parent_id, ipss_title, ipss_score, ipss_weight, order_weight, create_user, create_time, 
+    delete_user, delete_time, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_ipss
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from base_ipss
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.prostate.system.entity.Ipss">
+    insert into base_ipss (id, parent_id, ipss_title, 
+      ipss_score, ipss_weight, order_weight, 
+      create_user, create_time, delete_user, 
+      delete_time, del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{ipssTitle,jdbcType=VARCHAR}, 
+      #{ipssScore,jdbcType=VARCHAR}, #{ipssWeight,jdbcType=VARCHAR}, #{orderWeight,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{deleteUser,jdbcType=VARCHAR}, 
+      #{deleteTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prostate.system.entity.Ipss">
+    insert into base_ipss
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="ipssTitle != null">
+        ipss_title,
+      </if>
+      <if test="ipssScore != null">
+        ipss_score,
+      </if>
+      <if test="ipssWeight != null">
+        ipss_weight,
+      </if>
+      <if test="orderWeight != null">
+        order_weight,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="deleteUser != null">
+        delete_user,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="ipssTitle != null">
+        #{ipssTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ipssScore != null">
+        #{ipssScore,jdbcType=VARCHAR},
+      </if>
+      <if test="ipssWeight != null">
+        #{ipssWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="orderWeight != null">
+        #{orderWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteUser != null">
+        #{deleteUser,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prostate.system.entity.Ipss">
+    update base_ipss
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="ipssTitle != null">
+        ipss_title = #{ipssTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ipssScore != null">
+        ipss_score = #{ipssScore,jdbcType=VARCHAR},
+      </if>
+      <if test="ipssWeight != null">
+        ipss_weight = #{ipssWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="orderWeight != null">
+        order_weight = #{orderWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteUser != null">
+        delete_user = #{deleteUser,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prostate.system.entity.Ipss">
+    update base_ipss
+    set parent_id = #{parentId,jdbcType=VARCHAR},
+      ipss_title = #{ipssTitle,jdbcType=VARCHAR},
+      ipss_score = #{ipssScore,jdbcType=VARCHAR},
+      ipss_weight = #{ipssWeight,jdbcType=VARCHAR},
+      order_weight = #{orderWeight,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      delete_user = #{deleteUser,jdbcType=VARCHAR},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
