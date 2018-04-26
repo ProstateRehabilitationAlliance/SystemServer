@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>淘淘商城后台管理系统</title>
+<title>前列腺联盟后台管理系统</title>
 <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.1/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.1/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="css/taotao.css" />
@@ -18,14 +18,29 @@
 </style>
 </head>
 <body class="easyui-layout">
-    <div data-options="region:'west',title:'菜单',split:true" style="width:180px;">
+    <div data-options="region:'west',title:'管理列表',split:true" style="width:180px;">
     	<ul id="menu" class="easyui-tree" style="margin-top: 10px;margin-left: 5px;">
+		<#--分割线-->
+            <li>
+                <span>病史类型管理</span>
+                <ul>
+                    <li data-options="attributes:{'url':'anamnesis-type-list'}">查询病史</li>
+                </ul>
+            </li>
+
+			<#--分割线-->
          	<li>
-         		<span>商品管理</span>
+         		<span>城市管理</span>
          		<ul>
-	         		<li data-options="attributes:{'url':'item-add'}">新增商品</li>
+
+
+	         		<#--<li data-options="attributes:{'url':'item-add'}">新增商品
+
+
+					</li>-->
+
+
 	         		<li data-options="attributes:{'url':'item-list'}">查询商品</li>
-	         		<li data-options="attributes:{'url':'item-param-list'}">规格参数</li>
 	         	</ul>
          	</li>
          	<li>

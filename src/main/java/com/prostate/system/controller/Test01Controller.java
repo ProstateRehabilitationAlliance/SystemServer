@@ -16,4 +16,9 @@ public class Test01Controller {
     public String test(){
         return "index";
     }
+
+    @RequestMapping("/anamnesis-type-list")
+    public String test01(){
+        return "anamnesis-type-list";
+    }
 }
