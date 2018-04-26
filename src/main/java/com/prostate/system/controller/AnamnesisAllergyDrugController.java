@@ -88,15 +88,24 @@ public class AnamnesisAllergyDrugController extends BaseController {
      */
     @PostMapping("/update")
     public  Map<String, Object> updateDrug(AnamnesisAllergyDrug anamnesisAllergyDrug) {
-        anamnesisAllergyDrug.setUpdateUser(UserTokenManager.getToken().getId());
-        int r = anamnesisAllergyDrugService.updateSelective(anamnesisAllergyDrug);
-        if (r == 0){
-            resultMap.put("msg","修改过敏药品信息失败");
-            resultMap.put("status","20005");
-            resultMap.put("data",null);
+        //先检查是否存在,然后再添加
+        List<AnamnesisAllergyDrug> anamnesisAllergyDrugs =
+                anamnesisAllergyDrugService.selectByName(anamnesisAllergyDrug.getAllergyDrugName());
+        if (anamnesisAllergyDrugs.isEmpty()){
+            anamnesisAllergyDrug.setUpdateUser(UserTokenManager.getToken().getId());
+            int r = anamnesisAllergyDrugService.updateSelective(anamnesisAllergyDrug);
+            if (r == 0){
+                resultMap.put("msg","修改过敏药品信息失败");
+                resultMap.put("status","20005");
+                resultMap.put("data",null);
+            }else {
+                resultMap.put("msg","20000");
+                resultMap.put("status","成功修改过敏药品信息");
+                resultMap.put("data",null);
+            }
         }else {
-            resultMap.put("msg","20000");
-            resultMap.put("status","成功修改过敏药品信息");
+            resultMap.put("msg","20001");
+            resultMap.put("status","此信息已经存在");
             resultMap.put("data",null);
         }
         return resultMap;

@@ -1,6 +1,7 @@
 package com.prostate.system.service.impl;
 
 import com.prostate.system.entity.AnamnesisAllergyDrug;
+
 import com.prostate.system.mapper.AnamnesisAllergyDrugMapper;
 import com.prostate.system.service.AnamnesisAllergyDrugService;
 import org.springframework.beans.factory.annotation.Autowired;

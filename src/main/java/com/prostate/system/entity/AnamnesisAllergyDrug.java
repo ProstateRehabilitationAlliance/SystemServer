@@ -7,6 +7,8 @@ public class AnamnesisAllergyDrug {
 
     private String allergyDrugName;
 
+    private String spellName;
+
     private String allergyDrugNumber;
 
     private String orderWeight;
@@ -39,6 +41,14 @@ public class AnamnesisAllergyDrug {
 
     public void setAllergyDrugName(String allergyDrugName) {
         this.allergyDrugName = allergyDrugName == null ? null : allergyDrugName.trim();
+    }
+
+    public String getSpellName() {
+        return spellName;
+    }
+
+    public void setSpellName(String spellName) {
+        this.spellName = spellName == null ? null : spellName.trim();
     }
 
     public String getAllergyDrugNumber() {
@@ -111,22 +121,5 @@ public class AnamnesisAllergyDrug {
 
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag == null ? null : delFlag.trim();
-    }
-
-    @Override
-    public String toString() {
-        return "AnamnesisAllergyDrug{" +
-                "id='" + id + '\'' +
-                ", allergyDrugName='" + allergyDrugName + '\'' +
-                ", allergyDrugNumber='" + allergyDrugNumber + '\'' +
-                ", orderWeight='" + orderWeight + '\'' +
-                ", createUser='" + createUser + '\'' +
-                ", createTime=" + createTime +
-                ", updateUser='" + updateUser + '\'' +
-                ", updateTime=" + updateTime +
-                ", deleteUser='" + deleteUser + '\'' +
-                ", deleteTime=" + deleteTime +
-                ", delFlag='" + delFlag + '\'' +
-                '}';
     }
 }

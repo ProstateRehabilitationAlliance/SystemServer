@@ -30,7 +30,7 @@ public interface AnamnesisAllergyDrugMapper {
     List<AnamnesisAllergyDrug>  selectAllAnamnesisAllergyDrug();
 
     // 药品名称查询药品信息
-    List<AnamnesisAllergyDrug>  selectAnamnesisAllergyDrugByName(String drugName);
+    List<AnamnesisAllergyDrug> selectAnamnesisAllergyDrugByName(String drugName);
 
     // 选择性修改
     int updateByPrimaryKeySelective(AnamnesisAllergyDrug record);
