@@ -88,7 +88,7 @@ public class UserRealm extends AuthorizingRealm {
         ShiroToken token = (ShiroToken) authenticationToken;
         String userName=(String)authenticationToken.getPrincipal();
        List<User> list=userService.findUserWihtUserName(userName);
-        System.out.println("=====>"+list.get(0));
+       // System.out.println("=====>"+list.get(0));
         if(list.isEmpty()) {
             //用户不存在就抛出异常
             throw new UnknownAccountException();

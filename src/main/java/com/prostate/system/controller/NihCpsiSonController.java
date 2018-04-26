@@ -62,9 +62,9 @@ public class NihCpsiSonController extends BaseController{
      *    @Params:   * @param null
      */
 
-    @RequestMapping(value = "/list")
-    public Map list(String parentCityId) {
-        List<NihCpsi> list=nihCpsiService.findByParentId(parentCityId);
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    public Map list(String parentId) {
+        List<NihCpsi> list=nihCpsiService.findByParentId(parentId);
         if(list==null|list.size()==0){
             resultMap.put("status",20007);
             resultMap.put("msg","没有找到相关数据数据");
@@ -88,7 +88,6 @@ public class NihCpsiSonController extends BaseController{
         if (UserTokenManager.getToken()!=null){
             nihCpsi.setCreateUser(UserTokenManager.getToken().getId());
         }
-        nihCpsi.setParentId("000011112222");
         nihCpsi.setCreateTime(new Date());
         nihCpsi.setDelFlag("0");
         int result=nihCpsiService.insertSelective(nihCpsi);
