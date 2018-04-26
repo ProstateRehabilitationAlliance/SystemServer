@@ -7,17 +7,11 @@ public class AnamnesisEatingDrug {
 
     private String eatingDrugName;
 
+    private String spellName;
+
     private String eatingDrugNumber;
 
     private String orderWeight;
-
-    public String getOrderWeight() {
-        return orderWeight;
-    }
-
-    public void setOrderWeight(String orderWeight) {
-        this.orderWeight = orderWeight;
-    }
 
     private String createName;
 
@@ -32,9 +26,6 @@ public class AnamnesisEatingDrug {
     private Date deleteTime;
 
     private String delFlag;
-
-
-
 
     public String getId() {
         return id;
@@ -52,12 +43,28 @@ public class AnamnesisEatingDrug {
         this.eatingDrugName = eatingDrugName == null ? null : eatingDrugName.trim();
     }
 
+    public String getSpellName() {
+        return spellName;
+    }
+
+    public void setSpellName(String spellName) {
+        this.spellName = spellName == null ? null : spellName.trim();
+    }
+
     public String getEatingDrugNumber() {
         return eatingDrugNumber;
     }
 
     public void setEatingDrugNumber(String eatingDrugNumber) {
         this.eatingDrugNumber = eatingDrugNumber == null ? null : eatingDrugNumber.trim();
+    }
+
+    public String getOrderWeight() {
+        return orderWeight;
+    }
+
+    public void setOrderWeight(String orderWeight) {
+        this.orderWeight = orderWeight == null ? null : orderWeight.trim();
     }
 
     public String getCreateName() {
@@ -114,22 +121,5 @@ public class AnamnesisEatingDrug {
 
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag == null ? null : delFlag.trim();
-    }
-
-    @Override
-    public String toString() {
-        return "AnamnesisEatingDrug{" +
-                "id='" + id + '\'' +
-                ", eatingDrugName='" + eatingDrugName + '\'' +
-                ", eatingDrugNumber='" + eatingDrugNumber + '\'' +
-                ", createName='" + createName + '\'' +
-                ", createTime=" + createTime +
-                ", updateName='" + updateName + '\'' +
-                ", updateTime=" + updateTime +
-                ", deleteName='" + deleteName + '\'' +
-                ", deleteTime=" + deleteTime +
-                ", delFlag='" + delFlag + '\'' +
-                ", orderWeight='" + orderWeight + '\'' +
-                '}';
     }
 }
