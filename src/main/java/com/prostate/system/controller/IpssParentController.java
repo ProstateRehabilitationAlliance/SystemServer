@@ -63,8 +63,8 @@ public class IpssParentController extends BaseController{
      */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public Map list() {
-        String parentCityId="000011112222";
-        List<Ipss> list=ipssService.findByParentId(parentCityId);
+        List<Ipss> list=ipssService.findAll();
+
         if(list==null|list.size()==0){
             resultMap.put("status",20007);
             resultMap.put("msg","没有找到相关数据数据");
@@ -75,6 +75,18 @@ public class IpssParentController extends BaseController{
             resultMap.put("msg","数据查询成功");
             resultMap.put("data",list);
         }
+        /*String parentCityId="000011112222";
+        List<Ipss> list=ipssService.findByParentId(parentCityId);
+        if(list==null|list.size()==0){
+            resultMap.put("status",20007);
+            resultMap.put("msg","没有找到相关数据数据");
+            resultMap.put("data",false);
+
+        }else{
+            resultMap.put("status",20000);
+            resultMap.put("msg","数据查询成功");
+            resultMap.put("data",list);
+        }*/
         return resultMap;
     }
     /**
@@ -87,7 +99,7 @@ public class IpssParentController extends BaseController{
         if (UserTokenManager.getToken()!=null){
             ipss.setCreateUser(UserTokenManager.getToken().getId());
         }
-        ipss.setParentId("000011112222");
+        //ipss.setParentId("000011112222");
         ipss.setCreateTime(new Date());
         ipss.setDelFlag("0");
         int result=ipssService.insertSelective(ipss);

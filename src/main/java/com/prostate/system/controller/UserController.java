@@ -46,7 +46,7 @@ public class UserController extends BaseController{
         List<User> list = userService.findUserWihtUserName(user.getUsername());
         if (list.isEmpty()){
             //将当前登录的用户信息作为create_user加入user中
-            user.setCreateUser(UserTokenManager.getToken().getId());
+//            user.setCreateUser(UserTokenManager.getToken().getId());
             int r = userService.insertSelective(user);  //调用注册服务,如果注册成功返回1,如果注册时报返回0.
             //根据返回的数值判断是否注册成功,并返回不同的map结果.
             if (r == 1){

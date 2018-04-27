@@ -66,7 +66,7 @@ public class NihCpsiParentController extends BaseController{
     public Map list() {
         String parentCityId="000011112222";
 
-        List<NihCpsi> list=nihCpsiService.findByParentId(parentCityId);
+        List<NihCpsi> list=nihCpsiService.findAll();
         if(list==null|list.size()==0){
             resultMap.put("status",20007);
             resultMap.put("msg","没有找到相关数据数据");
@@ -90,7 +90,7 @@ public class NihCpsiParentController extends BaseController{
         if (UserTokenManager.getToken()!=null){
             nihCpsi.setCreateUser(UserTokenManager.getToken().getId());
         }
-        nihCpsi.setParentId("000011112222");
+       // nihCpsi.setParentId("000011112222");
         nihCpsi.setCreateTime(new Date());
         nihCpsi.setDelFlag("0");
         int result=nihCpsiService.insertSelective(nihCpsi);
