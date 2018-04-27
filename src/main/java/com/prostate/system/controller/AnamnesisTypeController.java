@@ -80,8 +80,28 @@ public class AnamnesisTypeController extends BaseController {
             resultMap.put("status",20000);
             resultMap.put("msg","数据查询成功");
             resultMap.put("data",list);
+
         }
+        System.out.println(list);
         return resultMap;
+    }
+
+    @RequestMapping(value = "/findAll01",method = RequestMethod.GET)
+    public List findByPage01() {
+        List<AnamnesisType> list=anamnesisTypeService.findAll();
+        if(list==null|list.size()==0){
+
+            resultMap.put("status",20007);
+            resultMap.put("msg","没有找到相关数据数据");
+            resultMap.put("data",false);
+
+        }else{
+            resultMap.put("status",20000);
+            resultMap.put("msg","数据查询成功");
+            resultMap.put("data",list);
+        }
+        System.out.println(list);
+        return list;
     }
     /**
      *    @Description:  病史类型添加

@@ -1,40 +1,20 @@
 <#--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>-->
-<#--<table class="easyui-datagrid" id="itemList" title="商品列表"
-       data-options="singleSelect:false,collapsible:true,pagination:true,url:'/anamnesistype/findAll',
-       method:'get',pageSize:30,toolbar:toolbar">-->
-    <table id="mTb"
-           class="easyui-datagrid" width="100%"
-           url="/anamnesistype/findAll"
-           toolbar="#toolbar" pagination="true" method="get"
-           rownumbers="true" fitColumns="true" singleSelect="true"
-
-    >
+<table class="easyui-datagrid" id="itemList" title="商品列表"
+       data-options="singleSelect:true,collapsible:true,rownumbers:true,pagination:true,url:'/anamnesistype/findAll',
+       method:'get',toolbar:toolbar">
     <thead>
-
-
-
-<tr>
-    <th field="data" width="50" >id</th>
-    <th field="list" width="50" >id</th>
-   <th field="row.id" width="50" >id</th>
-    <#--<th field="anamnesisTypeName" width="50" >类型</th>
-    <th field="anamnesisTypeNumber" width="50" >类型编号</th>
-    <th field="orderWeight" width="50" >排序权重</th>
-    <th field="createUser" width="50" >创造者</th>
-    <th field="createUser" width="50" >创建时间</th>-->
-
-        <#--<th data-options="field:'ck',checkbox:true"></th>
-
-        <th data-options="field='id',width:60">商品ID</th>
-        <th data-options="field:'anamnesisTypeName',width:200">商品标题</th>
-        <th data-options="field:'anamnesisTypeNumber',width:100">叶子类目</th>
-        <th data-options="field:'orderWeight',width:100">卖点</th>
-        <th data-options="field:'createUser',width:70,align:'right',formatter:TAOTAO.formatPrice">价格</th>
-        <th data-options="field:'createUser',width:70,align:'right'">库存数量</th>
-        <th data-options="field:'updateUser',width:100">条形码</th>
-        <th data-options="field:'updateTime',width:60,align:'center',formatter:TAOTAO.formatItemStatus">状态</th>
-        <th data-options="field:'deleteUser',width:130,align:'center',formatter:TAOTAO.formatDateTime">创建日期</th>
-        <th data-options="field:'deleteTime',width:130,align:'center',formatter:TAOTAO.formatDateTime">更新日期</th>-->
+<tr >
+    <#--<th data-options="field:'id'"></th>-->
+       <#--<th data-options="field:'ck',checkbox:true"></th>-->
+    <th data-options="field:'data',formatter:function(value,rows,index){return rows.data[index].id;},width:60,">病例类型id</th>
+        <#--<th data-options="field:'id',width:60,">病例类型id</th>-->
+        <#--<th data-options="field:'anamnesisTypeName',width:200">病例类型名称</th>
+        <th data-options="field:'anamnesisTypeNumber',width:100">病例类型编号</th>
+        <th data-options="field:'orderWeight',width:100">权重</th>
+        <th data-options="field:'createUser',width:70,align:'right'">创造者</th>
+        <th data-options="field:'createTime',width:70,align:'right',formatter:TAOTAO.formatItemStatus">创造时间</th>
+        <th data-options="field:'updateUser',width:100">更新人</th>
+        <th data-options="field:'updateTime',width:60,align:'center',formatter:TAOTAO.formatItemStatus">更新时间</th>-->
     </tr>
     </thead>
 </table>
@@ -58,8 +38,20 @@
         iconCls:'icon-add',
         handler:function(){
             $(".tree-title:contains('新增商品')").parent().click();
+            var node = $("#contentCategoryTree").tree("getSelected");
+            /*if(!node || !$("#contentCategoryTree").tree("isLeaf",node.target)){
+                $.messager.alert('提示','新增内容必须选择一个内容分类!');
+                return ;
+            }*/
+            TT.createWindow({
+                url : "/anamnesis-type-add"
+            });
         }
-    },{
+
+
+
+
+    },'-',{
         text:'编辑',
         iconCls:'icon-edit',
         handler:function(){
@@ -126,7 +118,7 @@
                 }
             }).window("open");
         }
-    },{
+    },'-',{
         text:'删除',
         iconCls:'icon-cancel',
         handler:function(){
@@ -148,7 +140,7 @@
                 }
             });
         }
-    },'-',{
+    }/*{
         text:'下架',
         iconCls:'icon-remove',
         handler:function(){
@@ -192,5 +184,5 @@
                 }
             });
         }
-    }];
+    }*/];
 </script>

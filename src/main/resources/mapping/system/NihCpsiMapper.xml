@@ -6,6 +6,7 @@
     <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
     <result column="nih_cpsi_title" jdbcType="VARCHAR" property="nihCpsiTitle" />
     <result column="nih_cpsi_score" jdbcType="VARCHAR" property="nihCpsiScore" />
+    <result column="nih_cpsi_type" jdbcType="VARCHAR" property="nihCpsiType" />
     <result column="nih_cpsi_weight" jdbcType="VARCHAR" property="nihCpsiWeight" />
     <result column="order_weight" jdbcType="VARCHAR" property="orderWeight" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
@@ -15,7 +16,7 @@
     <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, parent_id, nih_cpsi_title, nih_cpsi_score, nih_cpsi_weight, order_weight, create_user, 
+    id, parent_id, nih_cpsi_title, nih_cpsi_score,nih_cpsi_type, nih_cpsi_weight, order_weight, create_user,
     create_time, delete_user, delete_time, del_flag
   </sql>
 
@@ -72,6 +73,9 @@
       <if test="nihCpsiScore != null">
         nih_cpsi_score,
       </if>
+      <if test="nihCpsiType != null">
+        nih_cpsi_type,
+      </if>
       <if test="nihCpsiWeight != null">
         nih_cpsi_weight,
       </if>
@@ -107,6 +111,9 @@
       <if test="nihCpsiScore != null">
         #{nihCpsiScore,jdbcType=VARCHAR},
       </if>
+      <if test="nihCpsiType != null">
+        #{nihCpsiType,jdbcType=VARCHAR},
+      </if>
       <if test="nihCpsiWeight != null">
         #{nihCpsiWeight,jdbcType=VARCHAR},
       </if>
@@ -141,6 +148,10 @@
       </if>
       <if test="nihCpsiScore != null">
         nih_cpsi_score = #{nihCpsiScore,jdbcType=VARCHAR},
+      </if>
+
+      <if test="nihCpsiType != null">
+        nih_cpsi_type = #{nihCpsiType,jdbcType=VARCHAR},
       </if>
       <if test="nihCpsiWeight != null">
         nih_cpsi_weight = #{nihCpsiWeight,jdbcType=VARCHAR},

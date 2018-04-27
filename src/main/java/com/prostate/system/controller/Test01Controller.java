@@ -12,13 +12,27 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 
 public class Test01Controller {
-    @RequestMapping("/haha")
+    @RequestMapping("/index01")
     public String test(){
         return "index";
     }
 
+    @RequestMapping("/login")
+    public String test04(){
+        return "login";
+    }
     @RequestMapping("/anamnesis-type-list")
     public String test01(){
         return "anamnesis-type-list";
     }
+    @RequestMapping("/anamnesis-type-add")
+    public String test02(){
+        return "anamnesis-type-add";
+    }
+    @RequestMapping("/anamnesis-type-del")
+    public String test03(){
+        return "anamnesis-type-del";
+    }
+
+
 }

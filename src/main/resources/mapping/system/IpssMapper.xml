@@ -6,6 +6,7 @@
     <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
     <result column="ipss_title" jdbcType="VARCHAR" property="ipssTitle" />
     <result column="ipss_score" jdbcType="VARCHAR" property="ipssScore" />
+    <result column="ipss_type" jdbcType="VARCHAR" property="ipssType" />
     <result column="ipss_weight" jdbcType="VARCHAR" property="ipssWeight" />
     <result column="order_weight" jdbcType="VARCHAR" property="orderWeight" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
@@ -15,7 +16,7 @@
     <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, parent_id, ipss_title, ipss_score, ipss_weight, order_weight, create_user, create_time, 
+    id, parent_id, ipss_title, ipss_score,ipss_type, ipss_weight, order_weight, create_user, create_time,
     delete_user, delete_time, del_flag
   </sql>
   <select id="findAll" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -32,10 +33,6 @@
     WHERE  del_flag='0'
     AND parent_id = #{parentId,jdbcType=VARCHAR}
   </select>
-
-
-
-
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -75,6 +72,10 @@
       <if test="ipssScore != null">
         ipss_score,
       </if>
+      <if test="ipssType != null">
+        ipss_type,
+      </if>
+
       <if test="ipssWeight != null">
         ipss_weight,
       </if>
@@ -110,6 +111,10 @@
       <if test="ipssScore != null">
         #{ipssScore,jdbcType=VARCHAR},
       </if>
+      <if test="ipssType != null">
+        #{ipssType,jdbcType=VARCHAR},
+      </if>
+
       <if test="ipssWeight != null">
         #{ipssWeight,jdbcType=VARCHAR},
       </if>
@@ -145,6 +150,11 @@
       <if test="ipssScore != null">
         ipss_score = #{ipssScore,jdbcType=VARCHAR},
       </if>
+
+      <if test="ipssType != null">
+       ipss_type= #{ipssType,jdbcType=VARCHAR},
+      </if>
+
       <if test="ipssWeight != null">
         ipss_weight = #{ipssWeight,jdbcType=VARCHAR},
       </if>

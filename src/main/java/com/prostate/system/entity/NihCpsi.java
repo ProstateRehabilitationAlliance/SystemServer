@@ -25,6 +25,16 @@ public class NihCpsi {
 
     private String delFlag;
 
+    private String nihCpsiType;
+
+    public String getNihCpsiType() {
+        return nihCpsiType;
+    }
+
+    public void setNihCpsiType(String nihCpsiType) {
+        this.nihCpsiType = nihCpsiType;
+    }
+
     public String getId() {
         return id;
     }

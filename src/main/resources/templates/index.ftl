@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>前列腺联盟后台管理系统</title>
-<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.1/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.1/themes/bootstrap/easyui.css" />
 <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.1/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="css/taotao.css" />
+
 <script type="text/javascript" src="js/jquery-easyui-1.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/jquery-easyui-1.4.1/locale/easyui-lang-zh_CN.js"></script>
@@ -18,6 +18,9 @@
 </style>
 </head>
 <body class="easyui-layout">
+	<div data-options="region:'north',split:true" style="height: 10%;background-color: #b7d2ff">
+		<h1>          前列腺联盟后台管理系统</h1>
+	</div>
     <div data-options="region:'west',title:'管理列表',split:true" style="width:180px;">
     	<ul id="menu" class="easyui-tree" style="margin-top: 10px;margin-left: 5px;">
 		<#--分割线-->
@@ -67,7 +70,16 @@
     </div>
     
 <script type="text/javascript">
+
 $(function(){
+    $(document).bind('contextmenu',function(e){
+        e.preventDefault();
+        $('#mm').menu('show', {
+            left: e.pageX,
+            top: e.pageY
+        });
+    });
+
 	$('#menu').tree({
 		onClick: function(node){
 			if($('#menu').tree("isLeaf",node.target)){

@@ -25,6 +25,16 @@ public class Ipss {
 
     private String delFlag;
 
+    private String ipssType;
+
+    public String getIpssType() {
+        return ipssType;
+    }
+
+    public void setIpssType(String ipssType) {
+        this.ipssType = ipssType;
+    }
+
     public String getId() {
         return id;
     }
