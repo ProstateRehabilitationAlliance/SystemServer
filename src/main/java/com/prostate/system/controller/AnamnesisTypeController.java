@@ -1,5 +1,7 @@
 package com.prostate.system.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.prostate.system.entity.AnamnesisType;
 import com.prostate.system.entity.User;
 import com.prostate.system.service.AnamnesisTypeService;
@@ -68,18 +70,22 @@ public class AnamnesisTypeController extends BaseController {
      */
 
     @RequestMapping(value = "/findAll",method = RequestMethod.GET)
-    public Map findByPage() {
-        List<AnamnesisType> list=anamnesisTypeService.findAll();
+    public Map findByPage(@RequestParam("page") Integer page,@RequestParam("rows") Integer rows) {
+
+        Page<AnamnesisType> list= (Page<AnamnesisType>) anamnesisTypeService.findAll(page,rows);
         if(list==null|list.size()==0){
+
 
             resultMap.put("status",20007);
             resultMap.put("msg","没有找到相关数据数据");
             resultMap.put("data",false);
 
         }else{
+
             resultMap.put("status",20000);
             resultMap.put("msg","数据查询成功");
-            resultMap.put("data",list);
+            resultMap.put("rows",list);
+            resultMap.put("total",list.getTotal());
 
         }
         System.out.println(list);
@@ -87,8 +93,8 @@ public class AnamnesisTypeController extends BaseController {
     }
 
     @RequestMapping(value = "/findAll01",method = RequestMethod.GET)
-    public List findByPage01() {
-        List<AnamnesisType> list=anamnesisTypeService.findAll();
+    public List findByPage01(@RequestParam("page") Integer page,@RequestParam("rows") Integer rows) {
+        List<AnamnesisType> list=anamnesisTypeService.findAll(page,rows);
         if(list==null|list.size()==0){
 
             resultMap.put("status",20007);

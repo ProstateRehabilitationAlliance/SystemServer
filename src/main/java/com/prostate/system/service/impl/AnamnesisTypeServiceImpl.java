@@ -1,5 +1,6 @@
 package com.prostate.system.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.prostate.system.entity.AnamnesisType;
 import com.prostate.system.mapper.AnamnesisTypeMapper;
 import com.prostate.system.service.AnamnesisTypeService;
@@ -45,7 +46,9 @@ public class AnamnesisTypeServiceImpl  implements AnamnesisTypeService{
     }
 
     @Override
-    public List<AnamnesisType> findAll() {
+    public List<AnamnesisType> findAll(int page,int rows) {
+        PageHelper.startPage(page,rows);
+        System.out.println();
         return anamnesisTypeMapper.findAll();
     }
 

@@ -4,17 +4,14 @@
        method:'get',toolbar:toolbar">
     <thead>
 <tr >
-    <#--<th data-options="field:'id'"></th>-->
-       <#--<th data-options="field:'ck',checkbox:true"></th>-->
-    <th data-options="field:'data',formatter:function(value,rows,index){return rows.data[index].id;},width:60,">病例类型id</th>
-        <#--<th data-options="field:'id',width:60,">病例类型id</th>-->
-        <#--<th data-options="field:'anamnesisTypeName',width:200">病例类型名称</th>
+       <th data-options="field:'ck',checkbox:true"></th>
+       <th data-options="field:'anamnesisTypeName',width:200">病例类型名称</th>
         <th data-options="field:'anamnesisTypeNumber',width:100">病例类型编号</th>
         <th data-options="field:'orderWeight',width:100">权重</th>
         <th data-options="field:'createUser',width:70,align:'right'">创造者</th>
         <th data-options="field:'createTime',width:70,align:'right',formatter:TAOTAO.formatItemStatus">创造时间</th>
         <th data-options="field:'updateUser',width:100">更新人</th>
-        <th data-options="field:'updateTime',width:60,align:'center',formatter:TAOTAO.formatItemStatus">更新时间</th>-->
+        <th data-options="field:'updateTime',width:60,align:'center',formatter:TAOTAO.formatItemStatus">更新时间</th>
     </tr>
     </thead>
 </table>

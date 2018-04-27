@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>前列腺联盟后台管理系统</title>
-<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.1/themes/bootstrap/easyui.css" />
+<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.1/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.1/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="css/taotao.css" />
 
@@ -21,7 +21,7 @@
 	<div data-options="region:'north',split:true" style="height: 10%;background-color: #b7d2ff">
 		<h1>          前列腺联盟后台管理系统</h1>
 	</div>
-    <div data-options="region:'west',title:'管理列表',split:true" style="width:180px;">
+    <div  data-options="region:'west',title:'管理列表',split:true" style="width:180px;">
     	<ul id="menu" class="easyui-tree" style="margin-top: 10px;margin-left: 5px;">
 		<#--分割线-->
             <li>

@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface AnamnesisTypeService extends BaseService<AnamnesisType>{
 
-    List<AnamnesisType> findAll();
+    List<AnamnesisType> findAll(int page,int rows);
    List<AnamnesisType> selectByAnamnesisTypeName(String anamnesisTypeName);
 }
