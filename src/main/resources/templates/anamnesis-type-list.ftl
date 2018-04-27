@@ -11,20 +11,12 @@
     >
     <thead>
 
-    <#if resultMap?exists>
-        <#list resultMap?keys as key>
-        <tr>
-            <td>${key}</td>
-            <td>${resultMap[key]}</td>
-        </tr>
-        </#list>
-    </#if>
 
 
 <tr>
     <th field="data" width="50" >id</th>
     <th field="list" width="50" >id</th>
-   <th field="list.id" width="50" >id</th>
+   <th field="row.id" width="50" >id</th>
     <#--<th field="anamnesisTypeName" width="50" >类型</th>
     <th field="anamnesisTypeNumber" width="50" >类型编号</th>
     <th field="orderWeight" width="50" >排序权重</th>
