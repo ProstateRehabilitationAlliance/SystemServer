@@ -14,7 +14,7 @@
     </tr>
     </thead>
 </table>
-<div id="itemEditWindow" class="easyui-window" title="编辑商品" data-options="modal:true,closed:true,iconCls:'icon-save',href:'/rest/page/item-edit'" style="width:80%;height:80%;padding:10px;">
+<div id="anamnesisTypeEditWindow" class="easyui-window" title="编辑商品" data-options="modal:true,closed:true,iconCls:'icon-save',href:'/rest/page/item-edit'" style="width:80%;height:80%;padding:10px;">
 </div>
 <script>
 
@@ -123,7 +123,6 @@
             }*/
             //
             var ids = TT.getSelectionsIds("#anamnesisTypeList");
-            alert(ids)
             if(ids.length == 0){
                 $.messager.alert('提示','必须选择一个内容才能编辑!');
                 return ;
@@ -142,8 +141,7 @@
                 url : "/anamnesis-type-edit",
                 onLoad : function(){
                     var data = $("#anamnesisTypeList").datagrid("getSelections")[0];
-                    alert(data.anamnesisTypeName+data.anamnesisTypeNumber)
-                    $("#contentEditForm").form("load",data);
+                    $("#anamnesistypeEditForm").form("load",data);
 
 
 
@@ -165,12 +163,14 @@
             }
             $.messager.confirm('确认','确定删除ID为 '+ids+' 的商品吗？',function(r){
                 if (r){
-                    var params = {"ids":ids};
-                    $.post("/rest/item/delete",params, function(data){
+                    var id = {"ids":ids};
+                    $.post("/anamnesistype/delanamnesistype",id, function(data){
                         if(data.status == 200){
-                            $.messager.alert('提示','删除商品成功!',undefined,function(){
-                                $("#itemList").datagrid("reload");
+                            $.messager.alert('提示','删除商品成功!','info',function(){
+
+                                $("#anamnesisTypeList").datagrid("reload",{ });
                             });
+
                         }
                     });
                 }

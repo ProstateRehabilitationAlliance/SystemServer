@@ -191,7 +191,7 @@ public class AnamnesisTypeController extends BaseController {
      */
 
     @RequestMapping(value = "/delanamnesistype",method = RequestMethod.POST)
-    public Map delAnamnesisType(@RequestParam String id) {
+    public Map delAnamnesisType(@RequestParam("ids") String id) {
 
         AnamnesisType anamnesisType= anamnesisTypeService.selectById(id);
         if (anamnesisType!=null){

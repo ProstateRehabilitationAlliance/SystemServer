@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <link href="/js/kindeditor-4.1.10/themes/default/default.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" charset="utf-8" src="/js/kindeditor-4.1.10/kindeditor-all-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/kindeditor-4.1.10/lang/zh_CN.js"></script>
 <div style="padding:10px 10px 10px 10px">
-    <form id="itemeEditForm" class="itemForm" method="post">
+    <form id="anamnesistypeEditForm" class="itemForm" method="post">
         <input type="hidden" name="id"/>
         <table cellpadding="5">
             <tr>
@@ -28,22 +28,24 @@
     </div>
 </div>
 <script type="text/javascript">
-    var itemEditEditor ;
+    var anamnesistypeEditEditor ;
     $(function(){
+
+        alert(data.anamnesisTypeName+data.anamnesisTypeNumber)
         //实例化编辑器
-        itemEditEditor = TAOTAO.createEditor("#itemeEditForm [name=desc]");
+        //anamnesistypeEditEditor = TAOTAO.createEditor("#anamnesistypeEditForm [name=desc]");
     });
 
     function submitForm(){
-        if(!$('#itemeEditForm').form('validate')){
+        if(!$('#anamnesistypeEditForm').form('validate')){
             $.messager.alert('提示','表单还未填写完成!');
             return ;
         }
-        $("#itemeEditForm [name=price]").val(eval($("#itemeEditForm [name=priceView]").val()) * 1000);
+       /* $("#anamnesistypeEditForm [name=price]").val(eval($("#itemeEditForm [name=priceView]").val()) * 1000);
         itemEditEditor.sync();
 
         var paramJson = [];
-        $("#itemeEditForm .params li").each(function(i,e){
+        $("#anamnesistypeEditForm .params li").each(function(i,e){
             var trs = $(e).find("tr");
             var group = trs.eq(0).text();
             var ps = [];
@@ -61,13 +63,13 @@
         });
         paramJson = JSON.stringify(paramJson);
 
-        $("#itemeEditForm [name=itemParams]").val(paramJson);
+        $("#anamnesistypeEditForm [name=itemParams]").val(paramJson);*/
 
-        $.post("/rest/item/update",$("#itemeEditForm").serialize(), function(data){
+        $.post("/anamnesistype/updanamnesistype",$("#anamnesistypeEditForm").serialize(), function(data){
             if(data.status == 200){
                 $.messager.alert('提示','修改商品成功!','info',function(){
-                    $("#itemEditWindow").window('close');
-                    $("#itemList").datagrid("reload");
+                    $("#anamnesisTypeEditWindow").window('close');
+                    $("#anamnesisTypeList").datagrid("reload");
                 });
             }
         });

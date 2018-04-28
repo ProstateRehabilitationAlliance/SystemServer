@@ -134,7 +134,7 @@
                 alert($("#anamnesisTypeAddForm").serialize());
                 $.messager.alert('提示','新增病史类型添加成功!');
                  $("#anamnesisTypeAddForm").window('close');
-                $("#anamnesisTyprList").datagrid("reload");
+                $("#anamnesisTypeList").datagrid("reload");
 
 //               $("#anamnesisTyprList").datagrid("reload");
 //                console.log($.window().parent.closeModuleWin());
