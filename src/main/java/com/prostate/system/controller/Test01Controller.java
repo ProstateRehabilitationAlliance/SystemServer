@@ -29,9 +29,9 @@ public class Test01Controller {
     public String test02(){
         return "anamnesis-type-add";
     }
-    @RequestMapping("/anamnesis-type-del")
+    @RequestMapping("/anamnesis-type-edit")
     public String test03(){
-        return "anamnesis-type-del";
+        return "anamnesis-type-edit";
     }
 
 

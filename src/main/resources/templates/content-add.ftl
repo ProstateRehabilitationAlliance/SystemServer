@@ -53,8 +53,8 @@
 <script type="text/javascript">
 	var contentAddEditor ;
 	$(function(){
-		contentAddEditor = TT.createEditor("#contentAddForm [name=content]");
-		TT.initOnePicUpload();
+		contentAddEditor = P.createEditor("#contentAddForm [name=content]");
+		P.initOnePicUpload();
 		$("#contentAddForm [name=categoryId]").val($("#contentCategoryTree").tree("getSelected").id);
 	});
 	
@@ -70,7 +70,7 @@
 					if(data.status == 200){
 						$.messager.alert('提示','新增内容成功!');
     					$("#contentList").datagrid("reload");
-    					TT.closeCurrentWindow();
+    					P.closeCurrentWindow();
 					}
 				});
 			},

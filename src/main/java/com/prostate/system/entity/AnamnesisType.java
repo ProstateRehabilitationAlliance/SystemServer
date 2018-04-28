@@ -113,4 +113,21 @@ public class AnamnesisType {
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag == null ? null : delFlag.trim();
     }
+
+    @Override
+    public String toString() {
+        return "AnamnesisType{" +
+                "id='" + id + '\'' +
+                ", anamnesisTypeName='" + anamnesisTypeName + '\'' +
+                ", anamnesisTypeNumber='" + anamnesisTypeNumber + '\'' +
+                ", orderWeight='" + orderWeight + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", createTime=" + createTime +
+                ", updateUser='" + updateUser + '\'' +
+                ", updateTime=" + updateTime +
+                ", deleteUser='" + deleteUser + '\'' +
+                ", deleteTime=" + deleteTime +
+                ", delFlag='" + delFlag + '\'' +
+                '}';
+    }
 }

@@ -117,7 +117,7 @@ public class AnamnesisTypeController extends BaseController {
 
     @RequestMapping(value = "/addanamnesistype",method = RequestMethod.POST)
     public Map addanamnesistype(AnamnesisType anamnesisType) {
-
+        System.out.println(anamnesisType);
         List<AnamnesisType> list = anamnesisTypeService.selectByAnamnesisTypeName(anamnesisType.getAnamnesisTypeName());
         if (list==null||list.size()==0){
             if (UserTokenManager.getToken()!=null){

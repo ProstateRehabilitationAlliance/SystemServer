@@ -93,6 +93,7 @@ var contentListToolbar = [{
     	}
     	$.messager.confirm('确认','确定删除ID为 '+ids+' 的内容吗？',function(r){
     	    if (r){
+    	        alert(ids)
     	    	var params = {"ids":ids};
             	$.post("/content/delete",params, function(data){
         			if(data.status == 200){
