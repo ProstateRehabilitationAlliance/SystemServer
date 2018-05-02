@@ -1,6 +1,7 @@
 package com.prostate.system.controller;
 
 import com.prostate.system.entity.City;
+import com.prostate.system.entity.Node;
 import com.prostate.system.service.CityService;
 import com.prostate.system.shiro.UserTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -64,10 +66,10 @@ public class ProvinceController extends BaseController{
              */
 
         @RequestMapping(value = "/findbypage")
-        public Map findByPage(@RequestParam(defaultValue ="0" ) Integer pageNum ,
-                              @RequestParam(defaultValue = "10")  Integer pageSize) {
-                        String parentCityId="0";
-            List<City> list=cityService.findByPage(pageNum,pageSize,parentCityId);
+        public List findByPage(@RequestParam(defaultValue = "cc9e0348b3c311e7b77800163e08d49b")String id,
+                               @RequestParam(defaultValue = "1")Integer flag) {
+
+            List<City> list=cityService.findByPage(id);
             if(list==null|list.size()==0){
 
                     resultMap.put("status",20007);
@@ -77,10 +79,57 @@ public class ProvinceController extends BaseController{
             }else{
                 resultMap.put("status",20000);
                 resultMap.put("msg","数据查询成功");
-                resultMap.put("data",list);
+                resultMap.put("rows",list);
             }
-            return resultMap;
+
+            List list1 =null;
+            if (list!=null){
+                list1=new ArrayList<>();
+                for (City city:list){
+
+                    Node node =new Node();
+                    node.setId(city.getId());
+                    node.setText(city.getCityName());
+
+                    node.setState("closed");
+                    list1.add(node);
+
+                }
+            }
+
+
+
+            return list1;
         }
+
+             /**
+                 *    @Description: 级联菜单查询
+                 *    @Date:  16:54  2018/5/2
+                 *    @Params:   * @param null
+                 */
+
+         /*   public   List<Node> change(List<City> list){
+                List <Node> list1 =new ArrayList<>();
+                for (City city:list){
+
+                    Node node =new Node();
+                    node.setId(city.getId());
+                    node.setText(city.getCityName());
+                    if (cityService.findByPage(city.getId())!=null){
+
+                        node.setChildren(change(cityService.findByPage(city.getId())));
+                    }
+                    node.setState("closed");
+                    list1.add(node);
+
+                }
+                //System.out.println(list1);
+                return list1;
+            }*/
+
+
+
+
      /**
          *    @Description:  省级地区添加
          *    @Date:  16:11  2018/4/23

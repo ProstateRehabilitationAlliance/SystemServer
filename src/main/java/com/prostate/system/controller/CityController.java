@@ -64,7 +64,7 @@ public class CityController extends BaseController{
     public Map findByPage(@RequestParam(defaultValue ="0" ) Integer pageNum ,
                           @RequestParam(defaultValue = "10")  Integer pageSize
             , @RequestParam String parentCityId) {
-        List<City> list=cityService.findByPage(pageNum,pageSize,parentCityId);
+        List<City> list=cityService.findByPage(parentCityId);
         if(list==null|list.size()==0){
 
             resultMap.put("status",20007);
@@ -74,7 +74,8 @@ public class CityController extends BaseController{
         }else{
             resultMap.put("status",20000);
             resultMap.put("msg","数据查询成功");
-            resultMap.put("data",list);
+            resultMap.put("rows",list);
+            //resultMap.put("",)
         }
         return resultMap;
     }

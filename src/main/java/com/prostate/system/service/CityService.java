@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface CityService extends BaseService<City>{
 
-    public List<City> findByPage(Integer pageNum,Integer pageSize,String parentCityId);
+    public List<City> findByPage(String parentCityId);
 
 
     List<City> selectByCityName(String param);

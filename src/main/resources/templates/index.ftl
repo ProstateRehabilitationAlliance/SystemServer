@@ -127,7 +127,7 @@
                 </ul>
 
                 <ul>
-                    <li data-options="attributes:{'url':'anamnesis-type-list'}">城市列表</li>
+                    <li data-options="attributes:{'url':'login'}">城市列表</li>
                 </ul>
 
                 <ul>

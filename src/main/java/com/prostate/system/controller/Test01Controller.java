@@ -19,7 +19,7 @@ public class Test01Controller {
 
     @RequestMapping("/login")
     public String test04(){
-        return "login";
+        return "/city/cityList";
     }
     @RequestMapping("/anamnesis-type-list")
     public String test01(){
@@ -33,6 +33,9 @@ public class Test01Controller {
     public String test03(){
         return "/anamnesistype/anamnesis-type-edit";
     }
+
+
+
 
 
 }

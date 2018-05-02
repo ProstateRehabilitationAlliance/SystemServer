@@ -45,9 +45,9 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<City> findByPage(Integer pageNum, Integer pageSize, String parentCityId) {
+    public List<City> findByPage(String parentCityId) {
 
-        PageHelper.startPage(pageNum,pageSize);
+        //PageHelper.startPage(pageNum,pageSize);
         return cityMapper.findByParentCityId(parentCityId);
     }
 

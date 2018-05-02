@@ -63,7 +63,7 @@ public class CountiesController extends BaseController{
     public Map findByPage(@RequestParam(defaultValue ="0" ) Integer pageNum ,
                           @RequestParam(defaultValue = "10")  Integer pageSize
             , @RequestParam String parentCityId) {
-        List<City> list=cityService.findByPage(pageNum,pageSize,parentCityId);
+        List<City> list=cityService.findByPage(parentCityId);
         if(list==null|list.size()==0){
 
             resultMap.put("status",20007);
