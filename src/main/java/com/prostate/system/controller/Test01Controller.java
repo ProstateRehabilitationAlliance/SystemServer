@@ -35,6 +35,24 @@ public class Test01Controller {
     }
 
 
+ //正在服用药品列表
+    @RequestMapping("/anamnesis_eating_drug_list")
+    public String toEatingDrugList(){
+        return "/anamnesisEatingDrug/anamnesis_eating_drug_list";
+    }
+
+    //新增正在服用药品
+    @RequestMapping("/anamnesis_eating_drug_add")
+    public String addEatingDrugList(){
+        return "/anamnesisEatingDrug/anamnesis_eating_drug_add";
+    }
+    //anamnesis_eating_drug_edit
+
+    //修改正在服用药品
+    @RequestMapping("/anamnesis_eating_drug_edit")
+    public String deleteEatingDrugList(){
+        return "/anamnesisEatingDrug/anamnesis_eating_drug_edit";
+    }
 
 
 
