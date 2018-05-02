@@ -23,15 +23,15 @@ public class Test01Controller {
     }
     @RequestMapping("/anamnesis-type-list")
     public String test01(){
-        return "anamnesis-type-list";
+        return "/anamnesistype/anamnesis-type-list";
     }
     @RequestMapping("/anamnesis-type-add")
     public String test02(){
-        return "anamnesis-type-add";
+        return "//anamnesis-type-add";
     }
-    @RequestMapping("/anamnesis-type-edit")
+    @RequestMapping("anamnesis-type-edit")
     public String test03(){
-        return "anamnesis-type-edit";
+        return "/anamnesistype/anamnesis-type-edit";
     }
 
 

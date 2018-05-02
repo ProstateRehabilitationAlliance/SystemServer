@@ -78,7 +78,7 @@ public class AnamnesisTypeController extends BaseController {
 
             resultMap.put("status",20007);
             resultMap.put("msg","没有找到相关数据数据");
-            resultMap.put("data",false);
+            resultMap.put("rows",false);
 
         }else{
 
@@ -163,7 +163,7 @@ public class AnamnesisTypeController extends BaseController {
             }
             anamnesisType.setDeleteTime(new Date());
             anamnesisType.setUpdateTime(new Date());
-            anamnesisType.setDelFlag("1");
+            //anamnesisType.setDelFlag("1");
             int result=anamnesisTypeService.updateSelective(anamnesisType);
             if(result>0){
                 resultMap.put("status",20000);

@@ -8,9 +8,9 @@
         <th data-options="field:'anamnesisTypeNumber',width:100">病例类型编号</th>
         <th data-options="field:'orderWeight',width:100">权重</th>
         <th data-options="field:'createUser',width:70,align:'right'">创造者</th>
-        <th data-options="field:'createTime',width:70,align:'right',formatter:TAOTAO.formatItemStatus">创造时间</th>
+        <th data-options="field:'createTime',width:70,align:'right',formatter:TAOTAO.formatDateTime">创造时间</th>
         <th data-options="field:'updateUser',width:100">更新人</th>
-        <th data-options="field:'updateTime',width:60,align:'center',formatter:TAOTAO.formatItemStatus">更新时间</th>
+        <th data-options="field:'updateTime',width:60,align:'center',formatter:TAOTAO.formatDateTime">更新时间</th>
     </tr>
     </thead>
 </table>
@@ -158,7 +158,7 @@
         handler:function(){
             var ids = getSelectionsIds();
             if(ids.length == 0){
-                $.messager.alert('提示','未选中商品!');
+                $.messager.alert('提示','未选中病史类型!');
                 return ;
             }
             $.messager.confirm('确认','确定删除ID为 '+ids+' 的商品吗？',function(r){
@@ -166,9 +166,9 @@
                     var id = {"ids":ids};
                     $.post("/anamnesistype/delanamnesistype",id, function(data){
                         if(data.status == 200){
-                            $.messager.alert('提示','删除商品成功!','info',function(){
+                            $.messager.alert('提示','删除病史类型成功!','info',function(){
 
-                                $("#anamnesisTypeList").datagrid("reload",{ });
+                                $("#anamnesisTypeList").datagrid("load");
                             });
 
                         }

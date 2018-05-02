@@ -75,7 +75,7 @@
         <input type="hidden" name="itemParams"/>
     </form>
     <div style="padding:5px">
-        <a href="javascript:void(0)" class="easyui-linkbutton panel-tool-close" onclick="submitForm()">提交</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton panel-tool-close btn btn-success" onclick="submitForm()">提交</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">重置</a>
     </div>
 </div>
