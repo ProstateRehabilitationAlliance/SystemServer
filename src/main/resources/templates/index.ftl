@@ -93,16 +93,6 @@
 
 
 
-            <li>
-                <span>患者管理</span>
-                <ul>
-                    <li data-options="attributes:{'url':'anamnesis-type-list'}">患者详情列表</li>
-                </ul>
-
-                <ul>
-                    <li data-options="attributes:{'url':'anamnesis-type-list'}">患者+疾病列表</li>
-                </ul>
-            </li>
 
 
 
@@ -127,6 +117,30 @@
                 <ul>
                     <li data-options="attributes:{'url':'anamnesis-type-list'}">题库(综合)答案列表</li>
                 </ul>
+            </li>
+
+
+            <li>
+                <span>基础信息管理</span>
+                <ul>
+                    <li data-options="attributes:{'url':'anamnesis-type-list'}">血型列表</li>
+                </ul>
+
+                <ul>
+                    <li data-options="attributes:{'url':'anamnesis-type-list'}">城市列表</li>
+                </ul>
+
+                <ul>
+                    <li data-options="attributes:{'url':'anamnesis-type-list'}">教育背景列表</li>
+                </ul>
+                <ul>
+                    <li data-options="attributes:{'url':'anamnesis-type-list'}">职业列表</li>
+                </ul>
+                <ul>
+                    <li data-options="attributes:{'url':'anamnesis-type-list'}">民族列表</li>
+                </ul>
+
+
             </li>
 
 
