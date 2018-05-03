@@ -171,15 +171,8 @@ var TT = TAOTAO = {
      */
     createWindow : function(params){
     	$("<div>").css({padding:"5px"}).window({
-    		width : 80, //params.width?params.width:"80%",
-    		height : 100,//params.height?params.height:"80%",
-            top: ($(window).height() - 720) * 0.5,
-            left: ($(window).width() - 800) * 0.5,
-            onResize: function (width,height) {
-                var stab = $('#Teacher_tab').tabs('getSelected');
-                var actWidth = width; if (width > 38) { actWidth = width - 38; }
-                stab.width(actWidth);
-            }
+    		width : params.width?params.width:"80%",
+    		height : params.height?params.height:"80%",
     		modal:true,
     		title : params.title?params.title:" ",
     		href : params.url,
