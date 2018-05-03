@@ -1,5 +1,6 @@
 package com.prostate.system.controller;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.prostate.system.entity.AnamnesisAllergyDrug;
 import com.prostate.system.service.AnamnesisAllergyDrugService;
@@ -33,18 +34,19 @@ public class AnamnesisAllergyDrugController extends BaseController {
      * @param:
      */
     @GetMapping("/list")
-    public  Map<String, Object> getAllDrug(@RequestParam(defaultValue = "1") int pageNumber,
-                                           @RequestParam(defaultValue = "10") int pageSize) {
-        PageHelper.startPage(pageNumber, pageSize);
-        List<AnamnesisAllergyDrug> anamnesisAllergyDrugs = anamnesisAllergyDrugService.selectAll();
+    public  Map<String, Object> getAllDrug(@RequestParam("page") Integer page,
+                                           @RequestParam("rows") Integer rows) {
+
+        Page<AnamnesisAllergyDrug> anamnesisAllergyDrugs = (Page<AnamnesisAllergyDrug>) anamnesisAllergyDrugService.selectAll(page,rows);
         if (anamnesisAllergyDrugs.isEmpty()){
             resultMap.put("msg","没有药品信息");
             resultMap.put("status","20007");
-            resultMap.put("data",null);
+            resultMap.put("rows",null);
         }else {
             resultMap.put("msg","20000");
             resultMap.put("status","成功查询到药品信息");
-            resultMap.put("data",anamnesisAllergyDrugs);
+            resultMap.put("rows",anamnesisAllergyDrugs);
+            resultMap.put("total",anamnesisAllergyDrugs.getTotal());
         }
         return resultMap;
     }
@@ -57,6 +59,7 @@ public class AnamnesisAllergyDrugController extends BaseController {
      */
     @PostMapping("/insert")
     public  Map<String, Object> insertDrug(AnamnesisAllergyDrug anamnesisAllergyDrug) {
+        System.out.println(anamnesisAllergyDrug);
         //先检查是否存在,然后再添加
         List<AnamnesisAllergyDrug> anamnesisAllergyDrugs =
                 anamnesisAllergyDrugService.selectByName(anamnesisAllergyDrug.getAllergyDrugName());
@@ -66,16 +69,16 @@ public class AnamnesisAllergyDrugController extends BaseController {
             if (r == 0){
                 resultMap.put("msg","插入药品信息失败");
                 resultMap.put("status","20005");
-                resultMap.put("data",null);
+                resultMap.put("rows",null);
             }else {
-                resultMap.put("msg","20000");
-                resultMap.put("status","成功插入药品信息");
-                resultMap.put("data",null);
+                resultMap.put("msg","成功插入药品信息");
+                resultMap.put("status","20000");
+                resultMap.put("rows",null);
             }
         }else {
             resultMap.put("msg","20001");
             resultMap.put("status","此信息已经存在");
-            resultMap.put("data",null);
+            resultMap.put("rows",null);
         }
         return resultMap;
     }
@@ -97,16 +100,16 @@ public class AnamnesisAllergyDrugController extends BaseController {
             if (r == 0){
                 resultMap.put("msg","修改过敏药品信息失败");
                 resultMap.put("status","20005");
-                resultMap.put("data",null);
+                resultMap.put("rows",null);
             }else {
-                resultMap.put("msg","20000");
-                resultMap.put("status","成功修改过敏药品信息");
-                resultMap.put("data",null);
+                resultMap.put("msg","成功修改过敏药品信息");
+                resultMap.put("status","20000");
+                resultMap.put("rows",null);
             }
         }else {
             resultMap.put("msg","20001");
             resultMap.put("status","此信息已经存在");
-            resultMap.put("data",null);
+            resultMap.put("rows",null);
         }
         return resultMap;
     }
@@ -119,6 +122,7 @@ public class AnamnesisAllergyDrugController extends BaseController {
      */
     @PostMapping("/delete")
     public  Map<String, Object> deleteDrug(String id) {
+        System.out.println(id);
         AnamnesisAllergyDrug anamnesisAllergyDrug = anamnesisAllergyDrugService.selectById(id);
         if(anamnesisAllergyDrug != null){
             anamnesisAllergyDrug.setDeleteUser(UserTokenManager.getToken().getId());
@@ -127,16 +131,16 @@ public class AnamnesisAllergyDrugController extends BaseController {
             if (r == 0){
                 resultMap.put("msg","删除药品信息失败");
                 resultMap.put("status","20005");
-                resultMap.put("data",null);
+                resultMap.put("rows",null);
             }else {
-                resultMap.put("msg","20000");
-                resultMap.put("status","删除药品信息成功");
-                resultMap.put("data",null);
+                resultMap.put("msg","删除药品信息成功");
+                resultMap.put("status","20000");
+                resultMap.put("rows",null);
             }
         }else {
             resultMap.put("msg","20004");
             resultMap.put("status","这条信息不存在,可能之前已经删除了");
-            resultMap.put("data",null);
+            resultMap.put("rows",null);
         }
         return resultMap;
     }
@@ -153,11 +157,11 @@ public class AnamnesisAllergyDrugController extends BaseController {
         if (anamnesisAllergyDrugs.isEmpty()){
             resultMap.put("msg","查询失败");
             resultMap.put("status","20005");
-            resultMap.put("data",null);
+            resultMap.put("rows",null);
         }else {
             resultMap.put("msg","20000");
             resultMap.put("status","查询成功");
-            resultMap.put("data",anamnesisAllergyDrugs.get(0));
+            resultMap.put("rows",anamnesisAllergyDrugs.get(0));
         }
         return resultMap;
     }

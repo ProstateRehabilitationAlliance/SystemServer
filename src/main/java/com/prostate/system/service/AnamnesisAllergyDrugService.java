@@ -22,7 +22,7 @@ public interface AnamnesisAllergyDrugService  extends BaseService<AnamnesisAller
     AnamnesisAllergyDrug selectById(String id);
 
     // 无参查询信息列表
-    List<AnamnesisAllergyDrug> selectAll();
+    List<AnamnesisAllergyDrug> selectAll(int pageNumber,int pageSize);
 
     // 根据名称查询
     List<AnamnesisAllergyDrug> selectByName(String drugName);

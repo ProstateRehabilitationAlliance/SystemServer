@@ -22,4 +22,5 @@ public interface AnamnesisIllnessMapper {
     List<AnamnesisIllness> findAll();
 
     List<AnamnesisIllness> selectByAnamnesisIllnessName(String anamnesisIllnessName);
+
 }

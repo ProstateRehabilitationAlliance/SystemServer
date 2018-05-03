@@ -7,8 +7,6 @@ public class AnamnesisIllness {
 
     private String anamnesisIllnessName;
 
-    private String spellName;
-
     private String anamnesisIllnessNumber;
 
     private String orderWeight;
@@ -41,14 +39,6 @@ public class AnamnesisIllness {
 
     public void setAnamnesisIllnessName(String anamnesisIllnessName) {
         this.anamnesisIllnessName = anamnesisIllnessName == null ? null : anamnesisIllnessName.trim();
-    }
-
-    public String getSpellName() {
-        return spellName;
-    }
-
-    public void setSpellName(String spellName) {
-        this.spellName = spellName == null ? null : spellName.trim();
     }
 
     public String getAnamnesisIllnessNumber() {

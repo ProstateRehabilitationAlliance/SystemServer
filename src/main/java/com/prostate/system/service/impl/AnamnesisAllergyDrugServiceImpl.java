@@ -1,5 +1,6 @@
 package com.prostate.system.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.prostate.system.entity.AnamnesisAllergyDrug;
 
 import com.prostate.system.mapper.AnamnesisAllergyDrugMapper;
@@ -46,7 +47,8 @@ public class AnamnesisAllergyDrugServiceImpl  implements AnamnesisAllergyDrugSer
     }
 
     @Override
-    public List<AnamnesisAllergyDrug> selectAll() {
+    public List<AnamnesisAllergyDrug> selectAll(int pageNumber,int pageSize) {
+        PageHelper.startPage(pageNumber, pageSize);
         return anamnesisAllergyDrugMapper.selectAllAnamnesisAllergyDrug();
     }
 

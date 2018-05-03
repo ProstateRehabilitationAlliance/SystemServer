@@ -122,4 +122,22 @@ public class AnamnesisAllergyDrug {
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag == null ? null : delFlag.trim();
     }
+
+    @Override
+    public String toString() {
+        return "AnamnesisAllergyDrug{" +
+                "id='" + id + '\'' +
+                ", allergyDrugName='" + allergyDrugName + '\'' +
+                ", spellName='" + spellName + '\'' +
+                ", allergyDrugNumber='" + allergyDrugNumber + '\'' +
+                ", orderWeight='" + orderWeight + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", createTime=" + createTime +
+                ", updateUser='" + updateUser + '\'' +
+                ", updateTime=" + updateTime +
+                ", deleteUser='" + deleteUser + '\'' +
+                ", deleteTime=" + deleteTime +
+                ", delFlag='" + delFlag + '\'' +
+                '}';
+    }
 }

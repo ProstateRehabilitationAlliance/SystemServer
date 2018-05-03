@@ -1,0 +1,27 @@
+server:
+  port: 8800
+spring:
+  profiles:
+    active: dev
+  application:
+    name: system-server
+  datasource:
+    url: jdbc:mysql://192.168.1.221/pra?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  freemarker:
+      cache: false
+
+
+# mybatis
+mybatis:
+  mapper-locations:  classpath:mapping/**/*.xml
+  type-aliases-package: com.prostate.*.*.entity
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

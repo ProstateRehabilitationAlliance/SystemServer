@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prostate.system.mapper.AnamnesisEatingDrugMapper">
+  <resultMap id="BaseResultMap" type="com.prostate.system.entity.AnamnesisEatingDrug">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="eating_drug_name" jdbcType="VARCHAR" property="eatingDrugName" />
+    <result column="spell_name" jdbcType="VARCHAR" property="spellName" />
+    <result column="eating_drug_number" jdbcType="VARCHAR" property="eatingDrugNumber" />
+    <result column="order_weight" jdbcType="VARCHAR" property="orderWeight" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_name" jdbcType="VARCHAR" property="deleteName" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, eating_drug_name, spell_name, eating_drug_number, order_weight, create_name, 
+    create_time, update_name, update_time, delete_name, delete_time, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_anamnesis_eating_drug
+    where id = #{id,jdbcType=VARCHAR}  AND del_flag = '0'
+  </select>
+  <!--列表展示-->
+  <select id="selectAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from base_anamnesis_eating_drug
+    where del_flag = '0'
+  </select>
+
+  <!-- 根据名称查询药品信息-->
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from base_anamnesis_eating_drug
+    where eating_drug_name = #{eatingDrugName,jdbcType=VARCHAR} AND  del_flag = '0'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from base_anamnesis_eating_drug
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.prostate.system.entity.AnamnesisEatingDrug">
+    insert into base_anamnesis_eating_drug (id, eating_drug_name, spell_name, 
+      eating_drug_number, order_weight, create_name, 
+      create_time, update_name, update_time, 
+      delete_name, delete_time, del_flag
+      )
+    values (#{id,jdbcType=VARCHAR}, #{eatingDrugName,jdbcType=VARCHAR}, #{spellName,jdbcType=VARCHAR}, 
+      #{eatingDrugNumber,jdbcType=VARCHAR}, #{orderWeight,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleteName,jdbcType=VARCHAR}, #{deleteTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prostate.system.entity.AnamnesisEatingDrug">
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into base_anamnesis_eating_drug
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="eatingDrugName != null">
+        eating_drug_name,
+      </if>
+      <if test="spellName != null">
+        spell_name,
+      </if>
+      <if test="eatingDrugNumber != null">
+        eating_drug_number,
+      </if>
+      <if test="orderWeight != null">
+        order_weight,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteName != null">
+        delete_name,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="eatingDrugName != null">
+        #{eatingDrugName,jdbcType=VARCHAR},
+      </if>
+      <if test="spellName != null">
+        #{spellName,jdbcType=VARCHAR},
+      </if>
+      <if test="eatingDrugNumber != null">
+        #{eatingDrugNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderWeight != null">
+        #{orderWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteName != null">
+        #{deleteName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prostate.system.entity.AnamnesisEatingDrug">
+    update base_anamnesis_eating_drug
+    <set>
+      <if test="eatingDrugName != null">
+        eating_drug_name = #{eatingDrugName,jdbcType=VARCHAR},
+      </if>
+      <if test="spellName != null">
+        spell_name = #{spellName,jdbcType=VARCHAR},
+      </if>
+      <if test="eatingDrugNumber != null">
+        eating_drug_number = #{eatingDrugNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderWeight != null">
+        order_weight = #{orderWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteName != null">
+        delete_name = #{deleteName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prostate.system.entity.AnamnesisEatingDrug">
+    update base_anamnesis_eating_drug
+    set eating_drug_name = #{eatingDrugName,jdbcType=VARCHAR},
+      spell_name = #{spellName,jdbcType=VARCHAR},
+      eating_drug_number = #{eatingDrugNumber,jdbcType=VARCHAR},
+      order_weight = #{orderWeight,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_name = #{deleteName,jdbcType=VARCHAR},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
