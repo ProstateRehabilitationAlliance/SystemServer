@@ -25,7 +25,8 @@
     select
     <include refid="Base_Column_List" />
     from base_city
-      where parent_city_id = #{parentCityId,jdbcType=VARCHAR}
+      where del_flag='0'
+    AND parent_city_id = #{parentCityId,jdbcType=VARCHAR}
   </select>
 <!--  检查数据可用-->
   <select id="selectByCityName" parameterType="java.lang.String" resultMap="BaseResultMap">

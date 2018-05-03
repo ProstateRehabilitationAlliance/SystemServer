@@ -24,12 +24,12 @@
                 });
             },
             onAfterEdit : function(node){
-                alert("456")
                 var _tree = $(this);
                 if(node.id == 0){
-                    // 新增节点
-                    $.post("/province/addprovince",{parentCityId:node.parentId,name:node.text},function(data){
-                        if(data.status == 200){
+                    // 新增节点     parentCityId
+                    var father = $(this).tree("getParent",node.target);
+                    $.post("/province/addprovince",{id:father.id,text:node.text},function(data){
+                        if(data.status == 20000){
                             _tree.tree("update",{
                                 target : node.target,
                                 id : data.data.id
@@ -40,7 +40,7 @@
                     });
                 }else{
 
-                    $.post("/province/updprovince",{id:node.id,name:node.text});
+                    $.post("/province/updprovince",{id:node.id,text:node.text});
                 }
             }
         });

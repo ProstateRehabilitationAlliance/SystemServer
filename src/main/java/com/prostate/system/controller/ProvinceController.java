@@ -74,7 +74,7 @@ public class ProvinceController extends BaseController{
 
                     resultMap.put("status",20007);
                     resultMap.put("msg","没有找到相关数据数据");
-                    resultMap.put("data",false);
+                    resultMap.put("rows",false);
 
             }else{
                 resultMap.put("status",20000);
@@ -90,14 +90,18 @@ public class ProvinceController extends BaseController{
                     Node node =new Node();
                     node.setId(city.getId());
                     node.setText(city.getCityName());
+                    List list2 =cityService.findByPage(city.getId());
+                    if (list2==null||list2.size()==0){
 
-                    node.setState("closed");
+                    }else {
+                        node.setState("closed");
+                    }
                     list1.add(node);
 
                 }
             }
 
-
+            resultMap.put("list",list1);
 
             return list1;
         }
@@ -137,15 +141,16 @@ public class ProvinceController extends BaseController{
          */
 
     @RequestMapping(value = "/addprovince",method = RequestMethod.POST)
-    public Map addprovince(City city) {
-
-        List<City> list = cityService.selectByCityName(city.getCityName());
+    public Map addprovince(Node node) {
+        City city =null;
+        List<City> list = cityService.selectByCityName(node.getText());
         if (list==null||list.size()==0){
+            city=new City();
+            city.setParentCityId(node.getId());
+            city.setCityName(node.getText());
             city.setCityType("1");
             //这里通过查询此图citytype等于0的id作为省区的pid,前台不用传
-            if(cityService.selectByCityType("0")!=null){
-                city.setParentCityId(cityService.selectByCityType("0").getParentCityId());
-            }
+
             city.setCreateTime(new Date());
             if (UserTokenManager.getToken()!=null){
                 city.setCreateUser(UserTokenManager.getToken().getId());
@@ -179,9 +184,10 @@ public class ProvinceController extends BaseController{
          */
 
     @RequestMapping(value = "/updprovince",method = RequestMethod.POST)
-    public Map updProvince(City city) {
-
-        City city01= cityService.selectById(city.getId());
+    public Map updProvince(Node node) {
+        System.out.println(node);
+        City city =null;
+        City city01= cityService.selectById(node.getId());
         if (city01==null){
 
                 resultMap.put("status",20005);
@@ -189,7 +195,9 @@ public class ProvinceController extends BaseController{
                 resultMap.put("data",false);
 
         }else{
-
+            city=new City();
+            city.setId(node.getId());
+            city.setCityName(node.getText());
             city.setCreateTime(new Date());
             if (UserTokenManager.getToken()!=null){
                 city.setUpdateUser(UserTokenManager.getToken().getId());
