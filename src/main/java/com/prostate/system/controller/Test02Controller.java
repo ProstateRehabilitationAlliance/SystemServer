@@ -12,32 +12,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Test02Controller {
 
     @RequestMapping("/anamnesis-allergy-drug-list")
-    public String test01(){
+    public String anamnesisAllergyDrugList(){
         return "/anamnesis-allergy-drug/anamnesis-allergy-drug-list";
     }
     @RequestMapping("/anamnesis-allergy-drug-add")
-    public String test02(){
+    public String anamnesisAllergyDrugAdd(){
         return "/anamnesis-allergy-drug/anamnesis-allergy-drug-add";
     }
     @RequestMapping("/anamnesis-allergy-drug-edit")
-    public String test03(){
+    public String anamnesisAllergyDrugEdit(){
         return "/anamnesis-allergy-drug/anamnesis-allergy-drug-edit";
     }
 
     @RequestMapping("/citylist")
-    public String test04(){
+    public String cityList(){
         return "/city/cityList";
     }
     @RequestMapping("/anamnesis-type-list")
-    public String test05(){
+    public String anamnesisTypeList(){
         return "/anamnesistype/anamnesis-type-list";
     }
     @RequestMapping("/anamnesis-type-add")
-    public String test06(){
+    public String anamnesisTypeAdd(){
         return "/anamnesistype/anamnesis-type-add";
     }
     @RequestMapping("anamnesis-type-edit")
-    public String test07(){
+    public String anamnesisTypeEdit(){
         return "/anamnesistype/anamnesis-type-edit";
     }
 
