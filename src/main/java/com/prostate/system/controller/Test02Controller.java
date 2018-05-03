@@ -23,4 +23,23 @@ public class Test02Controller {
     public String test03(){
         return "/anamnesis-allergy-drug/anamnesis-allergy-drug-edit";
     }
+
+    @RequestMapping("/citylist")
+    public String test04(){
+        return "/city/cityList";
+    }
+    @RequestMapping("/anamnesis-type-list")
+    public String test05(){
+        return "/anamnesistype/anamnesis-type-list";
+    }
+    @RequestMapping("/anamnesis-type-add")
+    public String test06(){
+        return "/anamnesistype/anamnesis-type-add";
+    }
+    @RequestMapping("anamnesis-type-edit")
+    public String test07(){
+        return "/anamnesistype/anamnesis-type-edit";
+    }
+
+
 }

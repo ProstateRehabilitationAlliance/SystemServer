@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.prostate.system.entity.AnamnesisIllness">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="anamnesis_illness_name" jdbcType="VARCHAR" property="anamnesisIllnessName" />
+    <result column="spell_name" jdbcType="VARCHAR" property="spellName" />
     <result column="anamnesis_illness_number" jdbcType="VARCHAR" property="anamnesisIllnessNumber" />
     <result column="order_weight" jdbcType="VARCHAR" property="orderWeight" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
@@ -15,16 +16,17 @@
     <result column="del_flag" jdbcType="CHAR" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, anamnesis_illness_name, anamnesis_illness_number, order_weight, create_user, 
+    id, anamnesis_illness_name, spell_name, anamnesis_illness_number, order_weight, create_user, 
     create_time, update_user, update_time, delete_user, delete_time, del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from base_anamnesis_illness
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR} AND del_flag = '0'
   </select>
-  <select id="findAll" resultMap="BaseResultMap">
+
+  <select id="findAll" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from base_anamnesis_illness
@@ -34,8 +36,7 @@
     select
     <include refid="Base_Column_List" />
     from base_anamnesis_illness
-    where del_flag = '0'
-    AND anamnesis_illness_name = #{anamnesisIllnessName,jdbcType=VARCHAR}
+    where del_flag = '0' AND  anamnesis_illness_name = #{anamnesisIllnessName,jdbcType=VARCHAR}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -43,14 +44,16 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.prostate.system.entity.AnamnesisIllness">
-    insert into base_anamnesis_illness (id, anamnesis_illness_name, anamnesis_illness_number, 
-      order_weight, create_user, create_time, 
-      update_user, update_time, delete_user, 
-      delete_time, del_flag)
-    values (#{id,jdbcType=VARCHAR}, #{anamnesisIllnessName,jdbcType=VARCHAR}, #{anamnesisIllnessNumber,jdbcType=VARCHAR}, 
-      #{orderWeight,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteUser,jdbcType=VARCHAR}, 
-      #{deleteTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR})
+    insert into base_anamnesis_illness (id, anamnesis_illness_name, spell_name, 
+      anamnesis_illness_number, order_weight, create_user, 
+      create_time, update_user, update_time, 
+      delete_user, delete_time, del_flag
+      )
+    values (#{id,jdbcType=VARCHAR}, #{anamnesisIllnessName,jdbcType=VARCHAR}, #{spellName,jdbcType=VARCHAR}, 
+      #{anamnesisIllnessNumber,jdbcType=VARCHAR}, #{orderWeight,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleteUser,jdbcType=VARCHAR}, #{deleteTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.prostate.system.entity.AnamnesisIllness">
     <selectKey keyProperty="id" resultType="string" order="BEFORE">
@@ -63,6 +66,9 @@
       </if>
       <if test="anamnesisIllnessName != null">
         anamnesis_illness_name,
+      </if>
+      <if test="spellName != null">
+        spell_name,
       </if>
       <if test="anamnesisIllnessNumber != null">
         anamnesis_illness_number,
@@ -99,6 +105,9 @@
       <if test="anamnesisIllnessName != null">
         #{anamnesisIllnessName,jdbcType=VARCHAR},
       </if>
+      <if test="spellName != null">
+        #{spellName,jdbcType=VARCHAR},
+      </if>
       <if test="anamnesisIllnessNumber != null">
         #{anamnesisIllnessNumber,jdbcType=VARCHAR},
       </if>
@@ -134,6 +143,9 @@
       <if test="anamnesisIllnessName != null">
         anamnesis_illness_name = #{anamnesisIllnessName,jdbcType=VARCHAR},
       </if>
+      <if test="spellName != null">
+        spell_name = #{spellName,jdbcType=VARCHAR},
+      </if>
       <if test="anamnesisIllnessNumber != null">
         anamnesis_illness_number = #{anamnesisIllnessNumber,jdbcType=VARCHAR},
       </if>
@@ -167,6 +179,7 @@
   <update id="updateByPrimaryKey" parameterType="com.prostate.system.entity.AnamnesisIllness">
     update base_anamnesis_illness
     set anamnesis_illness_name = #{anamnesisIllnessName,jdbcType=VARCHAR},
+      spell_name = #{spellName,jdbcType=VARCHAR},
       anamnesis_illness_number = #{anamnesisIllnessNumber,jdbcType=VARCHAR},
       order_weight = #{orderWeight,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},

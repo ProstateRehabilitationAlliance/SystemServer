@@ -1,5 +1,6 @@
 package com.prostate.system.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.prostate.system.entity.AnamnesisEatingDrug;
 import com.prostate.system.mapper.AnamnesisEatingDrugMapper;
 import com.prostate.system.service.AnamnesisEatingDrugService;
@@ -37,7 +38,8 @@ public class AnamnesisEatingDrugServiceImpl implements AnamnesisEatingDrugServic
     }
 
     @Override
-    public List<AnamnesisEatingDrug> selectAll() {
+    public List<AnamnesisEatingDrug> selectAll(int pageNum,int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         return anamnesisEatingDrugMapper.selectAll();
     }
 

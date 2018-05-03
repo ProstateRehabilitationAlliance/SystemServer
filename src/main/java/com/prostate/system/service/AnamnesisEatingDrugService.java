@@ -22,7 +22,7 @@ public interface AnamnesisEatingDrugService extends BaseService<AnamnesisEatingD
     AnamnesisEatingDrug selectById(String id);
 
     //查询信息列表
-    List<AnamnesisEatingDrug> selectAll();
+    List<AnamnesisEatingDrug> selectAll(int pageNum,int pageSize);
 
     //根据名称查询
     List<AnamnesisEatingDrug> selectByName(String drugName);
