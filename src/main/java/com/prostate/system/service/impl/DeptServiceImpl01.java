@@ -10,16 +10,16 @@ import java.util.Map;
 
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
-import com.prostate.system.dao.DeptDao;
+import com.prostate.system.dao.DeptDao01;
 import com.prostate.system.domain.DeptDO;
-import com.prostate.system.service.DeptService;
+import com.prostate.system.service.DeptService01;
 
 
 
 @Service
-public class DeptServiceImpl implements DeptService {
+public class DeptServiceImpl01 implements DeptService01 {
 	@Autowired
-	private DeptDao sysDeptMapper;
+	private DeptDao01 sysDeptMapper;
 
 	@Override
 	public DeptDO get(Long deptId){

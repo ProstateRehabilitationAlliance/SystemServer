@@ -13,13 +13,11 @@ import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.prostate.common.domain.Tree;
-import com.prostate.system.dao.DeptDao;
+import com.prostate.system.dao.DeptDao01;
 import com.prostate.system.dao.UserDao;
 import com.prostate.system.dao.UserRoleDao;
 import com.prostate.system.domain.DeptDO;
@@ -39,7 +37,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRoleDao userRoleMapper;
     @Autowired
-    DeptDao deptMapper;
+    DeptDao01 deptMapper;
     @Autowired
     private FileService sysFileService;
     @Autowired

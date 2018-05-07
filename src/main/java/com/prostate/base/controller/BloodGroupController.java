@@ -74,6 +74,7 @@ public class BloodGroupController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:bloodGroup:add")
 	public R save( BloodGroupDO bloodGroup){
+		
 		if(bloodGroupService.save(bloodGroup)>0){
 			return R.ok();
 		}

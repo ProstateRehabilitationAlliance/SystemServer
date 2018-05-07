@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("com.prostate.*.dao")
 @SpringBootApplication
 @EnableCaching
-public class ProstatedoApplication {
+public class SystemApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ProstatedoApplication.class, args);
+        SpringApplication.run(SystemApplication.class, args);
         System.out.println("ヾ(◍°∇°◍)ﾉﾞ    prostate启动成功      ヾ(◍°∇°◍)ﾉﾞ\n" +
                 " ______                    _   ______            \n" +
                 "|_   _ \\                  / |_|_   _ `.          \n" +

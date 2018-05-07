@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.prostate.base.domain.AnamnesisEatingDrugDO;
 import com.prostate.base.service.AnamnesisEatingDrugService;
-import com.bootdo.common.utils.PageUtils;
-import com.bootdo.common.utils.Query;
-import com.bootdo.common.utils.R;
+import com.prostate.common.utils.PageUtils;
+import com.prostate.common.utils.Query;
+import com.prostate.common.utils.R;
 
 /**
  * 

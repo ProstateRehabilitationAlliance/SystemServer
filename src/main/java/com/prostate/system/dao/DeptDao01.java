@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @date 2017-10-03 15:35:39
  */
 @Repository
-public interface DeptDao {
+public interface DeptDao01 {
 
 	DeptDO get(Long deptId);
 	

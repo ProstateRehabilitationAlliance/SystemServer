@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.prostate.base.domain.DoctorTitleDO;
 import com.prostate.base.service.DoctorTitleService;
-import com.bootdo.common.utils.PageUtils;
-import com.bootdo.common.utils.Query;
-import com.bootdo.common.utils.R;
+import com.prostate.common.utils.PageUtils;
+import com.prostate.common.utils.Query;
+import com.prostate.common.utils.R;
 
 /**
  * 

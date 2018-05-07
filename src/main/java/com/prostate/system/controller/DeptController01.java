@@ -5,7 +5,7 @@ import com.prostate.common.controller.BaseController;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.R;
 import com.prostate.system.domain.DeptDO;
-import com.prostate.system.service.DeptService;
+import com.prostate.system.service.DeptService01;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +27,10 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/system/sysDept")
-public class DeptController extends BaseController {
+public class DeptController01 extends BaseController {
 	private String prefix = "system/dept";
 	@Autowired
-	private DeptService sysDeptService;
+	private DeptService01 sysDeptService;
 
 	@GetMapping()
 	@RequiresPermissions("system:sysDept:sysDept")
