@@ -28,7 +28,7 @@ public class HospitalDeptDO implements Serializable {
 	//科室激活标记(0/1 已/未)
 	private String activationFlag;
 	//排序
-	private String orderWeight;
+	private Integer orderWeight;
 	//创建人ID(后台管理员)
 	private String createUser;
 	//创建时间
@@ -116,18 +116,15 @@ public class HospitalDeptDO implements Serializable {
 	public String getActivationFlag() {
 		return activationFlag;
 	}
-	/**
-	 * 设置：排序
-	 */
-	public void setOrderWeight(String orderWeight) {
-		this.orderWeight = orderWeight;
-	}
-	/**
-	 * 获取：排序
-	 */
-	public String getOrderWeight() {
+
+	public Integer getOrderWeight() {
 		return orderWeight;
 	}
+
+	public void setOrderWeight(Integer orderWeight) {
+		this.orderWeight = orderWeight;
+	}
+
 	/**
 	 * 设置：创建人ID(后台管理员)
 	 */

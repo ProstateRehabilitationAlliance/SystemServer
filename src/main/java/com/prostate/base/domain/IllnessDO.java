@@ -22,7 +22,7 @@ public class IllnessDO implements Serializable {
 	//疾病编号
 	private String illnessNumber;
 	//排序
-	private String orderWeight;
+	private Integer orderWeight;
 	//创建人ID(后台管理员)
 	private String createUser;
 	//创建时间
@@ -74,18 +74,15 @@ public class IllnessDO implements Serializable {
 	public String getIllnessNumber() {
 		return illnessNumber;
 	}
-	/**
-	 * 设置：排序
-	 */
-	public void setOrderWeight(String orderWeight) {
-		this.orderWeight = orderWeight;
-	}
-	/**
-	 * 获取：排序
-	 */
-	public String getOrderWeight() {
+
+	public Integer getOrderWeight() {
 		return orderWeight;
 	}
+
+	public void setOrderWeight(Integer orderWeight) {
+		this.orderWeight = orderWeight;
+	}
+
 	/**
 	 * 设置：创建人ID(后台管理员)
 	 */

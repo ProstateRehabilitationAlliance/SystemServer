@@ -28,7 +28,7 @@ public class NihCpsiDO implements Serializable {
 	//权重
 	private String nihCpsiWeight;
 	//排序
-	private String orderWeight;
+	private Integer orderWeight;
 	//创建人
 	private String createUser;
 	//创建时间
@@ -112,18 +112,15 @@ public class NihCpsiDO implements Serializable {
 	public String getNihCpsiWeight() {
 		return nihCpsiWeight;
 	}
-	/**
-	 * 设置：排序
-	 */
-	public void setOrderWeight(String orderWeight) {
-		this.orderWeight = orderWeight;
-	}
-	/**
-	 * 获取：排序
-	 */
-	public String getOrderWeight() {
+
+	public Integer getOrderWeight() {
 		return orderWeight;
 	}
+
+	public void setOrderWeight(Integer orderWeight) {
+		this.orderWeight = orderWeight;
+	}
+
 	/**
 	 * 设置：创建人
 	 */

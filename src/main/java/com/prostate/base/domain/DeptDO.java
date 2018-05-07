@@ -28,7 +28,7 @@ public class DeptDO implements Serializable {
 	//权重排序用
 	private Integer deptWeight;
 	//排序
-	private String orderWeight;
+	private Integer orderWeight;
 	//创建人ID(后台管理员)
 	private String createUser;
 	//创建时间
@@ -116,18 +116,15 @@ public class DeptDO implements Serializable {
 	public Integer getDeptWeight() {
 		return deptWeight;
 	}
-	/**
-	 * 设置：排序
-	 */
-	public void setOrderWeight(String orderWeight) {
-		this.orderWeight = orderWeight;
-	}
-	/**
-	 * 获取：排序
-	 */
-	public String getOrderWeight() {
+
+	public Integer getOrderWeight() {
 		return orderWeight;
 	}
+
+	public void setOrderWeight(Integer orderWeight) {
+		this.orderWeight = orderWeight;
+	}
+
 	/**
 	 * 设置：创建人ID(后台管理员)
 	 */

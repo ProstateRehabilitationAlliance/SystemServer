@@ -22,7 +22,7 @@ public class DoctorTitleDO implements Serializable {
 	//职称名称
 	private String doctorTitleName;
 	//排序
-	private String orderWeight;
+	private Integer orderWeight;
 	//创建人
 	private String createUser;
 	//创建时间
@@ -74,18 +74,15 @@ public class DoctorTitleDO implements Serializable {
 	public String getDoctorTitleName() {
 		return doctorTitleName;
 	}
-	/**
-	 * 设置：排序
-	 */
-	public void setOrderWeight(String orderWeight) {
-		this.orderWeight = orderWeight;
-	}
-	/**
-	 * 获取：排序
-	 */
-	public String getOrderWeight() {
+
+	public Integer getOrderWeight() {
 		return orderWeight;
 	}
+
+	public void setOrderWeight(Integer orderWeight) {
+		this.orderWeight = orderWeight;
+	}
+
 	/**
 	 * 设置：创建人
 	 */

@@ -22,7 +22,7 @@ public class BloodGroupDO implements Serializable {
 	//
 	private String bloodGroupNumber;
 	//
-	private String orderWeight;
+	private Integer orderWeight;
 	//
 	private String createUser;
 	//
@@ -74,18 +74,15 @@ public class BloodGroupDO implements Serializable {
 	public String getBloodGroupNumber() {
 		return bloodGroupNumber;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setOrderWeight(String orderWeight) {
-		this.orderWeight = orderWeight;
-	}
-	/**
-	 * 获取：
-	 */
-	public String getOrderWeight() {
+
+	public Integer getOrderWeight() {
 		return orderWeight;
 	}
+
+	public void setOrderWeight(Integer orderWeight) {
+		this.orderWeight = orderWeight;
+	}
+
 	/**
 	 * 设置：
 	 */
