@@ -1,128 +1,242 @@
 package com.prostate.system.controller;
 
-import com.prostate.system.entity.User;
+import com.prostate.common.annotation.Log;
+import com.prostate.common.config.Constant;
+import com.prostate.common.controller.BaseController;
+import com.prostate.common.domain.FileDO;
+import com.prostate.common.domain.Tree;
+import com.prostate.common.service.DictService;
+import com.prostate.common.utils.*;
+import com.prostate.system.domain.DeptDO;
+import com.prostate.system.domain.RoleDO;
+import com.prostate.system.domain.UserDO;
+import com.prostate.system.service.RoleService;
 import com.prostate.system.service.UserService;
-import com.prostate.system.shiro.UserTokenManager;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.ExcessiveAttemptsException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-
-import org.apache.shiro.subject.Subject;
+import com.prostate.system.vo.UserVO;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import java.util.LinkedHashMap;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @Author: bianyakun
- * @Date: 2018/4/19 10:12
- * @Todo:  系统管理员的控制类
- */
+@RequestMapping("/sys/user")
+@Controller
+public class UserController extends BaseController {
+	private String prefix="system/user"  ;
+	@Autowired
+	UserService userService;
+	@Autowired
+	RoleService roleService;
+	@Autowired
+	DictService dictService;
+	@RequiresPermissions("sys:user:user")
+	@GetMapping("")
+	String user(Model model) {
+		return prefix + "/user";
+	}
 
-@RestController
-@RequestMapping("/user")
-public class UserController extends BaseController{
+	@GetMapping("/list")
+	@ResponseBody
+	PageUtils list(@RequestParam Map<String, Object> params) {
+		// 查询列表数据
+		Query query = new Query(params);
+		List<UserDO> sysUserList = userService.list(query);
+		int total = userService.count(query);
+		PageUtils pageUtil = new PageUtils(sysUserList, total);
+		return pageUtil;
+	}
 
-    Map<String,Object> resultMap = new LinkedHashMap<>();
+	@RequiresPermissions("sys:user:add")
+	@Log("添加用户")
+	@GetMapping("/add")
+	String add(Model model) {
+		List<RoleDO> roles = roleService.list();
+		model.addAttribute("roles", roles);
+		return prefix + "/add";
+	}
 
-    @Resource
-    private UserService userService;//注入UserService的服务
+	@RequiresPermissions("sys:user:edit")
+	@Log("编辑用户")
+	@GetMapping("/edit/{id}")
+	String edit(Model model, @PathVariable("id") Long id) {
+		UserDO userDO = userService.get(id);
+		model.addAttribute("user", userDO);
+		List<RoleDO> roles = roleService.list(id);
+		model.addAttribute("roles", roles);
+		return prefix+"/edit";
+	}
 
+	@RequiresPermissions("sys:user:add")
+	@Log("保存用户")
+	@PostMapping("/save")
+	@ResponseBody
+	R save(UserDO user) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
+		if (userService.save(user) > 0) {
+			return R.ok();
+		}
+		return R.error();
+	}
 
-
-    /***
-     * @TODO: 用户注册服务
-     * @param :User对象
-     * @return:
-     */
-    @RequestMapping(value="/regist",method= RequestMethod.POST)
-   // @RequiresPermissions("userInfo:add")//权限管理;
-    public Map<String,Object> insertUser(User user){
-        //根据用户名判断用户是否已经存在
-        List<User> list = userService.findUserWihtUserName(user.getUsername());
-        if (list.isEmpty()){
-            //将当前登录的用户信息作为create_user加入user中
-//            user.setCreateUser(UserTokenManager.getToken().getId());
-            int r = userService.insertSelective(user);  //调用注册服务,如果注册成功返回1,如果注册时报返回0.
-            //根据返回的数值判断是否注册成功,并返回不同的map结果.
-            if (r == 1){
-                resultMap.put("status","20000");
-                resultMap.put("msg","注册成功");
-                resultMap.put("data",null);
-            }else {
-                resultMap.put("status", "20005");
-                resultMap.put("msg", "注册失败");
-                resultMap.put("data",null);
-            }
-        }else {
-            resultMap.put("status", "20001");
-            resultMap.put("msg", "用户已经存在");
-            resultMap.put("data",null);
-        }
-        return resultMap;
-    }
-
-    /**
-     *  登陆认证，检查账号密码是否正确。成功则跳转到index.html，错误则跳转到对应的error.html
-     * @param userName
-     * @param password
-     * @return
-     */
-    @PostMapping(value="/login")
-    public Map<String, Object> login(@RequestParam("userName")String userName, @RequestParam("password") String password){
-        UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(userName,password);
-        User user =new User();
-        user.setUsername(userName);
-        user.setPassword(password);
-        try {
-            UserTokenManager.login(user,false);
-            System.out.println( UserTokenManager.getToken());
-            resultMap.put("data",null);
-            resultMap.put("msg","登录成功");
-            resultMap.put("status","20000");
-        }catch (IncorrectCredentialsException ice){
-            resultMap.put("data",null);
-            resultMap.put("msg","密码错误");
-            resultMap.put("status","20004");
-        }catch (UnknownAccountException uae) {
-            resultMap.put("data",null);
-            resultMap.put("msg","用户名错误");
-            resultMap.put("status","20004");
-        }catch (ExcessiveAttemptsException eae) {
-            resultMap.put("data",null);
-            resultMap.put("msg","token失效");
-            resultMap.put("status","20008");
-        }
-
-        return resultMap;
-    }
+	@RequiresPermissions("sys:user:edit")
+	@Log("更新用户")
+	@PostMapping("/update")
+	@ResponseBody
+	R update(UserDO user) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		if (userService.update(user) > 0) {
+			return R.ok();
+		}
+		return R.error();
+	}
 
 
-    /**
-     * @Author: bianyakun
-     * @Date: 2018/4/20 8:44
-     * @todo:   根据用户名查询用户信息
-     * @param:   * @param null
-     */
-    @GetMapping(value = "/select")
-    public Map<String,Object> userSelect(String username){
-        List<User> users = userService.findUserWihtUserName(username);  //调用查询服务,如果注册成功返回1,如果注册时报返回0
-        //根据返回的数值判断是否存在用户,并返回不同的map.
-        if(users.isEmpty()){
-           resultMap.put("data",null);
-           resultMap.put("msg","用户不存在");
-           resultMap.put("status","20007");
-       }else{
-           resultMap.put("status", "20000");
-           resultMap.put("msg", "用户已经存在");
-           resultMap.put("data",users.get(0));
-        }
-        return resultMap;
-    }
+	@RequiresPermissions("sys:user:edit")
+	@Log("更新用户")
+	@PostMapping("/updatePeronal")
+	@ResponseBody
+	R updatePeronal(UserDO user) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		if (userService.updatePersonal(user) > 0) {
+			return R.ok();
+		}
+		return R.error();
+	}
 
 
+	@RequiresPermissions("sys:user:remove")
+	@Log("删除用户")
+	@PostMapping("/remove")
+	@ResponseBody
+	R remove(Long id) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		if (userService.remove(id) > 0) {
+			return R.ok();
+		}
+		return R.error();
+	}
+
+	@RequiresPermissions("sys:user:batchRemove")
+	@Log("批量删除用户")
+	@PostMapping("/batchRemove")
+	@ResponseBody
+	R batchRemove(@RequestParam("ids[]") Long[] userIds) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		int r = userService.batchremove(userIds);
+		if (r > 0) {
+			return R.ok();
+		}
+		return R.error();
+	}
+
+	@PostMapping("/exit")
+	@ResponseBody
+	boolean exit(@RequestParam Map<String, Object> params) {
+		// 存在，不通过，false
+		return !userService.exit(params);
+	}
+
+	@RequiresPermissions("sys:user:resetPwd")
+	@Log("请求更改用户密码")
+	@GetMapping("/resetPwd/{id}")
+	String resetPwd(@PathVariable("id") Long userId, Model model) {
+
+		UserDO userDO = new UserDO();
+		userDO.setUserId(userId);
+		model.addAttribute("user", userDO);
+		return prefix + "/reset_pwd";
+	}
+
+	@Log("提交更改用户密码")
+	@PostMapping("/resetPwd")
+	@ResponseBody
+	R resetPwd(UserVO userVO) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		try{
+			userService.resetPwd(userVO,getUser());
+			return R.ok();
+		}catch (Exception e){
+			return R.error(1,e.getMessage());
+		}
+
+	}
+	@RequiresPermissions("sys:user:resetPwd")
+	@Log("admin提交更改用户密码")
+	@PostMapping("/adminResetPwd")
+	@ResponseBody
+	R adminResetPwd(UserVO userVO) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		try{
+			userService.adminResetPwd(userVO);
+			return R.ok();
+		}catch (Exception e){
+			return R.error(1,e.getMessage());
+		}
+
+	}
+	@GetMapping("/tree")
+	@ResponseBody
+	public Tree<DeptDO> tree() {
+		Tree<DeptDO> tree = new Tree<DeptDO>();
+		tree = userService.getTree();
+		return tree;
+	}
+
+	@GetMapping("/treeView")
+	String treeView() {
+		return  prefix + "/userTree";
+	}
+
+	@GetMapping("/personal")
+	String personal(Model model) {
+		UserDO userDO  = userService.get(getUserId());
+		model.addAttribute("user",userDO);
+		model.addAttribute("hobbyList",dictService.getHobbyList(userDO));
+		model.addAttribute("sexList",dictService.getSexList());
+		return prefix + "/personal";
+	}
+	@ResponseBody
+	@PostMapping("/uploadImg")
+	R uploadImg(@RequestParam("avatar_file") MultipartFile file, String avatar_data, HttpServletRequest request) {
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		Map<String, Object> result = new HashMap<>();
+		try {
+			result = userService.updatePersonalImg(file, avatar_data, getUserId());
+		} catch (Exception e) {
+			return R.error("更新图像失败！");
+		}
+		if(result!=null && result.size()>0){
+			return R.ok(result);
+		}else {
+			return R.error("更新图像失败！");
+		}
+	}
 }

@@ -1,0 +1,187 @@
+package com.prostate.base.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+
+
+/**
+ * 
+ * 
+ * @author chglee
+ * @email 1992lcg@163.com
+ * @date 2018-05-07 14:02:35
+ */
+public class IpssDO implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	//主键
+	private String id;
+	//父id
+	private String parentId;
+	//标题
+	private String ipssTitle;
+	//分数
+	private String ipssScore;
+	//
+	private String ipssType;
+	//权重
+	private String ipssWeight;
+	//排序
+	private String orderWeight;
+	//创建人
+	private String createUser;
+	//创建时间
+	private Date createTime;
+	//删除人
+	private String deleteUser;
+	//删除时间
+	private Date deleteTime;
+	//删除标记
+	private String delFlag;
+
+	/**
+	 * 设置：主键
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+	/**
+	 * 获取：主键
+	 */
+	public String getId() {
+		return id;
+	}
+	/**
+	 * 设置：父id
+	 */
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+	/**
+	 * 获取：父id
+	 */
+	public String getParentId() {
+		return parentId;
+	}
+	/**
+	 * 设置：标题
+	 */
+	public void setIpssTitle(String ipssTitle) {
+		this.ipssTitle = ipssTitle;
+	}
+	/**
+	 * 获取：标题
+	 */
+	public String getIpssTitle() {
+		return ipssTitle;
+	}
+	/**
+	 * 设置：分数
+	 */
+	public void setIpssScore(String ipssScore) {
+		this.ipssScore = ipssScore;
+	}
+	/**
+	 * 获取：分数
+	 */
+	public String getIpssScore() {
+		return ipssScore;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setIpssType(String ipssType) {
+		this.ipssType = ipssType;
+	}
+	/**
+	 * 获取：
+	 */
+	public String getIpssType() {
+		return ipssType;
+	}
+	/**
+	 * 设置：权重
+	 */
+	public void setIpssWeight(String ipssWeight) {
+		this.ipssWeight = ipssWeight;
+	}
+	/**
+	 * 获取：权重
+	 */
+	public String getIpssWeight() {
+		return ipssWeight;
+	}
+	/**
+	 * 设置：排序
+	 */
+	public void setOrderWeight(String orderWeight) {
+		this.orderWeight = orderWeight;
+	}
+	/**
+	 * 获取：排序
+	 */
+	public String getOrderWeight() {
+		return orderWeight;
+	}
+	/**
+	 * 设置：创建人
+	 */
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+	/**
+	 * 获取：创建人
+	 */
+	public String getCreateUser() {
+		return createUser;
+	}
+	/**
+	 * 设置：创建时间
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	/**
+	 * 获取：创建时间
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+	/**
+	 * 设置：删除人
+	 */
+	public void setDeleteUser(String deleteUser) {
+		this.deleteUser = deleteUser;
+	}
+	/**
+	 * 获取：删除人
+	 */
+	public String getDeleteUser() {
+		return deleteUser;
+	}
+	/**
+	 * 设置：删除时间
+	 */
+	public void setDeleteTime(Date deleteTime) {
+		this.deleteTime = deleteTime;
+	}
+	/**
+	 * 获取：删除时间
+	 */
+	public Date getDeleteTime() {
+		return deleteTime;
+	}
+	/**
+	 * 设置：删除标记
+	 */
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
+	}
+	/**
+	 * 获取：删除标记
+	 */
+	public String getDelFlag() {
+		return delFlag;
+	}
+}

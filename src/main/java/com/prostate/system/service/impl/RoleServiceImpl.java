@@ -1,53 +1,121 @@
 package com.prostate.system.service.impl;
 
-import com.prostate.system.entity.Role;
-import com.prostate.system.service.RoleService;
-import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
-/**
- * @Author: bianyakun
- * @Date: 2018/4/23 9:12
- * @Todo:
- */
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.prostate.system.dao.RoleDao;
+import com.prostate.system.dao.RoleMenuDao;
+import com.prostate.system.dao.UserDao;
+import com.prostate.system.dao.UserRoleDao;
+import com.prostate.system.domain.RoleDO;
+import com.prostate.system.domain.RoleMenuDO;
+import com.prostate.system.service.RoleService;
 
 
 @Service
 public class RoleServiceImpl implements RoleService {
+
+    public static final String ROLE_ALL_KEY = "\"role_all\"";
+
+    public static final String DEMO_CACHE_NAME = "role";
+
+    @Autowired
+    RoleDao roleMapper;
+    @Autowired
+    RoleMenuDao roleMenuMapper;
+    @Autowired
+    UserDao userMapper;
+    @Autowired
+    UserRoleDao userRoleMapper;
+
     @Override
-    public List<String> findPermissionIdByRoleId(String roleId) {
-        return null;
+    public List<RoleDO> list() {
+        List<RoleDO> roles = roleMapper.list(new HashMap<>(16));
+        return roles;
+    }
+
+
+    @Override
+    public List<RoleDO> list(Long userId) {
+        List<Long> rolesIds = userRoleMapper.listRoleId(userId);
+        List<RoleDO> roles = roleMapper.list(new HashMap<>(16));
+        for (RoleDO roleDO : roles) {
+            roleDO.setRoleSign("false");
+            for (Long roleId : rolesIds) {
+                if (Objects.equals(roleDO.getRoleId(), roleId)) {
+                    roleDO.setRoleSign("true");
+                    break;
+                }
+            }
+        }
+        return roles;
+    }
+    @Transactional
+    @Override
+    public int save(RoleDO role) {
+        int count = roleMapper.save(role);
+        List<Long> menuIds = role.getMenuIds();
+        Long roleId = role.getRoleId();
+        List<RoleMenuDO> rms = new ArrayList<>();
+        for (Long menuId : menuIds) {
+            RoleMenuDO rmDo = new RoleMenuDO();
+            rmDo.setRoleId(roleId);
+            rmDo.setMenuId(menuId);
+            rms.add(rmDo);
+        }
+        roleMenuMapper.removeByRoleId(roleId);
+        if (rms.size() > 0) {
+            roleMenuMapper.batchSave(rms);
+        }
+        return count;
+    }
+
+    @Transactional
+    @Override
+    public int remove(Long id) {
+        int count = roleMapper.remove(id);
+        userRoleMapper.removeByRoleId(id);
+        roleMenuMapper.removeByRoleId(id);
+        return count;
     }
 
     @Override
-    public String findRoleByRoleId(String roleId) {
-        return null;
+    public RoleDO get(Long id) {
+        RoleDO roleDO = roleMapper.get(id);
+        return roleDO;
     }
 
     @Override
-    public int insertSelective(Role role) {
-        return 0;
+    public int update(RoleDO role) {
+        int r = roleMapper.update(role);
+        List<Long> menuIds = role.getMenuIds();
+        Long roleId = role.getRoleId();
+        roleMenuMapper.removeByRoleId(roleId);
+        List<RoleMenuDO> rms = new ArrayList<>();
+        for (Long menuId : menuIds) {
+            RoleMenuDO rmDo = new RoleMenuDO();
+            rmDo.setRoleId(roleId);
+            rmDo.setMenuId(menuId);
+            rms.add(rmDo);
+        }
+        if (rms.size() > 0) {
+            roleMenuMapper.batchSave(rms);
+        }
+        return r;
     }
 
     @Override
-    public int updateSelective(Role role) {
-        return 0;
+    public int batchremove(Long[] ids) {
+        int r = roleMapper.batchRemove(ids);
+        return r;
     }
 
-    @Override
-    public Role selectById(String id) {
-        return null;
-    }
-
-    @Override
-    public List<Role> selectByParams(Role role) {
-        return null;
-    }
-
-    @Override
-    public int deleteById(String id) {
-        return 0;
-    }
 }

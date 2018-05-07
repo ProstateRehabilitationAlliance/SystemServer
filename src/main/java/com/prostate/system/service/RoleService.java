@@ -1,37 +1,25 @@
 package com.prostate.system.service;
 
-import com.prostate.system.entity.Role;
-import com.prostate.system.entity.UserRole;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Set;
 
-/**
- * @Author: bianyakun
- * @Date: 2018/4/20 14:00
- * @Todo:
- */
+import org.springframework.stereotype.Service;
 
-@Transactional
+import com.prostate.system.domain.RoleDO;
+
 @Service
-public interface RoleService extends  BaseService<Role>{
+public interface RoleService {
 
+	RoleDO get(Long id);
 
-    /**
-     * @Author: bianyakun
-     * @Date: 2018/4/20 14:23
-     * @todo: 根据角色id查询权限id
-     * @param:   * @param null
-     */
-    List<String> findPermissionIdByRoleId(String roleId);
+	List<RoleDO> list();
 
-    /**
-     * @Author: bianyakun
-     * @Date: 2018/4/20 13:55
-     * @todo:  通过角色id查询角色
-     * @param:   * @param null
-     */
-    String findRoleByRoleId(String  roleId);
+	int save(RoleDO role);
+
+	int update(RoleDO role);
+
+	int remove(Long id);
+
+	List<RoleDO> list(Long userId);
+
+	int batchremove(Long[] ids);
 }

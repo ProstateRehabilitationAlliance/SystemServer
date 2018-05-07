@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${anamnesisIllness.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">既往病史名称：</label>
+								<div class="col-sm-8">
+									<input id="anamnesisIllnessName" name="anamnesisIllnessName" th:value="${anamnesisIllness.anamnesisIllnessName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">中文缩写：</label>
+								<div class="col-sm-8">
+									<input id="spellName" name="spellName" th:value="${anamnesisIllness.spellName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">既往病史编号：</label>
+								<div class="col-sm-8">
+									<input id="anamnesisIllnessNumber" name="anamnesisIllnessNumber" th:value="${anamnesisIllness.anamnesisIllnessNumber}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">排序：</label>
+								<div class="col-sm-8">
+									<input id="orderWeight" name="orderWeight" th:value="${anamnesisIllness.orderWeight}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">创建人员：</label>
+								<div class="col-sm-8">
+									<input id="createUser" name="createUser" th:value="${anamnesisIllness.createUser}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">创建时间：</label>
+								<div class="col-sm-8">
+									<input id="createTime" name="createTime" th:value="${anamnesisIllness.createTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">更新人员：</label>
+								<div class="col-sm-8">
+									<input id="updateUser" name="updateUser" th:value="${anamnesisIllness.updateUser}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">更新时间：</label>
+								<div class="col-sm-8">
+									<input id="updateTime" name="updateTime" th:value="${anamnesisIllness.updateTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">删除人员：</label>
+								<div class="col-sm-8">
+									<input id="deleteUser" name="deleteUser" th:value="${anamnesisIllness.deleteUser}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">删除时间：</label>
+								<div class="col-sm-8">
+									<input id="deleteTime" name="deleteTime" th:value="${anamnesisIllness.deleteTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">删除标记：</label>
+								<div class="col-sm-8">
+									<input id="delFlag" name="delFlag" th:value="${anamnesisIllness.delFlag}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/base/anamnesisIllness/edit.js">
+	</script>
+</body>
+</html>

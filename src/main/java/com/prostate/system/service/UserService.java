@@ -1,79 +1,54 @@
 package com.prostate.system.service;
 
-import com.prostate.system.entity.Permission;
-import com.prostate.system.entity.Role;
-import com.prostate.system.entity.User;
-import com.prostate.system.entity.UserRole;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-/**
- * @Author: bianyakun
- * @Date: 2018/4/19 11:53
- * @Todo:
- */
+import com.prostate.system.vo.UserVO;
+import org.springframework.stereotype.Service;
+
+import com.prostate.common.domain.Tree;
+import com.prostate.system.domain.DeptDO;
+import com.prostate.system.domain.UserDO;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public interface UserService extends BaseService<User>{
+public interface UserService {
+	UserDO get(Long id);
 
-    /**
-     * @Author: bianyakun
-     * @Date: 2018/4/19 13:13
-     * @todo:   管理员注册
-     * @param:   User对象
-     * @return:  注册成功返回1,注册失败返回0
-     */
-    int insertSelective(User user);
+	List<UserDO> list(Map<String, Object> map);
 
-//    /**
-//     * @Author: bianyakun
-//     * @Date: 2018/4/19 13:14
-//     * @todo:   根据用户名和密码进行查询
-//     * @param:   用户名和密码
-//     * @return:  登录成功返回1,登录失败返回0
-//     */
-//    int userLogin(String username,String password);
+	int count(Map<String, Object> map);
 
-    /**
-     * @TODO: 根据用户名查找用户信息
-     * @param username
-     * @return  use对象
-     */
-   List<User> findUserWihtUserName(String username);
-   // User findUserWihtUserName(String username);
+	int save(UserDO user);
 
-    /**
-     * @Author: bianyakun
-     * @Date: 2018/4/20 13:44
-     * @todo:   根据用户名查询用户的id
-     * @param:   * @param null
-     */
-    List<String> findUserIdByName(String username);
+	int update(UserDO user);
 
+	int remove(Long userId);
 
-    /**
-     * @Author: bianyakun
-     * @Date: 2018/4/20 13:47
-     * @todo:   通过userId查询用户角色id,存进List集合
-     * @param:   * @param null
-     */
-    List<UserRole> findRoleIdByUid(String userId);
+	int batchremove(Long[] userIds);
 
+	boolean exit(Map<String, Object> params);
 
+	Set<String> listRoles(Long userId);
 
+	int resetPwd(UserVO userVO,UserDO userDO) throws Exception;
+	int adminResetPwd(UserVO userVO) throws Exception;
+	Tree<DeptDO> getTree();
 
+	/**
+	 * 更新个人信息
+	 * @param userDO
+	 * @return
+	 */
+	int updatePersonal(UserDO userDO);
 
-
-    int updateSelective(User user);
-
-    User selectById(String id);
-
-    List<User> selectByParams(User user);
-
-    int deleteById(String id);
+	/**
+	 * 更新个人图片
+	 * @param file 图片
+	 * @param avatar_data 裁剪信息
+	 * @param userId 用户ID
+	 * @throws Exception
+	 */
+    Map<String, Object> updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception;
 }
