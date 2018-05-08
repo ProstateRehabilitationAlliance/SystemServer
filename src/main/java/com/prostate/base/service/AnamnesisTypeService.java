@@ -27,4 +27,9 @@ public interface AnamnesisTypeService {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	List<AnamnesisTypeDO> listByName(String name);
+
+	List<AnamnesisTypeDO> listByNumber(String number);
+
 }

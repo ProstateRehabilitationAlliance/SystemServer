@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * 
@@ -13,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email 1992lcg@163.com
  * @date 2018-05-04 14:46:36
  */
-@Mapper
+@Repository
 public interface AnamnesisTypeDao {
 
 	AnamnesisTypeDO get(String id);
@@ -29,4 +30,8 @@ public interface AnamnesisTypeDao {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	List<AnamnesisTypeDO> listByName(String name);
+
+	List<AnamnesisTypeDO> listByNumber(String number);
 }

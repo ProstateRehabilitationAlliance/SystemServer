@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * 角色与菜单对应关系
@@ -13,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email 1992lcg@163.com
  * @date 2017-10-03 11:08:59
  */
-@Mapper
+@Repository
 public interface RoleMenuDao {
 
 	RoleMenuDO get(Long id);

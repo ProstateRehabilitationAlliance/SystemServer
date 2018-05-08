@@ -7,16 +7,16 @@ public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
 
 	public R() {
-		put("code", 0);
+		put("code", 20000);
 		put("msg", "操作成功");
 	}
 
 	public static R error() {
-		return error(1, "操作失败");
+		return error(20001, "操作失败");
 	}
 
 	public static R error(String msg) {
-		return error(500, msg);
+		return error(20001, msg);
 	}
 
 	public static R error(int code, String msg) {

@@ -51,5 +51,15 @@ public class AnamnesisTypeServiceImpl implements AnamnesisTypeService {
 	public int batchRemove(String[] ids){
 		return anamnesisTypeDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public List<AnamnesisTypeDO> listByName(String name) {
+		return anamnesisTypeDao.listByName(name);
+	}
+
+	@Override
+	public List<AnamnesisTypeDO> listByNumber(String number) {
+		return anamnesisTypeDao.listByNumber(number);
+	}
+
 }

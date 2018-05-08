@@ -1,8 +1,10 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -46,20 +48,27 @@ public class AnamnesisTypeController {
 	@RequiresPermissions("base:anamnesisType:anamnesisType")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-		params.put("delFlag","0");
         Query query = new Query(params);
 		List<AnamnesisTypeDO> anamnesisTypeList = anamnesisTypeService.list(query);
 		int total = anamnesisTypeService.count(query);
 		PageUtils pageUtils = new PageUtils(anamnesisTypeList, total);
 		return pageUtils;
 	}
-	
+
+	/**
+	 *   弹出新增页面
+	 * @return
+	 */
 	@GetMapping("/add")
 	@RequiresPermissions("base:anamnesisType:add")
 	String add(){
 	    return "base/anamnesisType/add";
 	}
 
+	/**
+	 *   数据回显
+	 * @return
+	 */
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("base:anamnesisType:edit")
 	String edit(@PathVariable("id") String id,Model model){
@@ -69,12 +78,19 @@ public class AnamnesisTypeController {
 	}
 	
 	/**
-	 * 保存
+	 * 保存  实际上新增数据
 	 */
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:anamnesisType:add")
 	public R save( AnamnesisTypeDO anamnesisType){
+		if (anamnesisTypeService.listByName(anamnesisType.getAnamnesisTypeName())!=null){
+			return R.error(20001,"该病史类型已经存在");
+		}
+		if (anamnesisTypeService.listByNumber(anamnesisType.getAnamnesisTypeNumber()) !=null){
+			return R.error(20001,"该病史类型编号已经存在");
+		}
+
 		if(anamnesisTypeService.save(anamnesisType)>0){
 			return R.ok();
 		}
@@ -98,7 +114,12 @@ public class AnamnesisTypeController {
 	@ResponseBody
 	@RequiresPermissions("base:anamnesisType:remove")
 	public R remove( String id){
-		if(anamnesisTypeService.remove(id)>0){
+		AnamnesisTypeDO anamnesisTypeDO=new AnamnesisTypeDO();
+		anamnesisTypeDO.setId(id);
+		anamnesisTypeDO.setDeleteUser(ShiroUtils.getUserId().toString());
+		anamnesisTypeDO.setDeleteTime(new Date());
+		anamnesisTypeDO.setDelFlag("1");
+		if(anamnesisTypeService.update(anamnesisTypeDO)>0){
 		return R.ok();
 		}
 		return R.error();
@@ -111,7 +132,16 @@ public class AnamnesisTypeController {
 	@ResponseBody
 	@RequiresPermissions("base:anamnesisType:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		anamnesisTypeService.batchRemove(ids);
+		for (String id:ids){
+			AnamnesisTypeDO anamnesisTypeDO=new AnamnesisTypeDO();
+			anamnesisTypeDO.setId(id);
+			anamnesisTypeDO.setDeleteUser(ShiroUtils.getUserId().toString());
+			anamnesisTypeDO.setDeleteTime(new Date());
+			anamnesisTypeDO.setDelFlag("1");
+			anamnesisTypeService.update(anamnesisTypeDO);
+		}
+
+		//anamnesisTypeService.batchRemove(ids);
 		return R.ok();
 	}
 	

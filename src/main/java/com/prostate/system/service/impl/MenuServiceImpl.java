@@ -2,9 +2,11 @@ package com.prostate.system.service.impl;
 
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
+import com.prostate.common.utils.ShiroUtils;
 import com.prostate.system.dao.MenuDao;
 import com.prostate.system.dao.RoleMenuDao;
 import com.prostate.system.domain.MenuDO;
+import com.prostate.system.domain.RoleMenuDO;
 import com.prostate.system.service.MenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,11 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public int save(MenuDO menu) {
 		int r = menuMapper.save(menu);
+		RoleMenuDO roleMenuDO =new RoleMenuDO();
+		roleMenuDO.setRoleId(ShiroUtils.getUserId());
+		roleMenuDO.setMenuId(menu.getMenuId());
+		System.out.println();
+		roleMenuMapper.save(roleMenuDO);
 		return r;
 	}
 
