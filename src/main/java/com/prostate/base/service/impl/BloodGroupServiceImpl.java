@@ -21,7 +21,17 @@ public class BloodGroupServiceImpl implements BloodGroupService {
 	public BloodGroupDO get(String id){
 		return bloodGroupDao.get(id);
 	}
-	
+
+	@Override
+	public BloodGroupDO getByName(String bloodGroupName) {
+		return bloodGroupDao.getByName(bloodGroupName);
+	}
+
+	@Override
+	public BloodGroupDO getByNumBer(String bloodGroupNumber) {
+		return bloodGroupDao.getByNumBer(bloodGroupNumber);
+	}
+
 	@Override
 	public List<BloodGroupDO> list(Map<String, Object> map){
 		return bloodGroupDao.list(map);
@@ -41,7 +51,8 @@ public class BloodGroupServiceImpl implements BloodGroupService {
 	public int update(BloodGroupDO bloodGroup){
 		return bloodGroupDao.update(bloodGroup);
 	}
-	
+
+
 	@Override
 	public int remove(String id){
 		return bloodGroupDao.remove(id);

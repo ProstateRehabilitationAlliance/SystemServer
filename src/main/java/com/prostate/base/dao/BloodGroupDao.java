@@ -17,15 +17,20 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BloodGroupDao {
 
 	BloodGroupDO get(String id);
-	
+
+	BloodGroupDO getByName(String bloodGroupName);
+
+	BloodGroupDO getByNumBer(String bloodGroupNumber);
+
 	List<BloodGroupDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
 	int save(BloodGroupDO bloodGroup);
-	
+
 	int update(BloodGroupDO bloodGroup);
-	
+
+
 	int remove(String id);
 	
 	int batchRemove(String[] ids);

@@ -15,6 +15,13 @@ import java.util.Map;
 public interface BloodGroupService {
 	
 	BloodGroupDO get(String id);
+
+	//新增按照名字查询的服务方法
+	BloodGroupDO getByName(String bloodGroupName);
+
+	//新增按照编号查询的服务方法
+	BloodGroupDO getByNumBer(String bloodGroupNumber);
+
 	
 	List<BloodGroupDO> list(Map<String, Object> map);
 	
@@ -23,8 +30,9 @@ public interface BloodGroupService {
 	int save(BloodGroupDO bloodGroup);
 	
 	int update(BloodGroupDO bloodGroup);
-	
+
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
 }

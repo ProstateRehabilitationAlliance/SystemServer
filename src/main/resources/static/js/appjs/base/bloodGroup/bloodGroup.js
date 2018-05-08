@@ -47,50 +47,50 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
-									field : 'id', 
-									title : '' 
-								},
-																{
+								// {
+								// 	field : 'id',
+								// 	title : 'ID'
+								// },
+								{
 									field : 'bloodGroupName', 
-									title : '' 
+									title : '名称'
 								},
 																{
 									field : 'bloodGroupNumber', 
-									title : '' 
+									title : '编号'
 								},
 																{
 									field : 'orderWeight', 
-									title : '' 
+									title : '权重'
 								},
 																{
 									field : 'createUser', 
-									title : '' 
+									title : '创建者'
 								},
 																{
 									field : 'createTime', 
-									title : '' 
+									title : '创建时间'
 								},
 																{
 									field : 'updateUser', 
-									title : '' 
+									title : '更新者'
 								},
 																{
 									field : 'updateTime', 
-									title : '' 
+									title : '更新时间'
 								},
-																{
-									field : 'deleteUser', 
-									title : '' 
-								},
-																{
-									field : 'deleteTime', 
-									title : '' 
-								},
-																{
-									field : 'delFlag', 
-									title : '' 
-								},
+								// 								{
+                            // 	field : 'deleteUser',
+                            // 	title : '删除者'
+                            // },
+                            // 								{
+                            // 	field : 'deleteTime',
+                            // 	title : '删除时间'
+                            // },
+								// 								{
+								// 	field : 'delFlag',
+								// 	title : '状态'
+								// },
 																{
 									title : '操作',
 									field : 'id',
@@ -144,7 +144,7 @@ function remove(id) {
 				'id' : id
 			},
 			success : function(r) {
-				if (r.code==0) {
+				if (r.code==20000) {
 					layer.msg(r.msg);
 					reLoad();
 				}else{
@@ -159,7 +159,7 @@ function resetPwd(id) {
 }
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
-	if (rows.length == 0) {
+	if (rows.length == 20000) {
 		layer.msg("请选择要删除的数据");
 		return;
 	}
@@ -179,7 +179,7 @@ function batchRemove() {
 			},
 			url : prefix + '/batchRemove',
 			success : function(r) {
-				if (r.code == 0) {
+				if (r.code == 20000) {
 					layer.msg(r.msg);
 					reLoad();
 				} else {
