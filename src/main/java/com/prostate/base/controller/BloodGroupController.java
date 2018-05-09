@@ -68,6 +68,15 @@ public class BloodGroupController {
     @PostMapping("/save")
     @RequiresPermissions("base:bloodGroup:add")
     public R save(BloodGroupDO bloodGroup) {
+//        System.out.println("===========================================================");
+////        System.out.println(bloodGroup.getBloodGroupName());
+////        System.out.println(bloodGroup.getUpdateTime());
+//        if (bloodGroup.getBloodGroupName() == null || bloodGroup.getBloodGroupName().equalsIgnoreCase("")){
+//            return R.error(20003,"名称不能为空");
+//        }
+//        if (bloodGroup.getBloodGroupNumber() == null || bloodGroup.getBloodGroupNumber().equalsIgnoreCase("")){
+//            return R.error(20003,"编号不能为空");
+//        }
         //如果名称和编号都不重复
         if (bloodGroupService.getByName(bloodGroup.getBloodGroupName()) == null
                 && bloodGroupService.getByNumBer(bloodGroup.getBloodGroupNumber()) == null) {
@@ -89,6 +98,12 @@ public class BloodGroupController {
     @RequestMapping("/update")
     @RequiresPermissions("base:bloodGroup:edit")
     public R update(BloodGroupDO bloodGroup) {
+//        if (bloodGroup.getBloodGroupName() == null || bloodGroup.getBloodGroupName().equalsIgnoreCase("")){
+//            return R.error(20003,"名称不能为空");
+//        }
+//        if (bloodGroup.getBloodGroupNumber() == null || bloodGroup.getBloodGroupNumber().equalsIgnoreCase("")){
+//            return R.error(20003,"编号不能为空");
+//        }
         //根据ID，获取修改前对象的信息
         BloodGroupDO bloodGroup01 = bloodGroupService.get(bloodGroup.getId());
         //如果对象的名称发生变化，

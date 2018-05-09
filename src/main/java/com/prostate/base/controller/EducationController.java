@@ -76,6 +76,12 @@ public class EducationController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:education:add")
 	public R save( EducationDO education){
+//		if (education.getEducationNumber() == null || education.getEducationNumber().equalsIgnoreCase("")){
+//			return R.error(20003,"编号不能为空");
+//		}
+//		if (education.getEducationName() == null || education.getEducationName().equalsIgnoreCase("")){
+//			return R.error(20003,"名称不能为空");
+//		}
 		//增加数据之前进行判断，如果名称和编号都不重复的话进行下一步
 		if(educationService.getByName(education.getEducationName()) == null
 				&& educationService.getByNumber(education.getEducationNumber()) == null){
@@ -96,6 +102,12 @@ public class EducationController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:education:edit")
 	public R update( EducationDO education){
+//		if (education.getEducationNumber() == null || education.getEducationNumber().equalsIgnoreCase("")){
+//			return R.error(20003,"编号不能为空");
+//		}
+//		if (education.getEducationName() == null || education.getEducationName().equalsIgnoreCase("")){
+//			return R.error(20003,"名称不能为空");
+//		}
 		//根据传入的对象的id获取数据库原来的数据内容
 		EducationDO educationDO01 = educationService.get(education.getId());
 		//如果新的名称和数据库原来的名称不相同，
