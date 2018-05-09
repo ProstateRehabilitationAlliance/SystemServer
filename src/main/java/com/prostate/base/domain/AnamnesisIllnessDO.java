@@ -182,4 +182,22 @@ public class AnamnesisIllnessDO implements Serializable {
 	public String getDelFlag() {
 		return delFlag;
 	}
+
+	@Override
+	public String toString() {
+		return "AnamnesisIllnessDO{" +
+				"id='" + id + '\'' +
+				", anamnesisIllnessName='" + anamnesisIllnessName + '\'' +
+				", spellName='" + spellName + '\'' +
+				", anamnesisIllnessNumber='" + anamnesisIllnessNumber + '\'' +
+				", orderWeight=" + orderWeight +
+				", createUser='" + createUser + '\'' +
+				", createTime=" + createTime +
+				", updateUser='" + updateUser + '\'' +
+				", updateTime=" + updateTime +
+				", deleteUser='" + deleteUser + '\'' +
+				", deleteTime=" + deleteTime +
+				", delFlag='" + delFlag + '\'' +
+				'}';
+	}
 }

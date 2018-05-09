@@ -257,6 +257,7 @@
 		where id = #{id}
 	</update>
 
+	<!--基本不用-->
 	<delete id="remove">
 		delete from base_anamnesis_type where id = #{value}
 	</delete>

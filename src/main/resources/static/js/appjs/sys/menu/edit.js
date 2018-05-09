@@ -33,15 +33,16 @@ function update() {
 			laryer.alert("Connection error");
 		},
 		success : function(data) {
-			if (data.code == 0) {
-				parent.layer.msg("保存成功");
-				parent.reLoad();
-				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-				parent.layer.close(index);
+            if (data.code ==20000) {
+                parent.layer.msg("操作成功");
+                parent.reLoad();
+                var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                parent.layer.close(index);
 
-			} else {
-				layer.alert(data.msg)
-			}
+            } else {
+            	alert("123")
+                //parent.layer.alert(data.msg)
+            }
 
 		}
 	});

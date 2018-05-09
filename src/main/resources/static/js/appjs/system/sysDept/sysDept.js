@@ -111,7 +111,7 @@ function removeone(id) {
 				'deptId' : id
 			},
 			success : function(r) {
-				if (r.code == 0) {
+				if (r.code == 20000) {
 					layer.msg(r.msg);
 					reLoad();
 				} else {
