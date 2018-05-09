@@ -12,6 +12,20 @@
 		update_user, update_time, delete_user, delete_time, del_flag
 	</sql>
 
+	<resultMap id="BaseResultMap" type="com.prostate.base.domain.AnamnesisTypeDO">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="anamnesis_type_name" jdbcType="VARCHAR" property="anamnesisTypeName" />
+		<result column="anamnesis_type_number" jdbcType="VARCHAR" property="anamnesisTypeNumber" />
+		<result column="order_weight" jdbcType="INTEGER" property="orderWeight" />
+		<result column="create_user" jdbcType="VARCHAR" property="createUser" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="delete_user" jdbcType="VARCHAR" property="deleteUser" />
+		<result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+		<result column="del_flag" jdbcType="CHAR" property="delFlag" />
+	</resultMap>
+
 	<select id="list" resultType="com.prostate.base.domain.AnamnesisTypeDO">
 		select <include refid="Base_Column_List" />
 		from base_anamnesis_type
@@ -40,34 +54,44 @@
 		</if>
 	</select>
 
-	<select id="listByName" resultType="com.prostate.base.domain.AnamnesisTypeDO">
-		select <include refid="Base_Column_List" />
+	<select id="listByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
 		from base_anamnesis_type
-		<where>
-			<if test="id != null and id != ''"> and id = #{id} </if>
-			<if test="anamnesisTypeName != null and anamnesisTypeName != ''"> and anamnesis_type_name = #{anamnesisTypeName} </if>
-			<if test="anamnesisTypeNumber != null and anamnesisTypeNumber != ''"> and anamnesis_type_number = #{anamnesisTypeNumber} </if>
-			<if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
-			<if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
-			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-			<if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
-			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
-			and del_flag ='0'
-		</where>
-		<choose>
-			<when test="orderWeight != null and orderWeight.trim() != ''">
-				order by ${orderWeight}
-			</when>
-			<otherwise>
-				order by order_weight ASC
-			</otherwise>
-		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
+		where del_flag = '0'
+		AND anamnesis_type_name = #{anamnesisTypeName,jdbcType=VARCHAR}
+	</select>
+	<select id="listByNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from base_anamnesis_type
+		where del_flag = '0'
+		AND anamnesis_type_number = #{anamnesisTypeNumber,jdbcType=VARCHAR}
 	</select>
 
-	<select id="listByNumber" resultType="com.prostate.base.domain.AnamnesisTypeDO">
+
+	<!--<select id="listByName" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" />
+		from base_anamnesis_type
+		<where>
+			and anamnesis_type_name = #{anamnesisTypeName}
+
+			and del_flag = '0'
+		</where>
+
+	</select>-->
+
+	<!--<select id="listByNumber" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" />
+		from base_anamnesis_type
+		<where>
+			and anamnesis_type_number = #{anamnesisTypeNumber}
+			and del_flag = '0'
+		</where>
+
+	</select>-->
+
+	<!--<select id="listByName" resultType="com.prostate.base.domain.AnamnesisTypeDO">
 		select <include refid="Base_Column_List" />
 		from base_anamnesis_type
 		<where>
@@ -92,7 +116,34 @@
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
-	</select>
+	</select>-->
+
+	<!--<select id="listByNumber" resultType="com.prostate.base.domain.AnamnesisTypeDO">
+		select <include refid="Base_Column_List" />
+		from base_anamnesis_type
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="anamnesisTypeName != null and anamnesisTypeName != ''"> and anamnesis_type_name = #{anamnesisTypeName} </if>
+			<if test="anamnesisTypeNumber != null and anamnesisTypeNumber != ''"> and anamnesis_type_number = #{anamnesisTypeNumber} </if>
+			<if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+			<if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+			and del_flag ='0'
+		</where>
+		<choose>
+			<when test="orderWeight != null and orderWeight.trim() != ''">
+				order by ${orderWeight}
+			</when>
+			<otherwise>
+				order by order_weight ASC
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>-->
 	
  	<select id="count" resultType="int">
 		select count(*) from base_anamnesis_type
@@ -205,6 +256,7 @@
 		</set>
 		where id = #{id}
 	</update>
+
 	<delete id="remove">
 		delete from base_anamnesis_type where id = #{value}
 	</delete>

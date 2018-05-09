@@ -60,22 +60,6 @@ function load() {
 									title : '排序' 
 								},
 																{
-									field : 'createUser', 
-									title : '创建人员' 
-								},
-																{
-									field : 'createTime', 
-									title : '创建时间' 
-								},
-																{
-									field : 'updateUser', 
-									title : '更新人员' 
-								},
-																{
-									field : 'updateTime', 
-									title : '更新时间' 
-								},
-																{
 									title : '操作',
 									field : 'id',
 									align : 'center',
@@ -163,12 +147,12 @@ function batchRemove() {
 			},
 			url : prefix + '/batchRemove',
 			success : function(r) {
-				if (r.code == 0) {
-					layer.msg(r.msg);
-					reLoad();
-				} else {
-					layer.msg(r.msg);
-				}
+                if (r.code==20000) {
+                    layer.msg(r.msg);
+                    reLoad();
+                }else{
+                    layer.msg(r.msg);
+                }
 			}
 		});
 	}, function() {

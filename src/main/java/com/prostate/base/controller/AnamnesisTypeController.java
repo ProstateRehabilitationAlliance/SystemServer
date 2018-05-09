@@ -84,17 +84,15 @@ public class AnamnesisTypeController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:anamnesisType:add")
 	public R save( AnamnesisTypeDO anamnesisType){
-		if (anamnesisTypeService.listByName(anamnesisType.getAnamnesisTypeName())!=null){
-			return R.error(20001,"该病史类型已经存在");
-		}
-		if (anamnesisTypeService.listByNumber(anamnesisType.getAnamnesisTypeNumber()) !=null){
-			return R.error(20001,"该病史类型编号已经存在");
-		}
+		System.out.println("+++>>>"+anamnesisTypeService.listByName(anamnesisType.getAnamnesisTypeName()));
+		if (anamnesisTypeService.listByName(anamnesisType.getAnamnesisTypeName()).size()==0&&
+				anamnesisTypeService.listByNumber(anamnesisType.getAnamnesisTypeNumber()).size()==0){
+			if(anamnesisTypeService.save(anamnesisType)>0){
+				return R.ok();
+			}
 
-		if(anamnesisTypeService.save(anamnesisType)>0){
-			return R.ok();
 		}
-		return R.error();
+		return R.error(20001,"该病史类型或者已经存在");
 	}
 	/**
 	 * 修改
@@ -103,8 +101,22 @@ public class AnamnesisTypeController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:anamnesisType:edit")
 	public R update( AnamnesisTypeDO anamnesisType){
-		anamnesisTypeService.update(anamnesisType);
-		return R.ok();
+		AnamnesisTypeDO anamnesisType01=anamnesisTypeService.get(anamnesisType.getId());
+		if (!anamnesisType01.getAnamnesisTypeName().equalsIgnoreCase(anamnesisType.getAnamnesisTypeName())){
+			if (anamnesisTypeService.listByName(anamnesisType.getAnamnesisTypeName()).size()>0){
+				return R.error(20001,"该病史类型已经存在");
+			}
+		}
+		if (!anamnesisType01.getAnamnesisTypeNumber().equalsIgnoreCase(anamnesisType.getAnamnesisTypeNumber())){
+			if (anamnesisTypeService.listByNumber(anamnesisType.getAnamnesisTypeNumber()).size()>0){
+				return R.error(20001,"该病史类型编号已经存在");
+			}
+		}
+		if (anamnesisTypeService.update(anamnesisType)>0){
+			return R.ok();
+		}else {
+			return R.error();
+		}
 	}
 	
 	/**
@@ -126,7 +138,7 @@ public class AnamnesisTypeController {
 	}
 	
 	/**
-	 *     删除
+	 *     批量删除
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody

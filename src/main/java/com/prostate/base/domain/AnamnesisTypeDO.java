@@ -170,4 +170,21 @@ public class AnamnesisTypeDO implements Serializable {
 	public String getDelFlag() {
 		return delFlag;
 	}
+
+	@Override
+	public String toString() {
+		return "AnamnesisTypeDO{" +
+				"id='" + id + '\'' +
+				", anamnesisTypeName='" + anamnesisTypeName + '\'' +
+				", anamnesisTypeNumber='" + anamnesisTypeNumber + '\'' +
+				", orderWeight=" + orderWeight +
+				", createUser='" + createUser + '\'' +
+				", createTime=" + createTime +
+				", updateUser='" + updateUser + '\'' +
+				", updateTime=" + updateTime +
+				", deleteUser='" + deleteUser + '\'' +
+				", deleteTime=" + deleteTime +
+				", delFlag='" + delFlag + '\'' +
+				'}';
+	}
 }
