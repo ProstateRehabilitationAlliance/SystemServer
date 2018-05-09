@@ -1,8 +1,10 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -74,10 +76,18 @@ public class EducationController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:education:add")
 	public R save( EducationDO education){
-		if(educationService.save(education)>0){
-			return R.ok();
+		//增加数据之前进行判断，如果名称和编号都不重复的话进行下一步
+		if(educationService.getByName(education.getEducationName()) == null
+				&& educationService.getByNumber(education.getEducationNumber()) == null){
+			//获取用户ID作为create_user信息
+			education.setCreateTime(new Date());
+			education.setCreateUser(ShiroUtils.getUserId().toString());
+			education.setDelFlag("0");
+			if(educationService.save(education)>0){
+				return R.ok();
+			}
 		}
-		return R.error();
+		return R.error(20001,"名称或者编号重复");
 	}
 	/**
 	 * 修改
@@ -86,6 +96,23 @@ public class EducationController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:education:edit")
 	public R update( EducationDO education){
+		//根据传入的对象的id获取数据库原来的数据内容
+		EducationDO educationDO01 = educationService.get(education.getId());
+		//如果新的名称和数据库原来的名称不相同，
+		if ( !educationDO01.getEducationName().equalsIgnoreCase(education.getEducationName())){
+			//判断新的名字和数据库中其他的数据名称是否冲突
+			if(educationService.getByName(education.getEducationName()) != null ){
+				return R.error(20001, "名称重复");
+			}
+		}
+		//编号重复上面的检查逻辑
+		if( !educationDO01.getEducationNumber().equalsIgnoreCase(education.getEducationNumber())){
+			if(educationService.getByNumber(education.getEducationNumber()) != null){
+				return R.error(20001, "编号重复");
+			}
+		}
+		education.setUpdateTime(new Date());
+		education.setUpdateUser(ShiroUtils.getUserId().toString());
 		educationService.update(education);
 		return R.ok();
 	}
@@ -97,9 +124,20 @@ public class EducationController {
 	@ResponseBody
 	@RequiresPermissions("base:education:remove")
 	public R remove( String id){
-		if(educationService.remove(id)>0){
-		return R.ok();
+
+		EducationDO educationDO = educationService.get(id);
+		if (educationDO == null ){
+			return R.error(20003,"这条数据不存在，可能已经删除了");
 		}
+		educationDO.setDeleteTime(new Date());
+		educationDO.setDeleteUser(ShiroUtils.getUserId().toString());
+		educationDO.setDelFlag("1");
+		if (educationService.update(educationDO)>0){
+			return R.ok();
+		}
+//		if(educationService.remove(id)>0){
+//		return R.ok();
+//		}
 		return R.error();
 	}
 	
@@ -110,7 +148,17 @@ public class EducationController {
 	@ResponseBody
 	@RequiresPermissions("base:education:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		educationService.batchRemove(ids);
+		//每一次操作都是和数据库交互两回，拉低了访问速度。
+		for (String id: ids) {
+			EducationDO educationDO = educationService.get(id);
+			if ( educationDO == null){
+				return  R.error(20003,"这条数据不存在，可能已经删除了");
+			}
+			educationDO.setDeleteTime(new Date());
+			educationDO.setDeleteUser(ShiroUtils.getUserId().toString());
+			educationDO.setDelFlag("1");
+			educationService.update(educationDO);
+		}
 		return R.ok();
 	}
 	

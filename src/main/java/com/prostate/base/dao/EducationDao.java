@@ -17,6 +17,11 @@ import org.apache.ibatis.annotations.Mapper;
 public interface EducationDao {
 
 	EducationDO get(String id);
+
+	EducationDO getByName(String educationName);
+
+	EducationDO getByNumber(String educationNumber);
+
 	
 	List<EducationDO> list(Map<String, Object> map);
 	

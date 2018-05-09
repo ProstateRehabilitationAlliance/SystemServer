@@ -15,6 +15,10 @@ import java.util.Map;
 public interface EducationService {
 	
 	EducationDO get(String id);
+
+	EducationDO getByName(String educationName);
+
+	EducationDO getByNumber(String educationNumber);
 	
 	List<EducationDO> list(Map<String, Object> map);
 	
