@@ -1,8 +1,10 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -74,10 +76,18 @@ public class AnamnesisIllnessController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:anamnesisIllness:add")
 	public R save( AnamnesisIllnessDO anamnesisIllness){
-		if(anamnesisIllnessService.save(anamnesisIllness)>0){
-			return R.ok();
+
+		if (anamnesisIllnessService.listByName(anamnesisIllness.getAnamnesisIllnessName()).size()==0&&
+				anamnesisIllnessService.listByNumber(anamnesisIllness.getAnamnesisIllnessNumber()).size()==0){
+			anamnesisIllness.setCreateUser(ShiroUtils.getUserId().toString());
+			anamnesisIllness.setUpdateTime(new Date());
+			anamnesisIllness.setUpdateUser(ShiroUtils.getUserId().toString());
+			if(anamnesisIllnessService.save(anamnesisIllness)>0){
+				return R.ok();
+			}
+
 		}
-		return R.error();
+		return R.error(20001,"该基础疾病名称或者编号已经存在");
 	}
 	/**
 	 * 修改
@@ -86,8 +96,25 @@ public class AnamnesisIllnessController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:anamnesisIllness:edit")
 	public R update( AnamnesisIllnessDO anamnesisIllness){
-		anamnesisIllnessService.update(anamnesisIllness);
-		return R.ok();
+		AnamnesisIllnessDO anamnesisIllnessDO01=anamnesisIllnessService.get(anamnesisIllness.getId());
+		if (!anamnesisIllnessDO01.getAnamnesisIllnessName().equalsIgnoreCase(anamnesisIllness.getAnamnesisIllnessName())){
+			if (anamnesisIllnessService.listByName(anamnesisIllness.getAnamnesisIllnessName()).size()>0){
+				return R.error(20001,"该疾病名称已经存在");
+			}
+		}
+		if (!anamnesisIllnessDO01.getAnamnesisIllnessNumber().equalsIgnoreCase(anamnesisIllness.getAnamnesisIllnessNumber())){
+			if (anamnesisIllnessService.listByNumber(anamnesisIllness.getAnamnesisIllnessNumber()).size()>0){
+				return R.error(20001,"该疾病名称对应编号已经存在");
+			}
+		}
+		anamnesisIllness.setUpdateUser(ShiroUtils.getUserId().toString());
+		anamnesisIllness.setUpdateTime(new Date());
+		if (anamnesisIllnessService.update(anamnesisIllness)>0){
+			return R.ok();
+		}else {
+			return R.error();
+		}
+
 	}
 	
 	/**
@@ -97,10 +124,17 @@ public class AnamnesisIllnessController {
 	@ResponseBody
 	@RequiresPermissions("base:anamnesisIllness:remove")
 	public R remove( String id){
-		if(anamnesisIllnessService.remove(id)>0){
-		return R.ok();
+
+		AnamnesisIllnessDO anamnesisIllnessDO=new AnamnesisIllnessDO();
+		anamnesisIllnessDO.setId(id);
+		anamnesisIllnessDO.setDeleteUser(ShiroUtils.getUserId().toString());
+		anamnesisIllnessDO.setDeleteTime(new Date());
+		anamnesisIllnessDO.setDelFlag("1");
+		if(anamnesisIllnessService.update(anamnesisIllnessDO)>0){
+			return R.ok();
 		}
 		return R.error();
+
 	}
 	
 	/**
@@ -110,8 +144,19 @@ public class AnamnesisIllnessController {
 	@ResponseBody
 	@RequiresPermissions("base:anamnesisIllness:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		anamnesisIllnessService.batchRemove(ids);
+
+		for (String id:ids){
+			AnamnesisIllnessDO anamnesisIllnessDO=new AnamnesisIllnessDO();
+			anamnesisIllnessDO.setId(id);
+			anamnesisIllnessDO.setDeleteUser(ShiroUtils.getUserId().toString());
+			anamnesisIllnessDO.setDeleteTime(new Date());
+			anamnesisIllnessDO.setDelFlag("1");
+			anamnesisIllnessService.update(anamnesisIllnessDO);
+		}
+
+		//anamnesisTypeService.batchRemove(ids);
 		return R.ok();
+
 	}
 	
 }

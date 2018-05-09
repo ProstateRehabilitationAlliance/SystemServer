@@ -51,5 +51,15 @@ public class AnamnesisIllnessServiceImpl implements AnamnesisIllnessService {
 	public int batchRemove(String[] ids){
 		return anamnesisIllnessDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public List<AnamnesisIllnessDO> listByName(String name) {
+		return anamnesisIllnessDao.listByName(name);
+	}
+
+	@Override
+	public List<AnamnesisIllnessDO> listByNumber(String number) {
+		return anamnesisIllnessDao.listByNumber(number);
+	}
+
 }

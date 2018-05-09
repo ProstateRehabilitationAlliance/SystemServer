@@ -84,9 +84,10 @@ public class AnamnesisTypeController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:anamnesisType:add")
 	public R save( AnamnesisTypeDO anamnesisType){
-		System.out.println("+++>>>"+anamnesisTypeService.listByName(anamnesisType.getAnamnesisTypeName()));
+
 		if (anamnesisTypeService.listByName(anamnesisType.getAnamnesisTypeName()).size()==0&&
 				anamnesisTypeService.listByNumber(anamnesisType.getAnamnesisTypeNumber()).size()==0){
+			anamnesisType.setCreateUser(ShiroUtils.getUserId().toString());
 			if(anamnesisTypeService.save(anamnesisType)>0){
 				return R.ok();
 			}
@@ -112,6 +113,8 @@ public class AnamnesisTypeController {
 				return R.error(20001,"该病史类型编号已经存在");
 			}
 		}
+		anamnesisType.setUpdateUser(ShiroUtils.getUserId().toString());
+		anamnesisType.setUpdateTime(new Date());
 		if (anamnesisTypeService.update(anamnesisType)>0){
 			return R.ok();
 		}else {

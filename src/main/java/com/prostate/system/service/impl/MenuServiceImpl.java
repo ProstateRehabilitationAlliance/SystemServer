@@ -59,6 +59,10 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public int remove(Long id) {
 		int result = menuMapper.remove(id);
+		RoleMenuDO roleMenuDO =new RoleMenuDO();
+		roleMenuDO.setRoleId(ShiroUtils.getUserId());
+		roleMenuDO.setMenuId(id);
+		roleMenuMapper.save(roleMenuDO);
 		return result;
 	}
 	@Transactional(readOnly = false,rollbackFor = Exception.class)
@@ -68,7 +72,6 @@ public class MenuServiceImpl implements MenuService {
 		RoleMenuDO roleMenuDO =new RoleMenuDO();
 		roleMenuDO.setRoleId(ShiroUtils.getUserId());
 		roleMenuDO.setMenuId(menu.getMenuId());
-		System.out.println();
 		roleMenuMapper.save(roleMenuDO);
 		return r;
 	}
