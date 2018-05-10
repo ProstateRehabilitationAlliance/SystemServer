@@ -27,4 +27,8 @@ public interface IllnessService {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	List<IllnessDO> listByName(String name);
+
+	List<IllnessDO> listByNumber(String number);
 }

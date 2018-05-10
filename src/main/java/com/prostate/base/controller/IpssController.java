@@ -3,6 +3,7 @@ package com.prostate.base.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -68,7 +69,7 @@ public class IpssController {
 	}
 	
 	/**
-	 * 保存
+	 * 保存  增
 	 */
 	@ResponseBody
 	@PostMapping("/save")

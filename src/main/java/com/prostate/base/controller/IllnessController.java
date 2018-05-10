@@ -1,8 +1,10 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -74,10 +76,22 @@ public class IllnessController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:illness:add")
 	public R save( IllnessDO illness){
-		if(illnessService.save(illness)>0){
-			return R.ok();
+
+
+
+
+		if (illnessService.listByName(illness.getIllnessName()).size()==0&&
+				illnessService.listByNumber(illness.getIllnessNumber()).size()==0){
+			illness.setCreateUser(ShiroUtils.getUserId().toString());
+			illness.setUpdateTime(new Date());
+			illness.setUpdateUser(ShiroUtils.getUserId().toString());
+			if(illnessService.save(illness)>0){
+				return R.ok();
+			}
+
 		}
-		return R.error();
+		return R.error(20001,"该病史名称或者编号已经存在");
+
 	}
 	/**
 	 * 修改
@@ -86,8 +100,25 @@ public class IllnessController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:illness:edit")
 	public R update( IllnessDO illness){
-		illnessService.update(illness);
-		return R.ok();
+
+		IllnessDO illnessDO01=illnessService.get(illness.getId());
+		if (!illnessDO01.getIllnessName().equalsIgnoreCase(illness.getIllnessName())){
+			if (illnessService.listByName(illness.getIllnessName()).size()>0){
+				return R.error(20001,"该疾病名称已经存在");
+			}
+		}
+		if (!illnessDO01.getIllnessNumber().equalsIgnoreCase(illness.getIllnessNumber())){
+			if (illnessService.listByNumber(illness.getIllnessNumber()).size()>0){
+				return R.error(20001,"该疾病编号已经存在");
+			}
+		}
+		illness.setUpdateUser(ShiroUtils.getUserId().toString());
+		illness.setUpdateTime(new Date());
+		if (illnessService.update(illness)>0){
+			return R.ok();
+		}else {
+			return R.error();
+		}
 	}
 	
 	/**
@@ -97,10 +128,17 @@ public class IllnessController {
 	@ResponseBody
 	@RequiresPermissions("base:illness:remove")
 	public R remove( String id){
-		if(illnessService.remove(id)>0){
-		return R.ok();
+		IllnessDO illnessDO=new IllnessDO();
+		illnessDO.setId(id);
+		illnessDO.setDeleteUser(ShiroUtils.getUserId().toString());
+		illnessDO.setDeleteTime(new Date());
+		illnessDO.setDelFlag("1");
+		if(illnessService.update(illnessDO)>0){
+			return R.ok();
 		}
 		return R.error();
+
+
 	}
 	
 	/**
@@ -110,8 +148,18 @@ public class IllnessController {
 	@ResponseBody
 	@RequiresPermissions("base:illness:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		illnessService.batchRemove(ids);
+
+		for (String id:ids){
+			IllnessDO illnessDO=new IllnessDO();
+			illnessDO.setId(id);
+			illnessDO.setDeleteUser(ShiroUtils.getUserId().toString());
+			illnessDO.setDeleteTime(new Date());
+			illnessDO.setDelFlag("1");
+			illnessService.update(illnessDO);
+		}
 		return R.ok();
+
+
 	}
 	
 }
