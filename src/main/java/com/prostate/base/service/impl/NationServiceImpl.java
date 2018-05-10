@@ -21,7 +21,22 @@ public class NationServiceImpl implements NationService {
 	public NationDO get(String id){
 		return nationDao.get(id);
 	}
-	
+
+	@Override
+	public NationDO getByName(String nationName) {
+		return nationDao.getByName(nationName);
+	}
+//
+//	@Override
+//	public int batchUpdate(String[] ids) {
+//		return nationDao.batchUpdate(ids);
+//	}
+
+	@Override
+	public NationDO getByNumber(String nationNumber) {
+		return nationDao.getByNumber(nationNumber);
+	}
+
 	@Override
 	public List<NationDO> list(Map<String, Object> map){
 		return nationDao.list(map);

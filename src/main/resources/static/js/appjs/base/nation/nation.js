@@ -47,10 +47,10 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
-									field : 'id', 
-									title : '主键id' 
-								},
+								// 								{
+								// 	field : 'id',
+								// 	title : '主键id'
+								// },
 																{
 									field : 'nationName', 
 									title : '民族名称' 
@@ -79,18 +79,18 @@ function load() {
 									field : 'updateTime', 
 									title : '更新时间' 
 								},
-																{
-									field : 'deleteUser', 
-									title : '删除人员' 
-								},
-																{
-									field : 'deleteTime', 
-									title : '删除时间' 
-								},
-																{
-									field : 'delFlag', 
-									title : '删除标记' 
-								},
+								// 								{
+								// 	field : 'deleteUser',
+								// 	title : '删除人员'
+								// },
+								// 								{
+								// 	field : 'deleteTime',
+								// 	title : '删除时间'
+								// },
+								// 								{
+								// 	field : 'delFlag',
+								// 	title : '删除标记'
+								// },
 																{
 									title : '操作',
 									field : 'id',
@@ -144,7 +144,7 @@ function remove(id) {
 				'id' : id
 			},
 			success : function(r) {
-				if (r.code==0) {
+				if (r.code==20000) {
 					layer.msg(r.msg);
 					reLoad();
 				}else{
@@ -179,7 +179,7 @@ function batchRemove() {
 			},
 			url : prefix + '/batchRemove',
 			success : function(r) {
-				if (r.code == 0) {
+				if (r.code == 20000) {
 					layer.msg(r.msg);
 					reLoad();
 				} else {

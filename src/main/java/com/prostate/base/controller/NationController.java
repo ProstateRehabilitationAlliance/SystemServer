@@ -1,8 +1,10 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -74,10 +76,16 @@ public class NationController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:nation:add")
 	public R save( NationDO nation){
-		if(nationService.save(nation)>0){
-			return R.ok();
-		}
-		return R.error();
+		NationDO nationDOByName = nationService.getByName(nation.getNationName());
+		NationDO nationDOByNumber = nationService.getByNumber(nation.getNationNumber());
+		if (nationDOByName == null && nationDOByNumber == null){
+			nation.setCreateTime(new Date());
+			nation.setCreateUser(ShiroUtils.getUserId().toString());
+			nation.setDelFlag("0");
+			if(nationService.save(nation) > 0){
+				return  R.ok();
+			}
+		}return R.error(20001,"名称或者编号重复");
 	}
 	/**
 	 * 修改
@@ -86,6 +94,22 @@ public class NationController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:nation:edit")
 	public R update( NationDO nation){
+		//根据id查询数据库中原来的数据
+		NationDO nationDOByID = nationService.get(nation.getId());
+		//如果新的名称和原来的名称不一致
+		if (!nationDOByID.getNationName().equalsIgnoreCase(nation.getNationName())){
+			//判断新的名称和数据库中其他的名称是否重复
+			if (nationService.getByName(nation.getNationName()) != null){
+				return R.error(20001,"名称重复");
+			}
+		}
+		if (!nationDOByID.getNationNumber().equalsIgnoreCase(nation.getNationNumber())){
+			if (nationService.getByNumber(nation.getNationNumber()) != null){
+				return  R.error(20001,"编号重复");
+			}
+		}
+		nation.setUpdateTime(new Date());
+		nation.setUpdateUser(ShiroUtils.getUserId().toString());
 		nationService.update(nation);
 		return R.ok();
 	}
@@ -97,8 +121,12 @@ public class NationController {
 	@ResponseBody
 	@RequiresPermissions("base:nation:remove")
 	public R remove( String id){
-		if(nationService.remove(id)>0){
-		return R.ok();
+		NationDO nationDO = nationService.get(id);
+		nationDO.setDeleteTime(new Date());
+		nationDO.setDeleteUser(ShiroUtils.getUserId().toString());
+		nationDO.setDelFlag("1");
+		if (nationService.update(nationDO) > 0){
+			return R.ok();
 		}
 		return R.error();
 	}
@@ -110,8 +138,29 @@ public class NationController {
 	@ResponseBody
 	@RequiresPermissions("base:nation:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		nationService.batchRemove(ids);
+		//这种遍历方法增加了与数据库的交互次数，拖慢了访问速度，从数据库中直接取出id的方法效率更高（参照批量删除），
+		// 但是对象中必须有createUser和createTime
+		for (String id:ids ) {
+			NationDO nationDO = nationService.get(id);
+			nationDO.setDeleteTime(new Date());
+			nationDO.setDeleteUser(ShiroUtils.getUserId().toString());
+			nationDO.setDelFlag("1");
+			nationService.update(nationDO);
+		}
 		return R.ok();
 	}
-	
+
+
+//	/**
+//	* 删除，
+//	*/
+//	@PostMapping( "/batchRemove")
+//	@ResponseBody
+//	@RequiresPermissions("base:nation:batchRemove")
+//	public R remove(@RequestParam("ids[]") String[] ids){
+//			nationService.batchUpdate(ids);
+//			//nationService.update(nationDO);
+//
+//		return R.ok();
+//	}
 }

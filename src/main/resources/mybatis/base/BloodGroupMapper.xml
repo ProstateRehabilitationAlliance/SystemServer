@@ -38,7 +38,7 @@
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by order_weight
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">

@@ -15,6 +15,10 @@ import java.util.Map;
 public interface NationService {
 	
 	NationDO get(String id);
+
+	NationDO getByName(String nationName);
+
+	NationDO getByNumber(String nationNumber);
 	
 	List<NationDO> list(Map<String, Object> map);
 	
@@ -27,4 +31,7 @@ public interface NationService {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+//
+//	//批量修改
+//	int batchUpdate(String[] ids);
 }

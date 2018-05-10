@@ -17,7 +17,13 @@ import org.apache.ibatis.annotations.Mapper;
 public interface NationDao {
 
 	NationDO get(String id);
-	
+
+	NationDO getByName(String nationName);
+
+	NationDO getByNumber(String nationNumber);
+
+//	int batchUpdate(String[] ids);
+
 	List<NationDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
