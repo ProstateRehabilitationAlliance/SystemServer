@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * 疾病表
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email 1992lcg@163.com
  * @date 2018-05-07 14:02:35
  */
+
 @Mapper
 public interface IllnessDao {
 
@@ -29,4 +31,8 @@ public interface IllnessDao {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	List<IllnessDO> listByName(String name);
+
+	List<IllnessDO> listByNumber(String number);
 }

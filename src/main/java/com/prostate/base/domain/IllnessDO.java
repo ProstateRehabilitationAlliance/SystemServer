@@ -167,4 +167,24 @@ public class IllnessDO implements Serializable {
 	public String getDelFlag() {
 		return delFlag;
 	}
+
+	@Override
+	public String toString() {
+		return "IllnessDO{" +
+				"id='" + id + '\'' +
+				", illnessName='" + illnessName + '\'' +
+				", illnessNumber='" + illnessNumber + '\'' +
+				", orderWeight=" + orderWeight +
+				", createUser='" + createUser + '\'' +
+				", createTime=" + createTime +
+				", updateUser='" + updateUser + '\'' +
+				", updateTime=" + updateTime +
+				", deleteUser='" + deleteUser + '\'' +
+				", deleteTime=" + deleteTime +
+				", delFlag='" + delFlag + '\'' +
+				'}';
+	}
+
+	public IllnessDO() {
+	}
 }

@@ -88,6 +88,8 @@ public class AnamnesisTypeController {
 		if (anamnesisTypeService.listByName(anamnesisType.getAnamnesisTypeName()).size()==0&&
 				anamnesisTypeService.listByNumber(anamnesisType.getAnamnesisTypeNumber()).size()==0){
 			anamnesisType.setCreateUser(ShiroUtils.getUserId().toString());
+			anamnesisType.setUpdateTime(new Date());
+			anamnesisType.setUpdateUser(ShiroUtils.getUserId().toString());
 			if(anamnesisTypeService.save(anamnesisType)>0){
 				return R.ok();
 			}

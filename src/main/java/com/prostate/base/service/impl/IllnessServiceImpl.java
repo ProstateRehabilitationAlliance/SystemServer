@@ -14,6 +14,7 @@ import com.prostate.base.service.IllnessService;
 
 @Service
 public class IllnessServiceImpl implements IllnessService {
+
 	@Autowired
 	private IllnessDao illnessDao;
 	
@@ -51,5 +52,16 @@ public class IllnessServiceImpl implements IllnessService {
 	public int batchRemove(String[] ids){
 		return illnessDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public List<IllnessDO> listByName(String name) {
+		System.out.println("=------------------"+name);
+		return illnessDao.listByName(name);
+	}
+
+	@Override
+	public List<IllnessDO> listByNumber(String number) {
+		return illnessDao.listByNumber(number);
+	}
+
 }
