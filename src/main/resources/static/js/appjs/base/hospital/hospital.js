@@ -56,6 +56,10 @@ function load() {
 									title : '医院名称' 
 								},
 																{
+									field : 'hospitalNumber', 
+									title : '医院编号' 
+								},
+																{
 									field : 'hospitalAlias', 
 									title : '医院别名' 
 								},

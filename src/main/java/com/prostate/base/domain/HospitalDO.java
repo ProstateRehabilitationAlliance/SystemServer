@@ -10,7 +10,7 @@ import java.util.Date;
  * 
  * @author chglee
  * @email 1992lcg@163.com
- * @date 2018-05-07 14:02:35
+ * @date 2018-05-10 17:53:04
  */
 public class HospitalDO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,6 +19,8 @@ public class HospitalDO implements Serializable {
 	private String id;
 	//医院名称
 	private String hospitalName;
+	//医院编号
+	private String hospitalNumber;
 	//医院别名
 	private String hospitalAlias;
 	//医院信息简介
@@ -73,6 +75,18 @@ public class HospitalDO implements Serializable {
 	 */
 	public String getHospitalName() {
 		return hospitalName;
+	}
+	/**
+	 * 设置：医院编号
+	 */
+	public void setHospitalNumber(String hospitalNumber) {
+		this.hospitalNumber = hospitalNumber;
+	}
+	/**
+	 * 获取：医院编号
+	 */
+	public String getHospitalNumber() {
+		return hospitalNumber;
 	}
 	/**
 	 * 设置：医院别名
@@ -158,15 +172,18 @@ public class HospitalDO implements Serializable {
 	public String getActivationFlag() {
 		return activationFlag;
 	}
-
-	public Integer getOrderWeight() {
-		return orderWeight;
-	}
-
+	/**
+	 * 设置：排序
+	 */
 	public void setOrderWeight(Integer orderWeight) {
 		this.orderWeight = orderWeight;
 	}
-
+	/**
+	 * 获取：排序
+	 */
+	public Integer getOrderWeight() {
+		return orderWeight;
+	}
 	/**
 	 * 设置：创建人ID(后台管理员)
 	 */

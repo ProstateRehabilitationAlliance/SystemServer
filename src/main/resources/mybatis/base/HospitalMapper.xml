@@ -4,14 +4,15 @@
 <mapper namespace="com.prostate.base.dao.HospitalDao">
 
 	<select id="get" resultType="com.prostate.base.domain.HospitalDO">
-		select `id`,`hospital_name`,`hospital_alias`,`hospital_inform`,`hospital_grade`,`hospital_weight`,`type_id`,`city_id`,`activation_flag`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_hospital where id = #{value}
+		select `id`,`hospital_name`,`hospital_number`,`hospital_alias`,`hospital_inform`,`hospital_grade`,`hospital_weight`,`type_id`,`city_id`,`activation_flag`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_hospital where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.prostate.base.domain.HospitalDO">
-		select `id`,`hospital_name`,`hospital_alias`,`hospital_inform`,`hospital_grade`,`hospital_weight`,`type_id`,`city_id`,`activation_flag`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_hospital
+		select `id`,`hospital_name`,`hospital_number`,`hospital_alias`,`hospital_inform`,`hospital_grade`,`hospital_weight`,`type_id`,`city_id`,`activation_flag`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_hospital
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="hospitalName != null and hospitalName != ''"> and hospital_name = #{hospitalName} </if>
+		  		  <if test="hospitalNumber != null and hospitalNumber != ''"> and hospital_number = #{hospitalNumber} </if>
 		  		  <if test="hospitalAlias != null and hospitalAlias != ''"> and hospital_alias = #{hospitalAlias} </if>
 		  		  <if test="hospitalInform != null and hospitalInform != ''"> and hospital_inform = #{hospitalInform} </if>
 		  		  <if test="hospitalGrade != null and hospitalGrade != ''"> and hospital_grade = #{hospitalGrade} </if>
@@ -46,6 +47,7 @@
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="hospitalName != null and hospitalName != ''"> and hospital_name = #{hospitalName} </if>
+		  		  <if test="hospitalNumber != null and hospitalNumber != ''"> and hospital_number = #{hospitalNumber} </if>
 		  		  <if test="hospitalAlias != null and hospitalAlias != ''"> and hospital_alias = #{hospitalAlias} </if>
 		  		  <if test="hospitalInform != null and hospitalInform != ''"> and hospital_inform = #{hospitalInform} </if>
 		  		  <if test="hospitalGrade != null and hospitalGrade != ''"> and hospital_grade = #{hospitalGrade} </if>
@@ -69,6 +71,7 @@
 		(
 			`id`, 
 			`hospital_name`, 
+			`hospital_number`, 
 			`hospital_alias`, 
 			`hospital_inform`, 
 			`hospital_grade`, 
@@ -89,6 +92,7 @@
 		(
 			#{id}, 
 			#{hospitalName}, 
+			#{hospitalNumber}, 
 			#{hospitalAlias}, 
 			#{hospitalInform}, 
 			#{hospitalGrade}, 
@@ -111,6 +115,7 @@
 		update base_hospital 
 		<set>
 			<if test="hospitalName != null">`hospital_name` = #{hospitalName}, </if>
+			<if test="hospitalNumber != null">`hospital_number` = #{hospitalNumber}, </if>
 			<if test="hospitalAlias != null">`hospital_alias` = #{hospitalAlias}, </if>
 			<if test="hospitalInform != null">`hospital_inform` = #{hospitalInform}, </if>
 			<if test="hospitalGrade != null">`hospital_grade` = #{hospitalGrade}, </if>

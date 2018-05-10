@@ -10,7 +10,7 @@ import java.util.Map;
  * 
  * @author chglee
  * @email 1992lcg@163.com
- * @date 2018-05-07 14:02:35
+ * @date 2018-05-10 17:53:04
  */
 public interface HospitalService {
 	
