@@ -1,8 +1,10 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -74,10 +76,21 @@ public class HospitalTypeController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:hospitalType:add")
 	public R save( HospitalTypeDO hospitalType){
-		if(hospitalTypeService.save(hospitalType)>0){
-			return R.ok();
+
+		if (hospitalTypeService.listByName(hospitalType.getHospitalTypeName()).size()==0&&
+				hospitalTypeService.listByNumber(hospitalType.getHospitalTypeNumber()).size()==0){
+			hospitalType.setCreateUser(ShiroUtils.getUserId().toString());
+			hospitalType.setUpdateTime(new Date());
+			hospitalType.setUpdateUser(ShiroUtils.getUserId().toString());
+			if(hospitalTypeService.save(hospitalType)>0){
+				return R.ok();
+			}
+
 		}
-		return R.error();
+		return R.error(20001,"该医院类型或者编号已经存在");
+
+
+
 	}
 	/**
 	 * 修改
@@ -86,8 +99,26 @@ public class HospitalTypeController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:hospitalType:edit")
 	public R update( HospitalTypeDO hospitalType){
-		hospitalTypeService.update(hospitalType);
-		return R.ok();
+
+		HospitalTypeDO hospitalTypeDO=hospitalTypeService.get(hospitalType.getId());
+		if (!hospitalTypeDO.getHospitalTypeName().equalsIgnoreCase(hospitalType.getHospitalTypeName())){
+			if (hospitalTypeService.listByName(hospitalType.getHospitalTypeName()).size()>0){
+				return R.error(20001,"该病史类型已经存在");
+			}
+		}
+		if (!hospitalTypeDO.getHospitalTypeNumber().equalsIgnoreCase(hospitalType.getHospitalTypeNumber())){
+			if (hospitalTypeService.listByNumber(hospitalType.getHospitalTypeNumber()).size()>0){
+				return R.error(20001,"该病史类型编号已经存在");
+			}
+		}
+		hospitalType.setUpdateUser(ShiroUtils.getUserId().toString());
+		hospitalType.setUpdateTime(new Date());
+		if (hospitalTypeService.update(hospitalType)>0){
+			return R.ok();
+		}else {
+			return R.error();
+		}
+
 	}
 	
 	/**
@@ -97,10 +128,17 @@ public class HospitalTypeController {
 	@ResponseBody
 	@RequiresPermissions("base:hospitalType:remove")
 	public R remove( String id){
-		if(hospitalTypeService.remove(id)>0){
-		return R.ok();
+		HospitalTypeDO hospitalTypeDO=new HospitalTypeDO();
+		hospitalTypeDO.setId(id);
+		hospitalTypeDO.setDeleteUser(ShiroUtils.getUserId().toString());
+		hospitalTypeDO.setDeleteTime(new Date());
+		hospitalTypeDO.setDelFlag("1");
+		if(hospitalTypeService.update(hospitalTypeDO)>0){
+			return R.ok();
 		}
 		return R.error();
+
+
 	}
 	
 	/**
@@ -110,8 +148,20 @@ public class HospitalTypeController {
 	@ResponseBody
 	@RequiresPermissions("base:hospitalType:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		hospitalTypeService.batchRemove(ids);
+
+		for (String id:ids){
+			HospitalTypeDO hospitalTypeDO=new HospitalTypeDO();
+			hospitalTypeDO.setId(id);
+			hospitalTypeDO.setDeleteUser(ShiroUtils.getUserId().toString());
+			hospitalTypeDO.setDeleteTime(new Date());
+			hospitalTypeDO.setDelFlag("1");
+			hospitalTypeService.update(hospitalTypeDO);
+		}
+
+		//anamnesisTypeService.batchRemove(ids);
 		return R.ok();
+
+
 	}
 	
 }

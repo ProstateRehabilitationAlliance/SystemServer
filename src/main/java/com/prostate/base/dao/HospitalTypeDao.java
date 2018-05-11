@@ -29,4 +29,8 @@ public interface HospitalTypeDao {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	List<HospitalTypeDO> listByName(String name);
+
+	List<HospitalTypeDO> listByNumber(String number);
 }

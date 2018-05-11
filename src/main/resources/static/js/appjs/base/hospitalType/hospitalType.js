@@ -48,10 +48,6 @@ function load() {
 									checkbox : true
 								},
 																{
-									field : 'id', 
-									title : '医院类型ID' 
-								},
-																{
 									field : 'hospitalTypeName', 
 									title : '医院类型名称' 
 								},
@@ -78,18 +74,6 @@ function load() {
 																{
 									field : 'updateTime', 
 									title : '修改时间' 
-								},
-																{
-									field : 'deleteUser', 
-									title : '删除人ID(后台管理员)' 
-								},
-																{
-									field : 'deleteTime', 
-									title : '删除时间' 
-								},
-																{
-									field : 'delFlag', 
-									title : '删除标记' 
 								},
 																{
 									title : '操作',
@@ -144,7 +128,7 @@ function remove(id) {
 				'id' : id
 			},
 			success : function(r) {
-				if (r.code==0) {
+				if (r.code==20000) {
 					layer.msg(r.msg);
 					reLoad();
 				}else{
@@ -159,7 +143,7 @@ function resetPwd(id) {
 }
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
-	if (rows.length == 0) {
+	if (rows.length == 20000) {
 		layer.msg("请选择要删除的数据");
 		return;
 	}
@@ -179,7 +163,7 @@ function batchRemove() {
 			},
 			url : prefix + '/batchRemove',
 			success : function(r) {
-				if (r.code == 0) {
+				if (r.code == 20000) {
 					layer.msg(r.msg);
 					reLoad();
 				} else {

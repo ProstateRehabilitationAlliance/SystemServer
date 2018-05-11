@@ -51,5 +51,15 @@ public class HospitalTypeServiceImpl implements HospitalTypeService {
 	public int batchRemove(String[] ids){
 		return hospitalTypeDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public List<HospitalTypeDO> listByName(String name) {
+		return hospitalTypeDao.listByName(name);
+	}
+
+	@Override
+	public List<HospitalTypeDO> listByNumber(String number) {
+		return hospitalTypeDao.listByNumber(number);
+	}
+
 }
