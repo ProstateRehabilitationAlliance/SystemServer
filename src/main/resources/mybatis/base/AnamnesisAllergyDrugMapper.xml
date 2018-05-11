@@ -4,7 +4,18 @@
 <mapper namespace="com.prostate.base.dao.AnamnesisAllergyDrugDao">
 
 	<select id="get" resultType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
-		select `id`,`allergy_drug_name`,`spell_name`,`allergy_drug_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_anamnesis_allergy_drug where id = #{value}
+		select `id`,`allergy_drug_name`,`spell_name`,`allergy_drug_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
+			  from base_anamnesis_allergy_drug where id = #{value} and del_flag = '0'
+	</select>
+
+	<select id="getByName" resultType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
+		select `id`,`allergy_drug_name`,`spell_name`,`allergy_drug_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
+		from base_anamnesis_allergy_drug where allergy_drug_name = #{value} and del_flag = '0'
+	</select>
+
+	<select id="getByNumber" resultType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
+		select `id`,`allergy_drug_name`,`spell_name`,`allergy_drug_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
+		from base_anamnesis_allergy_drug where allergy_drug_number = #{value} and del_flag = '0'
 	</select>
 
 	<select id="list" resultType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
@@ -21,14 +32,14 @@
 		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
 		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
-		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		 and del_flag = '0'
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by order_weight
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -50,11 +61,14 @@
 		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
 		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
-		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		   and del_flag = '0'
 		  		</where>
 	</select>
 	 
 	<insert id="save" parameterType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
+		<selectKey keyProperty="id" resultType="string" order="BEFORE">
+			select replace(uuid(), '-', '') as id from dual
+		</selectKey>
 		insert into base_anamnesis_allergy_drug
 		(
 			`id`, 

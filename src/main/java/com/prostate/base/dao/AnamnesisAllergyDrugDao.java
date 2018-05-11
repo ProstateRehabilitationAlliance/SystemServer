@@ -16,7 +16,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AnamnesisAllergyDrugDao {
 
+
 	AnamnesisAllergyDrugDO get(String id);
+
+	AnamnesisAllergyDrugDO getByName(String allergyDrugName);
+
+	AnamnesisAllergyDrugDO getByNumber(String allergyDrugNumber);
 	
 	List<AnamnesisAllergyDrugDO> list(Map<String, Object> map);
 	

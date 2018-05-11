@@ -15,6 +15,10 @@ import java.util.Map;
 public interface AnamnesisAllergyDrugService {
 	
 	AnamnesisAllergyDrugDO get(String id);
+
+	AnamnesisAllergyDrugDO getByName(String allergyDrugName);
+
+	AnamnesisAllergyDrugDO getByNumber(String allergyDrugNumber);
 	
 	List<AnamnesisAllergyDrugDO> list(Map<String, Object> map);
 	
