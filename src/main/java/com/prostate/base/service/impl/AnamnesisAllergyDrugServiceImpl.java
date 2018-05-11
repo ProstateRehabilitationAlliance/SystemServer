@@ -21,17 +21,7 @@ public class AnamnesisAllergyDrugServiceImpl implements AnamnesisAllergyDrugServ
 	public AnamnesisAllergyDrugDO get(String id){
 		return anamnesisAllergyDrugDao.get(id);
 	}
-
-	@Override
-	public AnamnesisAllergyDrugDO getByName(String allergyDrugName) {
-		return  anamnesisAllergyDrugDao.getByName(allergyDrugName);
-	}
-
-	@Override
-	public AnamnesisAllergyDrugDO getByNumber(String allergyDrugNumber) {
-		return anamnesisAllergyDrugDao.getByNumber(allergyDrugNumber);
-	}
-
+	
 	@Override
 	public List<AnamnesisAllergyDrugDO> list(Map<String, Object> map){
 		return anamnesisAllergyDrugDao.list(map);
