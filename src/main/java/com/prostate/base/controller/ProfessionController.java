@@ -1,8 +1,10 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -74,10 +76,19 @@ public class ProfessionController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:profession:add")
 	public R save( ProfessionDO profession){
-		if(professionService.save(profession)>0){
-			return R.ok();
+		if (professionService.listByName(profession.getProfessionName()).size()==0&&
+				professionService.listByNumber(profession.getProfessionNumber()).size()==0){
+			profession.setCreateUser(ShiroUtils.getUserId().toString());
+			profession.setUpdateTime(new Date());
+			profession.setUpdateUser(ShiroUtils.getUserId().toString());
+			if(professionService.save(profession)>0){
+				return R.ok();
+			}
+
 		}
-		return R.error();
+		return R.error(20001,"该职业名称或者编号已经存在");
+
+
 	}
 	/**
 	 * 修改
@@ -86,8 +97,25 @@ public class ProfessionController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:profession:edit")
 	public R update( ProfessionDO profession){
-		professionService.update(profession);
-		return R.ok();
+		ProfessionDO professionDO=professionService.get(profession.getId());
+		if (!professionDO.getProfessionName().equalsIgnoreCase(profession.getProfessionName())){
+			if (professionService.listByName(profession.getProfessionName()).size()>0){
+				return R.error(20001,"该职业名称已经存在");
+			}
+		}
+		if (!professionDO.getProfessionNumber().equalsIgnoreCase(profession.getProfessionNumber())){
+			if (professionService.listByNumber(profession.getProfessionNumber()).size()>0){
+				return R.error(20001,"该职业编号已经存在");
+			}
+		}
+		profession.setUpdateUser(ShiroUtils.getUserId().toString());
+		profession.setUpdateTime(new Date());
+		if (professionService.update(profession)>0){
+			return R.ok();
+		}else {
+			return R.error();
+		}
+
 	}
 	
 	/**
@@ -97,10 +125,17 @@ public class ProfessionController {
 	@ResponseBody
 	@RequiresPermissions("base:profession:remove")
 	public R remove( String id){
-		if(professionService.remove(id)>0){
-		return R.ok();
+		ProfessionDO professionDO=new ProfessionDO();
+		professionDO.setId(id);
+		professionDO.setDeleteUser(ShiroUtils.getUserId().toString());
+		professionDO.setDeleteTime(new Date());
+		professionDO.setDelFlag("1");
+		if(professionService.update(professionDO)>0){
+			return R.ok();
 		}
 		return R.error();
+
+
 	}
 	
 	/**
@@ -110,8 +145,19 @@ public class ProfessionController {
 	@ResponseBody
 	@RequiresPermissions("base:profession:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		professionService.batchRemove(ids);
+		for (String id:ids){
+			ProfessionDO professionDO=new ProfessionDO();
+			professionDO.setId(id);
+			professionDO.setDeleteUser(ShiroUtils.getUserId().toString());
+			professionDO.setDeleteTime(new Date());
+			professionDO.setDelFlag("1");
+			professionService.update(professionDO);
+		}
+
+		//anamnesisTypeService.batchRemove(ids);
 		return R.ok();
+
+
 	}
 	
 }

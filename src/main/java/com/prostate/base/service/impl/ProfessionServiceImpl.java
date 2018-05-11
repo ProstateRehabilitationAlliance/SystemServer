@@ -51,5 +51,15 @@ public class ProfessionServiceImpl implements ProfessionService {
 	public int batchRemove(String[] ids){
 		return professionDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public List<ProfessionDO> listByName(String name) {
+		return professionDao.listByName(name);
+	}
+
+	@Override
+	public List<ProfessionDO> listByNumber(String number) {
+		return professionDao.listByNumber(number);
+	}
+
 }

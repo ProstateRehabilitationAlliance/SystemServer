@@ -27,4 +27,8 @@ public interface ProfessionService {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	List<ProfessionDO> listByName(String name);
+
+	List<ProfessionDO> listByNumber(String number);
 }
