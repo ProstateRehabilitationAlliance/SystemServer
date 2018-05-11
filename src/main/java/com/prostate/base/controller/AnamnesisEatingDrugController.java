@@ -1,8 +1,11 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
+import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -74,10 +77,18 @@ public class AnamnesisEatingDrugController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:anamnesisEatingDrug:add")
 	public R save( AnamnesisEatingDrugDO anamnesisEatingDrug){
-		if(anamnesisEatingDrugService.save(anamnesisEatingDrug)>0){
-			return R.ok();
+		//先判断再插入
+		//如果编号和名字都不重复的话
+		if (anamnesisEatingDrugService.getByName(anamnesisEatingDrug.getEatingDrugName()) == null
+				&& anamnesisEatingDrugService.getByNumber(anamnesisEatingDrug.getEatingDrugNumber())==null){
+			anamnesisEatingDrug.setCreateTime(new Date());
+			anamnesisEatingDrug.setCreateName(ShiroUtils.getUserId().toString());
+			anamnesisEatingDrug.setDelFlag("0");
+			if(anamnesisEatingDrugService.save(anamnesisEatingDrug)>0){
+				return R.ok();
+			}
 		}
-		return R.error();
+		return R.error(20001,"名称或者编号重复");
 	}
 	/**
 	 * 修改
@@ -86,6 +97,24 @@ public class AnamnesisEatingDrugController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:anamnesisEatingDrug:edit")
 	public R update( AnamnesisEatingDrugDO anamnesisEatingDrug){
+		//先判断再修改
+		//根据新的信息在数据库中查找。判断数据是否发生变化
+		AnamnesisEatingDrugDO anamnesisEatingDrugById = anamnesisEatingDrugService.get(anamnesisEatingDrug.getId());
+		//名称发生变化
+		if (!anamnesisEatingDrugById.getEatingDrugName().equalsIgnoreCase(anamnesisEatingDrug.getEatingDrugName())){
+			//判断是不是和数据库其他内容重合
+			if (anamnesisEatingDrugService.getByName(anamnesisEatingDrug.getEatingDrugName()) != null){
+				return R.error(20001,"名称重复");
+			}
+		}
+		//编号发生重复
+		if (!anamnesisEatingDrugById.getEatingDrugNumber().equalsIgnoreCase(anamnesisEatingDrug.getEatingDrugNumber())){
+			if (anamnesisEatingDrugService.getByNumber(anamnesisEatingDrug.getEatingDrugNumber())!= null){
+				return R.error(20001,"编号重复");
+			}
+		}
+		anamnesisEatingDrug.setUpdateName(ShiroUtils.getUserId().toString());
+		anamnesisEatingDrug.setUpdateTime(new Date());
 		anamnesisEatingDrugService.update(anamnesisEatingDrug);
 		return R.ok();
 	}
@@ -97,9 +126,19 @@ public class AnamnesisEatingDrugController {
 	@ResponseBody
 	@RequiresPermissions("base:anamnesisEatingDrug:remove")
 	public R remove( String id){
-		if(anamnesisEatingDrugService.remove(id)>0){
-		return R.ok();
+		AnamnesisEatingDrugDO anamnesisEatingDrugById = anamnesisEatingDrugService.get(id);
+		if (anamnesisEatingDrugById == null){
+			return R.error(20004,"信息不存在");
 		}
+		anamnesisEatingDrugById.setDelFlag("1");
+		anamnesisEatingDrugById.setDeleteName(ShiroUtils.getUserId().toString());
+		anamnesisEatingDrugById.setDeleteTime(new Date());
+		if (anamnesisEatingDrugService.update(anamnesisEatingDrugById) > 0){
+			return R.ok();
+		}
+//		if(anamnesisEatingDrugService.remove(id)>0){
+//		return R.ok();
+//		}
 		return R.error();
 	}
 	
@@ -110,7 +149,14 @@ public class AnamnesisEatingDrugController {
 	@ResponseBody
 	@RequiresPermissions("base:anamnesisEatingDrug:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		anamnesisEatingDrugService.batchRemove(ids);
+		for (String id:ids) {
+			AnamnesisEatingDrugDO anamnesisEatingDrugDO = anamnesisEatingDrugService.get(id);
+			anamnesisEatingDrugDO.setDelFlag("1");
+			anamnesisEatingDrugDO.setDeleteName(ShiroUtils.getUserId().toString());
+			anamnesisEatingDrugDO.setDeleteTime(new Date());
+			anamnesisEatingDrugService.update(anamnesisEatingDrugDO);
+		}
+//		anamnesisEatingDrugService.batchRemove(ids);
 		return R.ok();
 	}
 	

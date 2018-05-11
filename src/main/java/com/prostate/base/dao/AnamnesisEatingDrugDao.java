@@ -17,6 +17,11 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AnamnesisEatingDrugDao {
 
 	AnamnesisEatingDrugDO get(String id);
+
+	AnamnesisEatingDrugDO getByName(String eatingDrugName);
+
+
+	AnamnesisEatingDrugDO getByNumber(String eatingDrugNumber);
 	
 	List<AnamnesisEatingDrugDO> list(Map<String, Object> map);
 	

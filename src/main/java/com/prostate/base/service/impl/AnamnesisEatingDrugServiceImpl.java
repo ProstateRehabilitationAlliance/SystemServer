@@ -21,7 +21,17 @@ public class AnamnesisEatingDrugServiceImpl implements AnamnesisEatingDrugServic
 	public AnamnesisEatingDrugDO get(String id){
 		return anamnesisEatingDrugDao.get(id);
 	}
-	
+
+	@Override
+	public AnamnesisEatingDrugDO getByName(String eatingDrugName) {
+		return anamnesisEatingDrugDao.getByName(eatingDrugName);
+	}
+
+	@Override
+	public AnamnesisEatingDrugDO getByNumber(String eatingDrugNumber) {
+		return anamnesisEatingDrugDao.getByNumber(eatingDrugNumber);
+	}
+
 	@Override
 	public List<AnamnesisEatingDrugDO> list(Map<String, Object> map){
 		return anamnesisEatingDrugDao.list(map);

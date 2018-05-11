@@ -15,6 +15,11 @@ import java.util.Map;
 public interface AnamnesisEatingDrugService {
 	
 	AnamnesisEatingDrugDO get(String id);
+
+	AnamnesisEatingDrugDO getByName(String eatingDrugName);
+
+
+	AnamnesisEatingDrugDO getByNumber(String eatingDrugNumber);
 	
 	List<AnamnesisEatingDrugDO> list(Map<String, Object> map);
 	

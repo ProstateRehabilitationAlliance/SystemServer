@@ -47,10 +47,10 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
-									field : 'id', 
-									title : '主键' 
-								},
+								// 								{
+								// 	field : 'id',
+								// 	title : '主键'
+								// },
 																{
 									field : 'eatingDrugName', 
 									title : '药物名' 
@@ -69,7 +69,7 @@ function load() {
 								},
 																{
 									field : 'createName', 
-									title : '创建者名字' 
+									title : '创建者'
 								},
 																{
 									field : 'createTime', 
@@ -77,24 +77,24 @@ function load() {
 								},
 																{
 									field : 'updateName', 
-									title : '更新人的名字' 
+									title : '更新者'
 								},
 																{
 									field : 'updateTime', 
 									title : '更新时间' 
 								},
-																{
-									field : 'deleteName', 
-									title : '删除人的名字' 
-								},
-																{
-									field : 'deleteTime', 
-									title : '删除时间' 
-								},
-																{
-									field : 'delFlag', 
-									title : '删除标记' 
-								},
+								// 								{
+								// 	field : 'deleteName',
+								// 	title : '删除者'
+								// },
+								// 								{
+								// 	field : 'deleteTime',
+								// 	title : '删除时间'
+								// },
+								// 								{
+								// 	field : 'delFlag',
+								// 	title : '状态'
+								// },
 																{
 									title : '操作',
 									field : 'id',
@@ -148,7 +148,7 @@ function remove(id) {
 				'id' : id
 			},
 			success : function(r) {
-				if (r.code==0) {
+				if (r.code==20000) {
 					layer.msg(r.msg);
 					reLoad();
 				}else{
@@ -183,7 +183,7 @@ function batchRemove() {
 			},
 			url : prefix + '/batchRemove',
 			success : function(r) {
-				if (r.code == 0) {
+				if (r.code == 20000) {
 					layer.msg(r.msg);
 					reLoad();
 				} else {
