@@ -17,6 +17,10 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DoctorTitleDao {
 
 	DoctorTitleDO get(String id);
+
+	DoctorTitleDO getByName(String doctorTitleName);
+
+	DoctorTitleDO getByNumber(String doctorTitleNumber);
 	
 	List<DoctorTitleDO> list(Map<String, Object> map);
 	

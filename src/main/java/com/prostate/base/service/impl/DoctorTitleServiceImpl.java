@@ -21,7 +21,17 @@ public class DoctorTitleServiceImpl implements DoctorTitleService {
 	public DoctorTitleDO get(String id){
 		return doctorTitleDao.get(id);
 	}
-	
+
+	@Override
+	public DoctorTitleDO getByName(String doctorTitleName) {
+		return doctorTitleDao.getByName(doctorTitleName);
+	}
+
+	@Override
+	public DoctorTitleDO getByNumber(String doctorTitleNumber) {
+		return doctorTitleDao.getByNumber(doctorTitleNumber);
+	}
+
 	@Override
 	public List<DoctorTitleDO> list(Map<String, Object> map){
 		return doctorTitleDao.list(map);

@@ -1,8 +1,10 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -34,7 +36,7 @@ import com.prostate.common.utils.R;
 public class DoctorTitleController {
 	@Autowired
 	private DoctorTitleService doctorTitleService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("base:doctorTitle:doctorTitle")
 	String DoctorTitle(){
@@ -74,10 +76,16 @@ public class DoctorTitleController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:doctorTitle:add")
 	public R save( DoctorTitleDO doctorTitle){
-		if(doctorTitleService.save(doctorTitle)>0){
-			return R.ok();
+		if (doctorTitleService.getByName(doctorTitle.getDoctorTitleName()) == null
+				&& doctorTitleService.getByNumber(doctorTitle.getDoctorTitleNumber()) == null){
+			doctorTitle.setCreateTime(new Date());
+			doctorTitle.setCreateUser(ShiroUtils.getUserId().toString());
+			doctorTitle.setDelFlag("0");
+			if(doctorTitleService.save(doctorTitle)>0){
+				return R.ok();
+			}
 		}
-		return R.error();
+		return R.error(20001,"名称或者编号重复");
 	}
 	/**
 	 * 修改
@@ -86,6 +94,19 @@ public class DoctorTitleController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:doctorTitle:edit")
 	public R update( DoctorTitleDO doctorTitle){
+		DoctorTitleDO  doctorTitleDOById = doctorTitleService.get(doctorTitle.getId());
+		if (!doctorTitleDOById.getDoctorTitleName().equalsIgnoreCase(doctorTitle.getDoctorTitleName())){
+			if (doctorTitleService.getByName(doctorTitle.getDoctorTitleName()) != null){
+				return R.error(20001,"名称重复");
+			}
+		}
+		if (!doctorTitleDOById.getDoctorTitleNumber().equalsIgnoreCase(doctorTitle.getDoctorTitleNumber())){
+			if (doctorTitleService.getByNumber(doctorTitle.getDoctorTitleNumber()) != null){
+				return R.error(20001,"编号重复");
+			}
+		}
+		doctorTitle.setUpdateTime(new Date());
+		doctorTitle.setUpdateUser(ShiroUtils.getUserId().toString());
 		doctorTitleService.update(doctorTitle);
 		return R.ok();
 	}
@@ -97,9 +118,17 @@ public class DoctorTitleController {
 	@ResponseBody
 	@RequiresPermissions("base:doctorTitle:remove")
 	public R remove( String id){
-		if(doctorTitleService.remove(id)>0){
-		return R.ok();
+		DoctorTitleDO doctorTitleDO = doctorTitleService.get(id);
+		if (doctorTitleDO == null){
+			return R.error(20004,"找不到数据");
 		}
+		doctorTitleDO.setDelFlag("1");
+		doctorTitleDO.setDeleteTime(new Date());
+		doctorTitleDO.setDeleteUser(ShiroUtils.getUserId().toString());
+		if (doctorTitleService.update(doctorTitleDO) > 0)
+//		if(doctorTitleService.remove(id)>0){
+		return R.ok();
+//		}
 		return R.error();
 	}
 	
@@ -110,7 +139,14 @@ public class DoctorTitleController {
 	@ResponseBody
 	@RequiresPermissions("base:doctorTitle:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
-		doctorTitleService.batchRemove(ids);
+		for (String id: ids) {
+			DoctorTitleDO doctorTitleDO = doctorTitleService.get(id);
+			doctorTitleDO.setDelFlag("1");
+			doctorTitleDO.setDeleteTime(new Date());
+			doctorTitleDO.setDeleteUser(ShiroUtils.getUserId().toString());
+			doctorTitleService.update(doctorTitleDO);
+		}
+		//doctorTitleService.batchRemove(ids);
 		return R.ok();
 	}
 	

@@ -47,17 +47,18 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
-									field : 'id', 
-									title : '医生职称id' 
-								},
-																{
-									field : 'doctorTitleNumber', 
-									title : '职称编号' 
-								},
+								// 								{
+								// 	field : 'id',
+								// 	title : '医生职称id'
+								// },
+
 																{
 									field : 'doctorTitleName', 
 									title : '职称名称' 
+								},
+								{
+									field : 'doctorTitleNumber',
+									title : '职称编号'
 								},
 																{
 									field : 'orderWeight', 
@@ -79,18 +80,18 @@ function load() {
 									field : 'updateTime', 
 									title : '修改时间' 
 								},
-																{
-									field : 'deleteUser', 
-									title : '删除人' 
-								},
-																{
-									field : 'deleteTime', 
-									title : '删除时间' 
-								},
-																{
-									field : 'delFlag', 
-									title : '删除标记' 
-								},
+								// 								{
+								// 	field : 'deleteUser',
+								// 	title : '删除人'
+								// },
+								// 								{
+								// 	field : 'deleteTime',
+								// 	title : '删除时间'
+								// },
+								// 								{
+								// 	field : 'delFlag',
+								// 	title : '删除标记'
+								// },
 																{
 									title : '操作',
 									field : 'id',
@@ -144,7 +145,7 @@ function remove(id) {
 				'id' : id
 			},
 			success : function(r) {
-				if (r.code==0) {
+				if (r.code==20000) {
 					layer.msg(r.msg);
 					reLoad();
 				}else{
@@ -179,7 +180,7 @@ function batchRemove() {
 			},
 			url : prefix + '/batchRemove',
 			success : function(r) {
-				if (r.code == 0) {
+				if (r.code == 20000) {
 					layer.msg(r.msg);
 					reLoad();
 				} else {
