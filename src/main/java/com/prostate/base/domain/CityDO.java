@@ -195,4 +195,24 @@ public class CityDO implements Serializable {
 	public String getDelFlag() {
 		return delFlag;
 	}
+
+	@Override
+	public String toString() {
+		return "CityDO{" +
+				"id='" + id + '\'' +
+				", parentCityId='" + parentCityId + '\'' +
+				", cityName='" + cityName + '\'' +
+				", cityType='" + cityType + '\'' +
+				", orderWeight=" + orderWeight +
+				", createUser='" + createUser + '\'' +
+				", createTime=" + createTime +
+				", cityWeight=" + cityWeight +
+				", updateUser='" + updateUser + '\'' +
+				", updateTime=" + updateTime +
+				", deleteUser='" + deleteUser + '\'' +
+				", deleteTime=" + deleteTime +
+				", delFlag='" + delFlag + '\'' +
+				'}';
+	}
+
 }

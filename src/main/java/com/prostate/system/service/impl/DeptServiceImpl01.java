@@ -60,6 +60,7 @@ public class DeptServiceImpl01 implements DeptService01 {
 	public Tree<DeptDO> getTree() {
 		List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
 		List<DeptDO> sysDepts = sysDeptMapper.list(new HashMap<String,Object>(16));
+
 		for (DeptDO sysDept : sysDepts) {
 			Tree<DeptDO> tree = new Tree<DeptDO>();
 			tree.setId(sysDept.getDeptId().toString());

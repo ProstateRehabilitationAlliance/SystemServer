@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * 城市表
@@ -13,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email 1992lcg@163.com
  * @date 2018-05-07 14:02:35
  */
-@Mapper
+@Repository
 public interface CityDao {
 
 	CityDO get(String id);
