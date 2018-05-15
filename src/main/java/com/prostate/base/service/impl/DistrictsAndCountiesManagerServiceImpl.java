@@ -69,6 +69,8 @@ public class DistrictsAndCountiesManagerServiceImpl implements DistrictsAndCount
             tree.setText(cityDO.getCityName());
             Map<String, Object> state = new HashMap<>(16);
             state.put("opened", false);
+            state.put("selected_arr",false);
+
             //state.put("mType", "dept");
             tree.setState(state);
             trees.add(tree);
@@ -78,6 +80,11 @@ public class DistrictsAndCountiesManagerServiceImpl implements DistrictsAndCount
         }
         Tree<CityDO> t = BuildTree.build(trees);
         return t;
+    }
+
+    @Override
+    public List<CityDO> listByName(String name) {
+        return districtsAndCountiesManageDao.listByName(name);
     }
 }
 

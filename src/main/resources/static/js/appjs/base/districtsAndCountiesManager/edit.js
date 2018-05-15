@@ -63,7 +63,7 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate()
 }
-var openDept = function(){
+var openCity = function(){
 	layer.open({
 		type:2,
 		title:"选择部门",
@@ -71,7 +71,8 @@ var openDept = function(){
 		content:"/base/districtsAndCountiesManager/treeView"
 	})
 }
-function loadDept( deptId,deptName){
-	$("#deptId").val(deptId);
-	$("#deptName").val(deptName);
+function loadCity( parentCityid,parentCityName){
+    var cityid=parentCityid
+    $("#parentCityId").val(cityid);
+    $("#parentCityName").val(parentCityName);
 }

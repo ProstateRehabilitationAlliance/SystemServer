@@ -36,22 +36,49 @@
 				'core' : {
 					'data' : tree
 				},
-				"plugins" : [ "checkbox" ]
+				"plugins" : [ ]
 			});
 			$('#jsTree').jstree().open_all();
+
+            /*$('#jsTree').jstree({
+                "core" : {
+                    "animation" : 0,
+                    "themes" : { "dots": true,"icons":true ,"stripes":false},
+                    "check_callback" : true,
+                    "multiple" : false,
+                    'data' : tree
+                },
+                "types" : {
+                    "#" : { "max_children" : 5,
+                        "max_depth" : 11 ,
+                    },
+                    "default" : {
+                        "icon" : "false",
+                        "valid_children" : ["default","text"]
+                    },
+                    "text" : {
+                        "icon" : "false",
+                        "valid_children" : []
+                    }
+                },
+                "plugins" : [ "state", "types", "wholerow" ]
+            });
+            $('#jsTree').jstree().open_all();*/
+
 		}
 		function loadCity(){
 			var userNames,userIds;
 			var ref = $('#jsTree').jstree(true); // 获得整个树
-			ids = ref.get_bottom_selected();
-			users = ref.get_bottom_checked('true');
+			ids = ref.get_selected();
+			users = ref.get_selected('true');
 			var txt="";
 			for(var user in users){
-				if(users[user].state.mType=="user"){
-					txt=txt+users[user].text+",";
-				}
+				//if(users[user].state.mType=="user"){
+					txt=txt+users[user].text;
+				//}
 			}
-			parent.loadUser(userIds,txt);
+			alert(ids+txt)
+			parent.loadCity(ids,txt);
 			var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 			parent.layer.close(index);
 		}

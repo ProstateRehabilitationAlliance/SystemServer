@@ -1,4 +1,5 @@
 $().ready(function() {
+
 	validateRule();
 });
 
@@ -30,7 +31,7 @@ function save() {
 			parent.layer.alert("Connection error");
 		},
 		success : function(data) {
-			if (data.code == 0) {
+			if (data.code == 20000) {
 				parent.layer.msg("操作成功");
 				parent.reLoad();
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
@@ -108,7 +109,7 @@ function validateRule() {
 	})
 }
 
-var openDept = function(){
+var openCity = function(){
 	layer.open({
 		type:2,
 		title:"选择部门",
@@ -116,7 +117,8 @@ var openDept = function(){
 		content:"/base/districtsAndCountiesManager/treeView"
 	})
 }
-function loadDept( deptId,deptName){
-	$("#deptId").val(deptId);
-	$("#deptName").val(deptName);
+function loadCity( parentCityid,parentCityName){
+	var cityid=parentCityid
+	$("#parentCityId").val(cityid);
+	$("#parentCityName").val(parentCityName);
 }
