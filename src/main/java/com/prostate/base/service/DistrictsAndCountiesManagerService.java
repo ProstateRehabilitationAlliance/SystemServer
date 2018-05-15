@@ -29,4 +29,7 @@ public interface DistrictsAndCountiesManagerService {
 
     Tree<CityDO> getTree();
 
+    List<CityDO> listByName(String name);
+
+
 }

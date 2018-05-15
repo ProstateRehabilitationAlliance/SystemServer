@@ -66,12 +66,10 @@ public class DistrictsAndCountiesManagerController {
     @Log("编辑区县")
     @GetMapping("/edit/{id}")
     String edit(Model model, @PathVariable("id") String id) {
-        System.out.println("====<<<<<<<<<<" +id);
         CityDO cityDO = districtsAndCountiesManagerService.get(id);
-        System.out.println("=======>"+cityDO);
         model.addAttribute("cityDO", cityDO);
-        //List<RoleDO> roles = roleService.list(id);
-        //model.addAttribute("roles", roles);
+        CityDO city = districtsAndCountiesManagerService.get(cityDO.getParentCityId());
+        model.addAttribute("city",city);
         return prefix+"/edit";
     }
 
@@ -80,14 +78,19 @@ public class DistrictsAndCountiesManagerController {
     @PostMapping("/save")
     @ResponseBody
     R save(CityDO cityDO) {
-        /*if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-        }*/
-       // cityDO.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
-        if (districtsAndCountiesManagerService.save(cityDO) > 0) {
-            return R.ok();
+
+        if (districtsAndCountiesManagerService.listByName(cityDO.getCityName()).size()==0){
+            cityDO.setCreateUser(ShiroUtils.getUserId().toString());
+            cityDO.setUpdateTime(new Date());
+            cityDO.setUpdateUser(ShiroUtils.getUserId().toString());
+            if(districtsAndCountiesManagerService.save(cityDO)>0){
+                return R.ok();
+            }
+
         }
-        return R.error();
+        return R.error(20001,"该区县名已经存在");
+
+
     }
 
     @RequiresPermissions("base:districtsAndCountiesManager:edit")
@@ -95,13 +98,23 @@ public class DistrictsAndCountiesManagerController {
     @PostMapping("/update")
     @ResponseBody
     R update(CityDO cityDO) {
-       /* if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-        }*/
-        if (districtsAndCountiesManagerService.update(cityDO) > 0) {
-            return R.ok();
+
+
+        CityDO cityDO1=districtsAndCountiesManagerService.get(cityDO.getId());
+        if (!cityDO1.getCityName().equalsIgnoreCase(cityDO.getCityName())){
+            if (districtsAndCountiesManagerService.listByName(cityDO.getCityName()).size()>0){
+                return R.error(20001,"该区县名已经存在");
+            }
         }
-        return R.error();
+
+        cityDO.setUpdateUser(ShiroUtils.getUserId().toString());
+        cityDO.setUpdateTime(new Date());
+        if (districtsAndCountiesManagerService.update(cityDO)>0){
+            return R.ok();
+        }else {
+            return R.error();
+        }
+
     }
 
 
@@ -110,7 +123,6 @@ public class DistrictsAndCountiesManagerController {
     @PostMapping("/updatePeronal")
     @ResponseBody
     R updatePeronal(UserDO user) {
-
         return R.error();
     }
 
@@ -120,11 +132,11 @@ public class DistrictsAndCountiesManagerController {
     @PostMapping("/remove")
     @ResponseBody
     R remove(String id) {
-        System.out.println("******====>"+id);
-        CityDO cityDO =new CityDO();
+
+        CityDO cityDO =districtsAndCountiesManagerService.get(id);
         cityDO.setDeleteTime(new Date());
         cityDO.setDeleteUser(ShiroUtils.getUserId().toString());
-        cityDO.setDelFlag("0");
+        cityDO.setDelFlag("1");
         if (districtsAndCountiesManagerService.update(cityDO) > 0) {
             return R.ok();
         }
@@ -135,15 +147,17 @@ public class DistrictsAndCountiesManagerController {
     @Log("批量删除用户")
     @PostMapping("/batchRemove")
     @ResponseBody
-    R batchRemove(@RequestParam("ids[]") String[] userIds) {
-        /*if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-        }*/
-        int r = districtsAndCountiesManagerService.batchRemove(userIds);
-        if (r > 0) {
-            return R.ok();
+    R batchRemove(@RequestParam("ids[]") String[] ids) {
+        for (String id:ids){
+            CityDO cityDO=districtsAndCountiesManagerService.get(id);
+            cityDO.setId(id);
+            cityDO.setDeleteUser(ShiroUtils.getUserId().toString());
+            cityDO.setDeleteTime(new Date());
+            cityDO.setDelFlag("1");
+            districtsAndCountiesManagerService.update(cityDO);
         }
-        return R.error();
+
+        return R.ok();
     }
 
    /* @PostMapping("/exit")
@@ -175,7 +189,7 @@ public class DistrictsAndCountiesManagerController {
 
     @GetMapping("/treeView")
     String treeView() {
-        return  prefix + "/userTree";
+        return  prefix + "/districtsAndCountiesManagerTree";
     }
 
 
