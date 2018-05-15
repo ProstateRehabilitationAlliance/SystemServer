@@ -51,7 +51,7 @@ public class LoginController extends BaseController {
 			if(fileService.isExist(fileDO.getUrl())){
 				model.addAttribute("picUrl",fileDO.getUrl());
 			}else {
-				model.addAttribute("picUrl","/img/55f50ecb82723.jpg");
+				model.addAttribute("picUrl","/img/11.jpg");
 			}
 		}else {
 			model.addAttribute("picUrl","/img/photo_s.jpg");
