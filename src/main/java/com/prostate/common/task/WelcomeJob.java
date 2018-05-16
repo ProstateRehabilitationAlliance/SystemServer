@@ -18,7 +18,7 @@ public class WelcomeJob implements Job{
 
     @Override
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
-    	template.convertAndSend("/topic/getResponse", new Response("老边,是不是屁股痒了" ));
+    	template.convertAndSend("/topic/getResponse", new Response("技术大佬好,我是智能提醒" ));
 
     }
 
