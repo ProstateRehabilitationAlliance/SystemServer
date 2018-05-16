@@ -32,7 +32,7 @@ function save(status) {
 			parent.layer.alert("Connection error");
 		},
 		success : function(r) {
-			if (r.code == 0) {
+			if (r.code == 20000) {
 				parent.layer.msg(r.msg);
 				parent.reLoad();
 				$("#cid").val(r.cid);

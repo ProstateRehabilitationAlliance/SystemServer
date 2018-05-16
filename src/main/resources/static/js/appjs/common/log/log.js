@@ -129,7 +129,7 @@ function remove(id) {
                 index = layer.load();
             },
             success: function (r) {
-                if (r.code == 0) {
+                if (r.code == 20000) {
                     layer.close(index);
                     layer.msg(r.msg);
                     reLoad();
@@ -163,7 +163,7 @@ function batchRemove() {
             },
             url: prefix + '/batchRemove',
             success: function (r) {
-                if (r.code == 0) {
+                if (r.code == 20000) {
                     layer.msg(r.msg);
                     reLoad();
                 } else {

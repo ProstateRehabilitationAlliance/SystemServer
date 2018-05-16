@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 @Configuration
 public class ActivitiConfig {
     //流程配置，与spring整合采用SpringProcessEngineConfiguration这个实现
+    //工作流引擎配置
     @Bean
     public ProcessEngineConfiguration processEngineConfiguration(DataSource dataSource, PlatformTransactionManager transactionManager){
         SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
@@ -30,6 +31,7 @@ public class ActivitiConfig {
     }
 
     //流程引擎，与spring整合使用factoryBean
+    //工作流引擎
     @Bean
     public ProcessEngineFactoryBean processEngine(ProcessEngineConfiguration processEngineConfiguration){
         ProcessEngineFactoryBean processEngineFactoryBean = new ProcessEngineFactoryBean();
@@ -37,7 +39,9 @@ public class ActivitiConfig {
         return processEngineFactoryBean;
     }
 
-    //八大接口
+     //组织机构适配实现
+
+    //八大接口   原生的服务
     @Bean
     public RepositoryService repositoryService(ProcessEngine processEngine){
         return processEngine.getRepositoryService();

@@ -55,7 +55,7 @@ function update() {
 			alert("Connection error");
 		},
 		success : function(r) {
-			if (r.code == 0) {
+			if (r.code == 20000) {
 				parent.layer.msg(r.msg);
 				parent.reLoad();
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
