@@ -3,7 +3,7 @@ package com.prostate.activiti.domain;
 import java.util.Map;
 
 /**
- * @author bootdo 1992lcg@163.com
+ * @author prostate 1992lcg@163.com
  */
 public class TaskDO {
     private  String taskId;

@@ -1,9 +1,9 @@
-bootdo:
+prostate:
   uploadPath: D:/var/uploaded_files/
 logging:
   level:
     root: info
-    com.bootdo: debug
+    com.prostate: debug
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
