@@ -18,6 +18,10 @@ import org.springframework.stereotype.Repository;
 public interface CityDao {
 
 	CityDO get(String id);
+
+	CityDO getParent (String id);
+
+	List<CityDO> getChild(Map<String, Object> map);
 	
 	List<CityDO> list(Map<String, Object> map);
 	

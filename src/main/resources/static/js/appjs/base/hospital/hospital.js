@@ -4,6 +4,7 @@ $(function() {
 	load();
 });
 
+
 function load() {
 	$('#exampleTable')
 			.bootstrapTable(
@@ -47,10 +48,10 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
-									field : 'id', 
-									title : '医院表ID' 
-								},
+								// 								{
+								// 	field : 'id',
+								// 	title : '医院表ID'
+								// },
 																{
 									field : 'hospitalName', 
 									title : '医院名称' 
@@ -76,12 +77,12 @@ function load() {
 									title : '权重排序用' 
 								},
 																{
-									field : 'typeId', 
-									title : '医院类型ID' 
+									field : 'typeId',
+									title : '医院类型'
 								},
 																{
-									field : 'cityId', 
-									title : '医院所在城市ID' 
+									field : 'cityId',
+									title : '医院所在城市'
 								},
 																{
 									field : 'activationFlag', 
@@ -91,34 +92,34 @@ function load() {
 									field : 'orderWeight', 
 									title : '排序' 
 								},
-																{
-									field : 'createUser', 
-									title : '创建人ID(后台管理员)' 
-								},
-																{
-									field : 'createTime', 
-									title : '创建时间' 
-								},
-																{
-									field : 'updateUser', 
-									title : '修改人ID(后台管理员)' 
-								},
-																{
-									field : 'updateTime', 
-									title : '修改时间' 
-								},
-																{
-									field : 'deleteUser', 
-									title : '删除人ID(后台管理员)' 
-								},
-																{
-									field : 'deleteTime', 
-									title : '删除时间' 
-								},
-																{
-									field : 'delFlag', 
-									title : '删除标记' 
-								},
+								// 								{
+								// 	field : 'createUser',
+								// 	title : '创建人ID(后台管理员)'
+								// },
+								// 								{
+								// 	field : 'createTime',
+								// 	title : '创建时间'
+								// },
+								// 								{
+								// 	field : 'updateUser',
+								// 	title : '修改人ID(后台管理员)'
+								// },
+								// 								{
+								// 	field : 'updateTime',
+								// 	title : '修改时间'
+								// },
+								// 								{
+								// 	field : 'deleteUser',
+								// 	title : '删除人ID(后台管理员)'
+								// },
+								// 								{
+								// 	field : 'deleteTime',
+								// 	title : '删除时间'
+								// },
+								// 								{
+								// 	field : 'delFlag',
+								// 	title : '删除标记'
+								// },
 																{
 									title : '操作',
 									field : 'id',
@@ -172,7 +173,7 @@ function remove(id) {
 				'id' : id
 			},
 			success : function(r) {
-				if (r.code==0) {
+				if (r.code==20000) {
 					layer.msg(r.msg);
 					reLoad();
 				}else{

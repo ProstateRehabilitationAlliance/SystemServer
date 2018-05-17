@@ -1,5 +1,6 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +9,6 @@ import java.util.Map;
 
 import com.prostate.base.dao.CityDao;
 import com.prostate.base.domain.CityDO;
-import com.prostate.base.service.CityService;
-
 
 
 @Service
@@ -20,6 +19,16 @@ public class CityServiceImpl implements CityService {
 	@Override
 	public CityDO get(String id){
 		return cityDao.get(id);
+	}
+
+	@Override
+	public CityDO getParent(String id) {
+		return cityDao.getParent(id);
+	}
+
+	@Override
+	public List<CityDO> getChild(Map<String, Object> map) {
+		return cityDao.getChild(map);
 	}
 	
 	@Override

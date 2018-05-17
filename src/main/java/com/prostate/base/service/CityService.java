@@ -15,9 +15,13 @@ import java.util.Map;
 public interface CityService {
 	
 	CityDO get(String id);
+
+	CityDO getParent(String id);
 	
 	List<CityDO> list(Map<String, Object> map);
-	
+
+	List<CityDO> getChild(Map<String, Object> map);
+
 	int count(Map<String, Object> map);
 	
 	int save(CityDO city);
@@ -27,4 +31,8 @@ public interface CityService {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+
+
+
 }

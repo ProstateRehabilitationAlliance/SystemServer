@@ -3,6 +3,7 @@ package com.prostate.base.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.service.CityService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -10,13 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.prostate.base.domain.CityDO;
-import com.prostate.base.service.CityService;
 import com.prostate.common.utils.PageUtils;
 import com.prostate.common.utils.Query;
 import com.prostate.common.utils.R;
@@ -43,7 +42,7 @@ public class CityController {
 	
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("base:city:city")
+	//@RequiresPermissions("base:city:city")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
@@ -52,6 +51,21 @@ public class CityController {
 		PageUtils pageUtils = new PageUtils(cityList, total);
 		return pageUtils;
 	}
+
+
+	@ResponseBody
+	@GetMapping("/ChildList")
+	//@RequiresPermissions("base:city:city")
+	public PageUtils getChild(@RequestParam Map<String, Object> params){
+		//查询列表数据
+		Query query = new Query(params);
+		List<CityDO> cityList = cityService.getChild(query);
+		int total = cityService.count(query);
+		PageUtils pageUtils = new PageUtils(cityList, total);
+		return pageUtils;
+	}
+
+
 	
 	@GetMapping("/add")
 	@RequiresPermissions("base:city:add")
