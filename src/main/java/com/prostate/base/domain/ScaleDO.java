@@ -181,4 +181,22 @@ public class ScaleDO implements Serializable {
 	public String getDelFlag() {
 		return delFlag;
 	}
+
+	@Override
+	public String toString() {
+		return "ScaleDO{" +
+				"id='" + id + '\'' +
+				", parentId='" + parentId + '\'' +
+				", scaleTitle='" + scaleTitle + '\'' +
+				", scaleScore='" + scaleScore + '\'' +
+				", scaleType='" + scaleType + '\'' +
+				", scaleWeight='" + scaleWeight + '\'' +
+				", orderWeight=" + orderWeight +
+				", createUser='" + createUser + '\'' +
+				", createTime=" + createTime +
+				", deleteUser='" + deleteUser + '\'' +
+				", deleteTime=" + deleteTime +
+				", delFlag='" + delFlag + '\'' +
+				'}';
+	}
 }
