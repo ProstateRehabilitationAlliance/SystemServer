@@ -85,7 +85,6 @@ public class HospitalTypeController {
 			if(hospitalTypeService.save(hospitalType)>0){
 				return R.ok();
 			}
-
 		}
 		return R.error(20001,"该医院类型或者编号已经存在");
 
@@ -160,8 +159,14 @@ public class HospitalTypeController {
 
 		//anamnesisTypeService.batchRemove(ids);
 		return R.ok();
-
-
 	}
-	
+
+
+	@ResponseBody
+	@GetMapping("/getById")
+	//@RequiresPermissions("base:hospitalType:hospitalType")
+	public HospitalTypeDO getById(String id){
+		return hospitalTypeService.get(id);
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.prostate.base.dao;
 
+import com.prostate.base.domain.CityDO;
 import com.prostate.base.domain.DeptDO;
 
 import java.util.List;
@@ -29,4 +30,9 @@ public interface DeptDao {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	List<DeptDO> listByName(String name);
+
+
+	List<DeptDO> getTree(Map<String, Object> map);
 }

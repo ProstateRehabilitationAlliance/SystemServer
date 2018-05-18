@@ -1,8 +1,12 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.common.domain.Tree;
+import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,5 +55,34 @@ public class DeptServiceImpl implements DeptService {
 	public int batchRemove(String[] ids){
 		return deptDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public Tree<DeptDO> getTree() {
+		List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
+		List<DeptDO> cityDOS = deptDao.getTree(new HashMap<String, Object>(16));
+		for (DeptDO cityDO:cityDOS){
+			Tree<DeptDO> tree = new Tree<DeptDO>();
+			tree.setId(cityDO.getId());
+			tree.setParentId(cityDO.getParentDeptId());
+			tree.setText(cityDO.getDeptName());
+			Map<String, Object> state = new HashMap<>(16);
+			state.put("opened", false);
+			state.put("selected_arr",false);
+
+			//state.put("mType", "dept");
+			tree.setState(state);
+			trees.add(tree);
+
+
+
+		}
+		Tree<DeptDO> t = BuildTree.build(trees);
+		return t;
+	}
+//
+//	@Override
+//	public List<DeptDO> listByName(String name) {
+//		return null;
+//	}
+
 }

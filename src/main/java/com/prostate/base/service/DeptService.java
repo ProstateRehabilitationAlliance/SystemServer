@@ -1,6 +1,7 @@
 package com.prostate.base.service;
 
 import com.prostate.base.domain.DeptDO;
+import com.prostate.common.domain.Tree;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +28,8 @@ public interface DeptService {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	Tree<DeptDO> getTree();
+
+//	List<DeptDO> listByName(String name);
 }
