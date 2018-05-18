@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2018-05-07 14:02:35
  */
 @Mapper
-public interface IpssDao {
+public interface IpssManagerDao {
 
 	IpssDO get(String id);
 	
@@ -29,4 +29,10 @@ public interface IpssDao {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+
+	List<IpssDO> listByName(String name);
+
+	List<IpssDO> listByNumber(String number);
+
+	public List<IpssDO> getTree(Map<String, Object> map);
 }

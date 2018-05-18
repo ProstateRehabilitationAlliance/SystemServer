@@ -177,4 +177,22 @@ public class IpssDO implements Serializable {
 	public String getDelFlag() {
 		return delFlag;
 	}
+
+	@Override
+	public String toString() {
+		return "IpssDO{" +
+				"id='" + id + '\'' +
+				", parentId='" + parentId + '\'' +
+				", ipssTitle='" + ipssTitle + '\'' +
+				", ipssScore='" + ipssScore + '\'' +
+				", ipssType='" + ipssType + '\'' +
+				", ipssWeight=" + ipssWeight +
+				", orderWeight=" + orderWeight +
+				", createUser='" + createUser + '\'' +
+				", createTime=" + createTime +
+				", deleteUser='" + deleteUser + '\'' +
+				", deleteTime=" + deleteTime +
+				", delFlag='" + delFlag + '\'' +
+				'}';
+	}
 }
