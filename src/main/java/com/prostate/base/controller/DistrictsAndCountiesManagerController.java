@@ -79,6 +79,14 @@ public class DistrictsAndCountiesManagerController {
     @ResponseBody
     R save(CityDO cityDO) {
 
+        if (districtsAndCountiesManagerService.get(cityDO.getParentCityId()).getCityType().equalsIgnoreCase("0")){
+            cityDO.setCityType("1");
+        }else if(districtsAndCountiesManagerService.get(cityDO.getParentCityId()).getCityType().equalsIgnoreCase("1")){
+            cityDO.setCityType("2");
+        }else if(districtsAndCountiesManagerService.get(cityDO.getParentCityId()).getCityType().equalsIgnoreCase("2")){
+            cityDO.setCityType("3");
+        }
+
         if (districtsAndCountiesManagerService.listByName(cityDO.getCityName()).size()==0){
             cityDO.setCreateUser(ShiroUtils.getUserId().toString());
             cityDO.setUpdateTime(new Date());
