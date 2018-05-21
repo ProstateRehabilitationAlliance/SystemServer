@@ -14,7 +14,7 @@
 						<div class="form-group">
 								<label class="col-sm-3 control-label">所属的上级：</label>
 								<div class="col-sm-8">
-									<input id="parentId" name="parentId" class="hidden" th:value="${cityDO.id}">
+									<input id="parentId" name="parentId" class="hidden" th:value="${cityDO.parentId}">
 									 <input id="parentCityId" name="parentCityId"
 										class="form-control" type="text" style="cursor: pointer;"
 										onclick="openCity()" readonly="readonly" placeholder="所属部门" th:value="${city.cityName}">

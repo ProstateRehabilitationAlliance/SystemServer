@@ -57,9 +57,11 @@ public class IpssManagerController {
 	PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
+		//System.out.println(params);
 		if(params.get("parentId")==null||params.get("parentId").equals("")){
-			query.put("parentId","0");
+			query.put("ipssType","1");
 		}
+		//System.out.println(query);
 		List<IpssDO> ipssDOList = ipssManagerService.list(query);
 
 		int total = ipssManagerService.count(query);
@@ -198,7 +200,7 @@ public class IpssManagerController {
 	public Tree<IpssDO> tree() {
 		Tree<IpssDO> tree = new Tree<IpssDO>();
 		tree = ipssManagerService.getTree();
-
+		//System.out.println("=========>"+tree);
 		return tree;
 	}
 

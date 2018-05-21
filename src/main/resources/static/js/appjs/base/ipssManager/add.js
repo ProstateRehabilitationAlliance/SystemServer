@@ -109,7 +109,7 @@ function validateRule() {
 	})
 }
 
-var openScale = function(){
+var openIpss = function(){
 	layer.open({
 		type:2,
 		title:"选择题目",
