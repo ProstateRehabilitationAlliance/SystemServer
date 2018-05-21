@@ -24,12 +24,20 @@ import com.prostate.system.dao.UserDao;
 import com.prostate.system.domain.UserDO;
 import com.prostate.system.service.MenuService;
 
+/**
+ * 自定义realm 安全的数据库
+ */
 public class UserRealm extends AuthorizingRealm {
 /*	@Autowired
 	UserDao userMapper;
 	@Autowired
 	MenuService menuService;*/
 
+	/**
+	 *
+	 * @param arg0
+	 * @return
+	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
 		Long userId = ShiroUtils.getUserId();

@@ -62,7 +62,7 @@ public class ScaleManagerController {
     }
 
     @RequiresPermissions("base:scaleManager:add")
-    @Log("添加区县")
+    @Log("添加题目或选项")
     @GetMapping("/add")
     String add(Model model) {
         List<RoleDO> roles = roleService.list();
@@ -71,7 +71,7 @@ public class ScaleManagerController {
     }
 
     @RequiresPermissions("base:scaleManager:edit")
-    @Log("编辑区县")
+    @Log("编辑题目或选项")
     @GetMapping("/edit/{id}")
     String edit(Model model, @PathVariable("id") String id) {
         ScaleDO scaleDO = scaleManagerService.get(id);
@@ -82,7 +82,7 @@ public class ScaleManagerController {
     }
 
     @RequiresPermissions("base:scaleManager:add")
-    @Log("保存区县")
+    @Log("保存题目或选项")
     @PostMapping("/save")
     @ResponseBody
     R save(ScaleDO scaleDO) {
@@ -106,13 +106,13 @@ public class ScaleManagerController {
             }
 
       //  }
-        return R.error(20001,"该区县名已经存在");
+        return R.error(20001,"该题目或选项已经存在");
 
 
     }
 
     @RequiresPermissions("base:scaleManager:edit")
-    @Log("更新用户")
+    @Log("更新题目或选项")
     @PostMapping("/update")
     @ResponseBody
     R update(ScaleDO scaleDO) {
@@ -197,16 +197,6 @@ public class ScaleManagerController {
         return !districtsAndCountiesManagerService.exit(params);
     }*/
 
-    @RequiresPermissions("sys:user:resetPwd")
-    @Log("请求更改用户密码")
-    @GetMapping("/resetPwd/{id}")
-    String resetPwd(@PathVariable("id") Long userId, Model model) {
-
-        UserDO userDO = new UserDO();
-        userDO.setUserId(userId);
-        model.addAttribute("user", userDO);
-        return prefix + "/reset_pwd";
-    }
 
 
     @GetMapping("/tree")

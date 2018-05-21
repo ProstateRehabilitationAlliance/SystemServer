@@ -48,7 +48,6 @@ public class IpssManagerController {
 	@RequiresPermissions("base:ipssManager:ipssManager")
 	@GetMapping("")
 	String user(Model model) {
-		System.out.println("++++++"+prefix + "/ipssManager");
 		return prefix + "/ipssManager";
 	}
 
