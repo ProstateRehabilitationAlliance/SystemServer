@@ -1,5 +1,6 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.domain.DeptDO;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.prostate.base.dao.DeptDao;
-import com.prostate.base.domain.DeptDO;
 import com.prostate.base.service.DeptService;
 
 
@@ -20,7 +20,17 @@ import com.prostate.base.service.DeptService;
 public class DeptServiceImpl implements DeptService {
 	@Autowired
 	private DeptDao deptDao;
-	
+
+	@Override
+	public DeptDO getByNumber(String deptNumber) {
+		return deptDao.getByNumber(deptNumber);
+	}
+
+	@Override
+	public DeptDO getByName(String deptName) {
+		return deptDao.getByName(deptName);
+	}
+
 	@Override
 	public DeptDO get(String id){
 		return deptDao.get(id);

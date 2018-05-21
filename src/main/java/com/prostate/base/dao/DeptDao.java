@@ -1,11 +1,9 @@
 package com.prostate.base.dao;
 
-import com.prostate.base.domain.CityDO;
-import com.prostate.base.domain.DeptDO;
-
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.DeptDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -18,7 +16,11 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DeptDao {
 
 	DeptDO get(String id);
-	
+
+	DeptDO getByNumber(String deptNumber);
+
+	DeptDO getByName(String deptName);
+
 	List<DeptDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);

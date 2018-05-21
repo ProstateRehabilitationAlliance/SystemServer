@@ -16,6 +16,10 @@ import java.util.Map;
 public interface DeptService {
 	
 	DeptDO get(String id);
+
+	DeptDO getByNumber(String deptNumber);
+
+	DeptDO getByName(String deptName);
 	
 	List<DeptDO> list(Map<String, Object> map);
 	

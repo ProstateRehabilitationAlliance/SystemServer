@@ -8,9 +8,9 @@ import java.util.Date;
 /**
  * 科室表
  * 
- * @author chglee
+ * @author ykbian
  * @email 1992lcg@163.com
- * @date 2018-05-07 14:02:35
+ * @date 2018-05-21 16:05:42
  */
 public class DeptDO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,6 +21,8 @@ public class DeptDO implements Serializable {
 	private String parentDeptId;
 	//科室名称
 	private String deptName;
+	//科室编号
+	private String deptNumber;
 	//科室等级
 	private String deptGrade;
 	//科室简介
@@ -28,7 +30,7 @@ public class DeptDO implements Serializable {
 	//权重排序用
 	private Integer deptWeight;
 	//排序
-	private Integer orderWeight;
+	private String orderWeight;
 	//创建人ID(后台管理员)
 	private String createUser;
 	//创建时间
@@ -81,6 +83,18 @@ public class DeptDO implements Serializable {
 		return deptName;
 	}
 	/**
+	 * 设置：科室编号
+	 */
+	public void setDeptNumber(String deptNumber) {
+		this.deptNumber = deptNumber;
+	}
+	/**
+	 * 获取：科室编号
+	 */
+	public String getDeptNumber() {
+		return deptNumber;
+	}
+	/**
 	 * 设置：科室等级
 	 */
 	public void setDeptGrade(String deptGrade) {
@@ -116,15 +130,18 @@ public class DeptDO implements Serializable {
 	public Integer getDeptWeight() {
 		return deptWeight;
 	}
-
-	public Integer getOrderWeight() {
-		return orderWeight;
-	}
-
-	public void setOrderWeight(Integer orderWeight) {
+	/**
+	 * 设置：排序
+	 */
+	public void setOrderWeight(String orderWeight) {
 		this.orderWeight = orderWeight;
 	}
-
+	/**
+	 * 获取：排序
+	 */
+	public String getOrderWeight() {
+		return orderWeight;
+	}
 	/**
 	 * 设置：创建人ID(后台管理员)
 	 */

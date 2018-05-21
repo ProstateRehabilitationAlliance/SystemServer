@@ -54,6 +54,10 @@ function load(id) {
 						title : '科室'
 					},
                     {
+                        field : 'deptNumber',
+                        title : '科室编号'
+                    },
+                    {
                         field : 'deptInform',
                         title : '科室简介'
                     },
