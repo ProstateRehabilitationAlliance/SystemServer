@@ -41,6 +41,7 @@ public class HospitalController {
 
 	@Autowired
 	private CityService cityService;
+
 	@Autowired
 	private HospitalTypeService hospitalTypeService;
 	
@@ -95,13 +96,17 @@ public class HospitalController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:hospital:add")
 	public R save( HospitalDO hospital){
-		hospital.setCreateUser(ShiroUtils.getUserId().toString());
-		hospital.setCreateTime(new Date());
-		hospital.setDelFlag("0");
-		if(hospitalService.save(hospital)>0){
-			return R.ok();
+		HospitalDO hospitalDOByName = hospitalService.getByName(hospital.getHospitalName());
+		HospitalDO hospitalDOByNumber = hospitalService.getByNumber(hospital.getHospitalNumber());
+		if (hospitalDOByName == null && hospitalDOByNumber == null){
+			hospital.setCreateUser(ShiroUtils.getUserId().toString());
+			hospital.setCreateTime(new Date());
+			hospital.setDelFlag("0");
+			if(hospitalService.save(hospital)>0){
+				return R.ok();
+			}
 		}
-		return R.error();
+		return R.error(20001,"编号或者名称重复");
 	}
 	/**
 	 * 修改
@@ -110,6 +115,18 @@ public class HospitalController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:hospital:edit")
 	public R update( HospitalDO hospital){
+		//获取正在修改的对象信息
+		HospitalDO hospitalById = hospitalService.get(hospital.getId());
+		if( !hospital.getHospitalName().equalsIgnoreCase(hospitalById.getHospitalName())){
+			if (hospitalService.getByName(hospital.getHospitalName()) != null){
+				return  R.error(20001,"名称重复");
+			}
+		}
+		if( !hospital.getHospitalNumber().equalsIgnoreCase(hospitalById.getHospitalNumber())){
+			if (hospitalService.getByNumber(hospital.getHospitalNumber()) != null){
+				return  R.error(20001,"编号重复");
+			}
+		}
 		hospitalService.update(hospital);
 		return R.ok();
 	}

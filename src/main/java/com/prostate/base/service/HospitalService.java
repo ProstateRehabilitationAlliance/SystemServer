@@ -15,6 +15,10 @@ import java.util.Map;
 public interface HospitalService {
 	
 	HospitalDO get(String id);
+
+	HospitalDO getByName(String hospitalName);
+
+	HospitalDO getByNumber(String hospitalNumber);
 	
 	List<HospitalDO> list(Map<String, Object> map);
 	

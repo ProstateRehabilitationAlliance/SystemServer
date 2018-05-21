@@ -17,6 +17,10 @@ import org.apache.ibatis.annotations.Mapper;
 public interface HospitalDao {
 
 	HospitalDO get(String id);
+
+	HospitalDO getByName(String hospitalName);
+
+	HospitalDO getByNumber(String hospitalNumber);
 	
 	List<HospitalDO> list(Map<String, Object> map);
 	

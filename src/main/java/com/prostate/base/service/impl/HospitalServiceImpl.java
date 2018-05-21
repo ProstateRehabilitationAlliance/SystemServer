@@ -21,7 +21,17 @@ public class HospitalServiceImpl implements HospitalService {
 	public HospitalDO get(String id){
 		return hospitalDao.get(id);
 	}
-	
+
+	@Override
+	public HospitalDO getByName(String hospitalName) {
+		return hospitalDao.getByName(hospitalName);
+	}
+
+	@Override
+	public HospitalDO getByNumber(String hospitalNumber) {
+		return hospitalDao.getByNumber(hospitalNumber);
+	}
+
 	@Override
 	public List<HospitalDO> list(Map<String, Object> map){
 		return hospitalDao.list(map);
