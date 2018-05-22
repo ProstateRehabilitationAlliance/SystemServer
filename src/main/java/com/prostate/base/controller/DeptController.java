@@ -1,10 +1,8 @@
 package com.prostate.base.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.common.domain.Tree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -46,22 +44,13 @@ public class DeptController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("base:dept:dept")
-//	public PageUtils list(@RequestParam Map<String, Object> params){
-//		//查询列表数据
-//        Query query = new Query(params);
-//		List<DeptDO> deptList = deptService.list(query);
-//		int total = deptService.count(query);
-//		PageUtils pageUtils = new PageUtils(deptList, total);
-//		System.out.println(pageUtils.getRows()+"===="+pageUtils.getTotal());
-//		for (DeptDO DeptDO:deptList) {
-//			System.out.println("======"+DeptDO.getDeptName());
-//		}
-//		return pageUtils;
-//	}
-	public List<DeptDO> list() {
-		Map<String, Object> query = new HashMap<>(16);
-		List<DeptDO> sysDeptList = deptService.list(query);
-		return sysDeptList;
+	public PageUtils list(@RequestParam Map<String, Object> params){
+		//查询列表数据
+        Query query = new Query(params);
+		List<DeptDO> deptList = deptService.list(query);
+		int total = deptService.count(query);
+		PageUtils pageUtils = new PageUtils(deptList, total);
+		return pageUtils;
 	}
 	
 	@GetMapping("/add")
@@ -124,18 +113,5 @@ public class DeptController {
 		deptService.batchRemove(ids);
 		return R.ok();
 	}
-
-	@GetMapping("/tree")
-	@ResponseBody
-	public Tree<DeptDO> tree() {
-		Tree<DeptDO> tree = new Tree<DeptDO>();
-		tree = deptService.getTree();
-		return tree;
-	}
-
-	@GetMapping("/treeView")
-	String treeView() {
-		return  "base/dept/deptTree";
-	}
-
+	
 }

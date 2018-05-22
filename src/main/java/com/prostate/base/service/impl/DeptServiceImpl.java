@@ -69,19 +69,23 @@ public class DeptServiceImpl implements DeptService {
 	@Override
 	public Tree<DeptDO> getTree() {
 		List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
-		List<DeptDO> sysDepts = deptDao.list(new HashMap<String,Object>(16));
-
-		for (DeptDO sysDept : sysDepts) {
+		List<DeptDO> cityDOS = deptDao.getTree(new HashMap<String, Object>(16));
+		for (DeptDO cityDO:cityDOS){
 			Tree<DeptDO> tree = new Tree<DeptDO>();
-			tree.setId(sysDept.getId().toString());
-			tree.setParentId(sysDept.getParentDeptId().toString());
-			tree.setText(sysDept.getDeptName());
+			tree.setId(cityDO.getId());
+			tree.setParentId(cityDO.getParentDeptId());
+			tree.setText(cityDO.getDeptName());
 			Map<String, Object> state = new HashMap<>(16);
-			state.put("opened", true);
+			state.put("opened", false);
+			state.put("selected_arr",false);
+
+			//state.put("mType", "dept");
 			tree.setState(state);
 			trees.add(tree);
+
+
+
 		}
-		// 默认顶级菜单为０，根据数据库实际情况调整
 		Tree<DeptDO> t = BuildTree.build(trees);
 		return t;
 	}
