@@ -22,15 +22,15 @@ public interface DeptDao {
 	DeptDO getByName(String deptName);
 
 	List<DeptDO> list(Map<String, Object> map);
-	
+
 	int count(Map<String, Object> map);
-	
+
 	int save(DeptDO dept);
-	
+
 	int update(DeptDO dept);
-	
+
 	int remove(String id);
-	
+
 	int batchRemove(String[] ids);
 
 	List<DeptDO> listByName(String name);

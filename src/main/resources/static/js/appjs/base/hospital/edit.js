@@ -1,17 +1,17 @@
 $().ready(function() {
-	validateRule();
+    validateRule();
     loadAllType();
     //加载所有的省级信息
    loadAllProvince();
-	//从县级信息开始，回显数据
+    //从县级信息开始，回显数据
     loadCounty();
 
 });
 
 $.validator.setDefaults({
-	submitHandler : function() {
-		update();
-	}
+    submitHandler : function() {
+        update();
+    }
 });
 //根据类型id查询类型信息
 function loadType(hospitalTypeId) {
@@ -19,9 +19,9 @@ function loadType(hospitalTypeId) {
         $.get("/base/hospitalType/getById",{
             id : hospitalTypeId  //传递ID到后台
         }, function(data) {
-        	if (data != null){
-        		//将类型信息传给select，
-				selectValue(data.id);
+            if (data != null){
+                //将类型信息传给select，
+                selectValue(data.id);
             }
         });
     }
@@ -63,12 +63,12 @@ function loadAllType() {
 
 //根据区县id查询省市区县信息
 function loadCounty() {
-	var countyId = $("#cityId").val();
+    var countyId = $("#cityId").val();
     if(countyId!=null){
         $.get("/base/city/getById",{
             id : countyId  //传递区县ID到后台
         }, function(cityVO) {
-        	//cityVO中包含county  city  province三层信息
+            //cityVO中包含county  city  province三层信息
             if (cityVO != null) {
                 $("#cityId").empty();   //清空省市县三级默认值
                 $("#cityId1").empty();
@@ -82,14 +82,14 @@ function loadCounty() {
             }
         });
     }
-    updateProvince();
+    //updateProvince();
 }
 
 //修改区县信息
 function updateCounty() {
     $("#cityId").empty();
-   //获取上级的地市信息，主要是id
-	 var cityID = $("#cityId1").val();
+    //获取上级的地市信息，主要是id
+    var cityID = $("#cityId1").val();
     $.get("/base/city/ChildList",{
         offset : 0,
         limit:1000,
@@ -99,8 +99,8 @@ function updateCounty() {
             var rows = data.rows;
             for(var i = 0;i<rows.length;i++){
                 var city = rows[i];
-                    var str = '<option id="'+city.id+'" value="'+city.id+'">'+city.cityName+'</option>';
-                    $("#cityId").append(str);
+                var str = '<option id="'+city.id+'" value="'+city.id+'">'+city.cityName+'</option>';
+                $("#cityId").append(str);
             }
         }
     });
@@ -133,7 +133,7 @@ function loadAllProvince() {
         offset : 0,
         limit:5000,
     }, function(data) {
-    	$("#cityId2").empty();
+        $("#cityId2").empty();
         if (data != null){
             var rows = data.rows;
             for(var i = 0;i<rows.length;i++){
@@ -196,42 +196,42 @@ function selectCountyValue(County) {
 }
 
 function update() {
-	$.ajax({
-		cache : true,
-		type : "POST",
-		url : "/base/hospital/update",
-		data : $('#signupForm').serialize(),// 你的formid
-		async : false,
-		error : function(request) {
-			parent.layer.alert("Connection error");
-		},
-		success : function(data) {
-			if (data.code == 20000) {
-				parent.layer.msg("操作成功");
-				parent.reLoad();
-				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-				parent.layer.close(index);
+    $.ajax({
+        cache : true,
+        type : "POST",
+        url : "/base/hospital/update",
+        data : $('#signupForm').serialize(),// 你的formid
+        async : false,
+        error : function(request) {
+            parent.layer.alert("Connection error");
+        },
+        success : function(data) {
+            if (data.code == 20000) {
+                parent.layer.msg("操作成功");
+                parent.reLoad();
+                var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                parent.layer.close(index);
 
-			} else {
-				parent.layer.alert(data.msg)
-			}
+            } else {
+                parent.layer.alert(data.msg)
+            }
 
-		}
-	});
+        }
+    });
 
 }
 function validateRule() {
-	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
-	})
+    var icon = "<i class='fa fa-times-circle'></i> ";
+    $("#signupForm").validate({
+        rules : {
+            name : {
+                required : true
+            }
+        },
+        messages : {
+            name : {
+                required : icon + "请输入名字"
+            }
+        }
+    })
 }

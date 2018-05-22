@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.prostate.base.service.CityService;
+import com.prostate.base.vo.CityVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -127,5 +128,20 @@ public class CityController {
 		cityService.batchRemove(ids);
 		return R.ok();
 	}
-	
+
+
+	@ResponseBody
+	@GetMapping("/getById")
+	//@RequiresPermissions("base:city:city")
+	public CityVO getById(String id){
+		CityVO cityVO = new CityVO();
+		//分别获取三级信息
+		CityDO cityDOCounty  = cityService.get(id);
+		CityDO cityDOCity  = cityService.get(cityDOCounty.getParentCityId());
+		CityDO cityDOProvince  = cityService.get(cityDOCity.getParentCityId());
+		cityVO.setProvince(cityDOProvince);
+		cityVO.setCity(cityDOCity);
+		cityVO.setCounty(cityDOCounty);
+		return cityVO;
+	}
 }

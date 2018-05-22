@@ -226,4 +226,25 @@ public class DeptDO implements Serializable {
 	public String getDelFlag() {
 		return delFlag;
 	}
+
+	@Override
+	public String toString() {
+		return "DeptDO{" +
+				"id='" + id + '\'' +
+				", parentDeptId='" + parentDeptId + '\'' +
+				", deptName='" + deptName + '\'' +
+				", deptNumber='" + deptNumber + '\'' +
+				", deptGrade='" + deptGrade + '\'' +
+				", deptInform='" + deptInform + '\'' +
+				", deptWeight=" + deptWeight +
+				", orderWeight='" + orderWeight + '\'' +
+				", createUser='" + createUser + '\'' +
+				", createTime=" + createTime +
+				", updateUser='" + updateUser + '\'' +
+				", updateTime=" + updateTime +
+				", deleteUser='" + deleteUser + '\'' +
+				", deleteTime=" + deleteTime +
+				", delFlag='" + delFlag + '\'' +
+				'}';
+	}
 }
