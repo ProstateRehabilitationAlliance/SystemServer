@@ -14,7 +14,9 @@ public class Constant {
     //通知公告阅读状态-已读
     public static int OA_NOTIFY_READ_YES = 1;
     //部门根节点id
-    public static Long DEPT_ROOT_ID = 0l;
+    public static Long DEPT_ROOT_ID = 0L;
+    //部门根节点id
+    public static String ROOT_ID = "0";
 
     //部门根节点id==============================================新增，处理 base/dept/edit请求
     public static String DEPT_ROOT_ID2 = "0";

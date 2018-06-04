@@ -168,12 +168,7 @@ public class DistrictsAndCountiesManagerController {
         return R.ok();
     }
 
-   /* @PostMapping("/exit")
-    @ResponseBody
-    boolean exit(@RequestParam Map<String, Object> params) {
-        // 存在，不通过，false
-        return !districtsAndCountiesManagerService.exit(params);
-    }*/
+
 
     @RequiresPermissions("sys:user:resetPwd")
     @Log("请求更改用户密码")
