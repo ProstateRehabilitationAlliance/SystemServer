@@ -47,19 +47,19 @@ function load() {
                         align : 'center',
                         valign : 'center',
 					},
-					{
-						field : 'delFlag',
-						title : '状态',
-						align : 'center',
-                        valign : 'center',
-						formatter : function(item, index) {
-							if (item.delFlag == '1') {
-								return '<span class="label label-danger">禁用</span>';
-							} else if (item.delFlag == '0') {
-								return '<span class="label label-primary">正常</span>';
-							}
-						}
-					},
+					// {
+					// 	field : 'delFlag',
+					// 	title : '状态',
+					// 	align : 'center',
+                     //    valign : 'center',
+					// 	formatter : function(item, index) {
+					// 		if (item.delFlag == '1') {
+					// 			return '<span class="label label-danger">禁用</span>';
+					// 		} else if (item.delFlag == '0') {
+					// 			return '<span class="label label-primary">正常</span>';
+					// 		}
+					// 	}
+					// },
 					{
 						title : '操作',
 						field : 'id',
