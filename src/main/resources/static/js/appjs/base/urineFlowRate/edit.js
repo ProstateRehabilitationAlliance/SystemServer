@@ -4,14 +4,14 @@ $().ready(function() {
 
 $.validator.setDefaults({
 	submitHandler : function() {
-		save();
+		update();
 	}
 });
-function save() {
+function update() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/base/urineRoutine/save",
+		url : "/base/urineFlowRate/update",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {
@@ -32,22 +32,21 @@ function save() {
 	});
 
 }
-function loadParent( parentId,parentName){
-	//alert(parentid+parentName)
-    var id=parentId
-    $("#parentId").val(id);
-    $("#parentName").val(parentName);
-}
-
 var openParent = function(){
     layer.open({
         type:2,
         title:"选择部门",
         area : [ '300px', '450px' ],
-        content:"/base/urineRoutine/urineRoutineTree"
+        content:"/base/urineFlowRate/urineFlowRateTree"
     })
 }
 
+function loadParent( parentId,parentName){
+    //alert(parentId+parentName)
+    var id=parentId
+    $("#parentId").val(id);
+    $("#parentName").val(parentName);
+}
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
@@ -58,7 +57,7 @@ function validateRule() {
 		},
 		messages : {
 			name : {
-				required : icon + "请输入姓名"
+				required : icon + "请输入名字"
 			}
 		}
 	})

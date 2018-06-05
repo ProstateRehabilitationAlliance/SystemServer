@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.prostate.base.dao.UrineRoutineDao">
+<mapper namespace="com.prostate.base.dao.UrineFlowRateDao">
 
-	<select id="get" resultType="com.prostate.base.domain.UrineRoutineDO">
-		select `id`,`parent_id`,`scale_title`,`scale_score`,`scale_type`,`scale_weight`,`order_weight`,`create_user`,`create_time` from scale_urine_routine where id = #{value}
+	<select id="get" resultType="com.prostate.base.domain.UrineFlowRateDO">
+		select `id`,`parent_id`,`scale_title`,`scale_score`,`scale_type`,`scale_weight`,`order_weight`,`create_user`,`create_time`,`delete_user`,`delete_time`,`del_flag` from scale_urine_flow_rate where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.prostate.base.domain.UrineRoutineDO">
-		select `id`,`parent_id`,`scale_title`,`scale_score`,`scale_type`,`scale_weight`,`order_weight`,`create_user`,`create_time`,`delete_user`,`delete_time`,`del_flag` from scale_urine_routine
+	<select id="list" resultType="com.prostate.base.domain.UrineFlowRateDO">
+		select `id`,`parent_id`,`scale_title`,`scale_score`,`scale_type`,`scale_weight`,`order_weight`,`create_user`,`create_time`,`delete_user`,`delete_time`,`del_flag` from scale_urine_flow_rate
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
 		  		  <if test="scaleTitle != null and scaleTitle != ''"> and scale_title = #{scaleTitle} </if>
 		  		  <if test="scaleScore != null and scaleScore != ''"> and scale_score = #{scaleScore} </if>
-		  		  <if test="scaleType != null and scaleType != ''"> and scale_type = #{scaleType} </if>
+
+				<if test="scaleType != null and scaleType != ''"> and scale_type = #{scaleType} </if>
 		  		  <if test="scaleWeight != null and scaleWeight != ''"> and scale_weight = #{scaleWeight} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
@@ -36,8 +37,8 @@
 		</if>
 	</select>
 
-	<select id="getTree" resultType="com.prostate.base.domain.UrineRoutineDO">
-		select `id`,`parent_id`,`scale_title`,`scale_score`,`scale_type`,`scale_weight`,`order_weight`,`create_user`,`create_time`,`delete_user`,`delete_time`,`del_flag` from scale_urine_routine
+	<select id="getTree" resultType="com.prostate.base.domain.UrineFlowRateDO">
+		select `id`,`parent_id`,`scale_title`,`scale_score`,`scale_type`,`scale_weight`,`order_weight`,`create_user`,`create_time`,`delete_user`,`delete_time`,`del_flag` from scale_urine_flow_rate
 		<where>
 			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
@@ -66,7 +67,7 @@
 	</select>
 	
  	<select id="count" resultType="int">
-		select count(*) from scale_urine_routine
+		select count(*) from scale_urine_flow_rate
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
@@ -79,17 +80,15 @@
 		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
 		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
 		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
-		  		  and del_flag ='0'
+		  		   and del_flag = '0'
 		  		</where>
 	</select>
-
-
-
-	<insert id="save" parameterType="com.prostate.base.domain.UrineRoutineDO">
+	 
+	<insert id="save" parameterType="com.prostate.base.domain.UrineFlowRateDO">
 		<selectKey keyProperty="id" resultType="string" order="BEFORE">
 			select replace(uuid(), '-', '') as id from dual
 		</selectKey>
-		insert into scale_urine_routine
+		insert into scale_urine_flow_rate
 		(
 			`id`, 
 			`parent_id`, 
@@ -121,8 +120,8 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.prostate.base.domain.UrineRoutineDO">
-		update scale_urine_routine 
+	<update id="update" parameterType="com.prostate.base.domain.UrineFlowRateDO">
+		update scale_urine_flow_rate 
 		<set>
 			<if test="parentId != null">`parent_id` = #{parentId}, </if>
 			<if test="scaleTitle != null">`scale_title` = #{scaleTitle}, </if>
@@ -140,11 +139,11 @@
 	</update>
 	
 	<delete id="remove">
-		delete from scale_urine_routine where id = #{value}
+		delete from scale_urine_flow_rate where id = #{value}
 	</delete>
 	
 	<delete id="batchRemove">
-		delete from scale_urine_routine where id in 
+		delete from scale_urine_flow_rate where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

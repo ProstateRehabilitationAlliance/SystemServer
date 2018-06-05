@@ -1,5 +1,5 @@
 
-var prefix = "/base/urineRoutine"
+var prefix = "/base/urineFlowRate"
 $(function() {
 	load();
 });

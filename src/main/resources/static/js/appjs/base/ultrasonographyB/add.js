@@ -11,7 +11,7 @@ function save() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/base/urineRoutine/save",
+		url : "/base/ultrasonographyB/save",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {
@@ -33,7 +33,7 @@ function save() {
 
 }
 function loadParent( parentId,parentName){
-	//alert(parentid+parentName)
+    //alert(parentId+parentName)
     var id=parentId
     $("#parentId").val(id);
     $("#parentName").val(parentName);
@@ -44,7 +44,7 @@ var openParent = function(){
         type:2,
         title:"选择部门",
         area : [ '300px', '450px' ],
-        content:"/base/urineRoutine/urineRoutineTree"
+        content:"/base/ultrasonographyB/ultrasonographyBTree"
     })
 }
 

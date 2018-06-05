@@ -9,35 +9,41 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
+							<input id="id" name="id" th:value="${ultrasonographyB.id}"
+								class="hidden">
+
+
 							<div class="form-group">
-								<label class="col-sm-3 control-label">上级：</label>
+								<label class="col-sm-3 control-label">所属的上级：</label>
 								<div class="col-sm-8">
-									<input id="parentId" name="parentId" th:value="${parentId}"
-										class="form-control hidden" type="text">
-								</div>
-								<div class="col-sm-8">
-									<input id="parentName" name="parentName" th:value="${parentName}"
-										   onclick="openParent()"  class="form-control" type="text" readonly>
+									<input id="parentId" name="parentId" class="hidden" th:value="${ultrasonographyB.parentId}">
+									<input id="parentName" name="parentName"
+										   class="form-control" type="text" style="cursor: pointer;"
+										   onclick="openParent()" readonly="readonly" placeholder="所属上级" th:value="${parentName}">
 								</div>
 							</div>
+
+
+
 							<div class="form-group">
-								<label class="col-sm-3 control-label">题目或者选项的内容：</label>
+								<label class="col-sm-3 control-label">题目或者选项内容：</label>
 								<div class="col-sm-8">
-									<input id="scaleTitle" name="scaleTitle" class="form-control" type="text">
+									<input id="scaleTitle" name="scaleTitle" th:value="${ultrasonographyB.scaleTitle}"
+										class="form-control" type="text">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">分数：</label>
 								<div class="col-sm-8">
-									<input id="scaleScore" name="scaleScore" class="form-control"
-										type="text">
+									<input id="scaleScore" name="scaleScore" th:value="${ultrasonographyB.scaleScore}"
+										class="form-control" type="text">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">排序：</label>
 								<div class="col-sm-8">
-									<input id="scaleWeight" name="scaleWeight" class="form-control"
-										type="text">
+									<input id="scaleWeight" name="scaleWeight" th:value="${ultrasonographyB.scaleWeight}"
+										class="form-control" type="text">
 								</div>
 							</div>
 							<div class="form-group">
@@ -52,7 +58,7 @@
 		</div>
 	</div>
 	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/base/urineRoutine/add.js">
+	<script type="text/javascript" src="/js/appjs/base/ultrasonographyB/edit.js">
 	</script>
 </body>
 </html>

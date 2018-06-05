@@ -6,13 +6,13 @@ import java.util.Date;
 
 
 /**
- * 尿常规量表
+ * 尿流率量表
  * 
  * @author xiaofeng
  * @email 1992lcg@163.com
- * @date 2018-06-04 10:40:25
+ * @date 2018-06-05 09:27:00
  */
-public class UrineRoutineDO implements Serializable {
+public class UrineFlowRateDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//
@@ -183,23 +183,5 @@ public class UrineRoutineDO implements Serializable {
 	 */
 	public String getDelFlag() {
 		return delFlag;
-	}
-
-	@Override
-	public String toString() {
-		return "UrineRoutineDO{" +
-				"id='" + id + '\'' +
-				", parentId='" + parentId + '\'' +
-				", scaleTitle='" + scaleTitle + '\'' +
-				", scaleScore='" + scaleScore + '\'' +
-				", scaleType='" + scaleType + '\'' +
-				", scaleWeight=" + scaleWeight +
-				", orderWeight=" + orderWeight +
-				", createUser='" + createUser + '\'' +
-				", createTime=" + createTime +
-				", deleteUser='" + deleteUser + '\'' +
-				", deleteTime=" + deleteTime +
-				", delFlag='" + delFlag + '\'' +
-				'}';
 	}
 }

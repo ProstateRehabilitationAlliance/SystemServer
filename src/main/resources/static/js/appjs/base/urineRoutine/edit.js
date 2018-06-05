@@ -41,9 +41,10 @@ var openParent = function(){
     })
 }
 
-function loadParent( parentid,parentName){
-    var cityid=parentid
-    $("#parentid").val(parentid);
+function loadParent( parentId,parentName){
+    //alert(parentId+parentName)
+    var id=parentId
+    $("#parentId").val(id);
     $("#parentName").val(parentName);
 }
 function validateRule() {
