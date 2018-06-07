@@ -50,14 +50,6 @@ public class DeptController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("base:dept:dept")
-//	public PageUtils list(@RequestParam Map<String, Object> params){
-//		//查询列表数据
-//        Query query = new Query(params);
-//		List<DeptDO> deptList = deptService.list(query);
-//		int total = deptService.count(query);
-//		PageUtils pageUtils = new PageUtils(deptList, total);
-//		return pageUtils;
-//	}
 	public List<DeptDO> list() {
 		Map<String, Object> query = new HashMap<>(16);
 		List<DeptDO> sysDeptList = deptService.list(query);
@@ -69,7 +61,7 @@ public class DeptController {
 	String add(@PathVariable("pId") String pId, Model model) {
 		model.addAttribute("pId", pId);
 		if (pId.equalsIgnoreCase("0")) {
-			model.addAttribute("pName", "总部门");
+			model.addAttribute("pName", "无");
 		} else {
 			model.addAttribute("pName", deptService.get(pId).getDeptName());
 		}
@@ -89,7 +81,7 @@ public class DeptController {
 	String edit(@PathVariable("id") String deptId, Model model) {
 		DeptDO sysDept = deptService.get(deptId);
 		model.addAttribute("dept", sysDept);
-		if(Constant.DEPT_ROOT_ID2.equals(sysDept.getParentDeptId())) {
+		if(sysDept.getParentDeptId() == null) {
 			model.addAttribute("parentDeptName", "无");
 		}else {
 			DeptDO parDept = deptService.get(sysDept.getParentDeptId());
@@ -110,6 +102,9 @@ public class DeptController {
 			dept.setCreateUser(ShiroUtils.getUserId().toString());
 			dept.setCreateTime(new Date());
 			dept.setDelFlag("0");
+			if ("0".equalsIgnoreCase(dept.getParentDeptId())){
+				dept.setParentDeptId(null);
+			}
 			if(deptService.save(dept)>0){
 				return R.ok();
 			}
@@ -124,8 +119,6 @@ public class DeptController {
 	@RequiresPermissions("base:dept:edit")
 	public R update( DeptDO dept){
 		DeptDO deptDO = deptService.get(dept.getId());
-		System.out.println("======================");
-		System.out.println(dept);
 		if ( !deptDO.getDeptName().equalsIgnoreCase(dept.getDeptName())){
 			if (deptService.getByName(dept.getDeptName()) != null){
 				return R.error(20001,"名称重复");
@@ -135,6 +128,9 @@ public class DeptController {
 			if (deptService.getByNumber(dept.getDeptNumber()) != null){
 				return R.error(20001,"编号重复");
 			}
+		}
+		if (dept.getParentDeptId().equalsIgnoreCase("")){
+			dept.setParentDeptId(null);
 		}
 		dept.setUpdateUser(ShiroUtils.getUserId().toString());
 		dept.setUpdateTime(new Date());

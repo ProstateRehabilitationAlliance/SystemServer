@@ -31,16 +31,16 @@ function load() {
 					// },
 					{
 						field : 'scaleTitle',
-						title : '题干',
+						title : '题目信息',
                         valign : 'center',
 						witth :20
 					},
-                    // {
-                    //     field : 'deptNumber',
-                    //     title : '部门编号',
-                    //     valign : 'center',
-                    //     witth :20
-                    // },
+                    {
+                        field : 'scaleScore',
+                        title : '分值',
+                        valign : 'center',
+                        witth :20
+                    },
 					{
 						field : 'orderWeight',
 						title : '排序',

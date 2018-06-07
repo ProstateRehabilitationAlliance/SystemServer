@@ -75,7 +75,7 @@ public class ExpressedProstaticSecretionController {
 	String add(@PathVariable("pId") String pId, Model model) {
 		model.addAttribute("pId", pId);
 		if (pId.equalsIgnoreCase("0")) {
-			model.addAttribute("pName", "总");
+			model.addAttribute("pName", "无");
 		} else {
 			model.addAttribute("pName", expressedProstaticSecretionService.get(pId).getScaleTitle());
 		}
@@ -91,8 +91,8 @@ public class ExpressedProstaticSecretionController {
 		//把对象信息存入model
 		model.addAttribute("expressedProstaticSecretion", expressedProstaticSecretionDO);
 		//如果这个对象没有父id,那么他就是一级菜单
-		if(Constant.DEPT_ROOT_ID2.equals(expressedProstaticSecretionDO.getParentId())) {
-			model.addAttribute("scaleTitle", "无");
+		if(expressedProstaticSecretionDO.getParentId() == null) {
+			model.addAttribute("parentScaleTitle", "无");
 		}else {
 			//如果有父id，则把他的上级菜单的信息存入model
 			ExpressedProstaticSecretionDO bloodRoutineDO =
@@ -109,6 +109,9 @@ public class ExpressedProstaticSecretionController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:expressedProstaticSecretion:add")
 	public R save( ExpressedProstaticSecretionDO expressedProstaticSecretion){
+		if ("0".equalsIgnoreCase(expressedProstaticSecretion.getParentId())){
+			expressedProstaticSecretion.setParentId(null);
+		}
 		expressedProstaticSecretion.setCreateTime(new Date());
 		expressedProstaticSecretion.setCreateUser(ShiroUtils.getUserId().toString());
 		expressedProstaticSecretion.setDelFlag("0");
@@ -124,6 +127,9 @@ public class ExpressedProstaticSecretionController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:expressedProstaticSecretion:edit")
 	public R update( ExpressedProstaticSecretionDO expressedProstaticSecretion){
+		if (expressedProstaticSecretion.getParentId().equalsIgnoreCase("")){
+			expressedProstaticSecretion.setParentId(null);
+		}
 		expressedProstaticSecretionService.update(expressedProstaticSecretion);
 		return R.ok();
 	}

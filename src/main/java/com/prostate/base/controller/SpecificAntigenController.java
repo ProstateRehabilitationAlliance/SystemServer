@@ -90,8 +90,8 @@ public class SpecificAntigenController {
 		//把对象信息存入model
 		model.addAttribute("specificAntigen", specificAntigenDO);
 		//如果这个对象没有父id,那么他就是一级菜单
-		if(Constant.DEPT_ROOT_ID2.equals(specificAntigenDO.getParentId())) {
-			model.addAttribute("scaleTitle", "无");
+		if(specificAntigenDO.getParentId() == null) {
+			model.addAttribute("parentScaleTitle", "无");
 		}else {
 			//如果有父id，则把他的上级菜单的信息存入model
 			SpecificAntigenDO specificAntigenDO1 =
@@ -108,6 +108,9 @@ public class SpecificAntigenController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:specificAntigen:add")
 	public R save( SpecificAntigenDO specificAntigen){
+		if ("0".equalsIgnoreCase(specificAntigen.getParentId())){
+			specificAntigen.setParentId(null);
+		}
 		specificAntigen.setCreateTime(new Date());
 		specificAntigen.setCreateUser(ShiroUtils.getUserId().toString());
 		specificAntigen.setDelFlag("0");
@@ -123,6 +126,9 @@ public class SpecificAntigenController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:specificAntigen:edit")
 	public R update( SpecificAntigenDO specificAntigen){
+		if (specificAntigen.getParentId().equalsIgnoreCase("")){
+			specificAntigen.setParentId(null);
+		}
 		specificAntigenService.update(specificAntigen);
 		return R.ok();
 	}

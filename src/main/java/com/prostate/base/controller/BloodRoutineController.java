@@ -46,14 +46,6 @@ public class BloodRoutineController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("base:bloodRoutine:bloodRoutine")
-//	public PageUtils list(@RequestParam Map<String, Object> params){
-//		//查询列表数据
-//        Query query = new Query(params);
-//		List<BloodRoutineDO> bloodRoutineList = bloodRoutineService.list(query);
-//		int total = bloodRoutineService.count(query);
-//		PageUtils pageUtils = new PageUtils(bloodRoutineList, total);
-//		return pageUtils;
-//	}
 	public List<BloodRoutineDO> list() {
 		Map<String, Object> query = new HashMap<>(16);
 		List<BloodRoutineDO> bloodRoutineDOS = bloodRoutineService.list(query);
@@ -70,9 +62,10 @@ public class BloodRoutineController {
 	@RequiresPermissions("base:bloodRoutine:add")
 	String add(@PathVariable("pId") String pId, Model model) {
 		model.addAttribute("pId", pId);
-		if (pId.equalsIgnoreCase("0")) {
-			model.addAttribute("pName", "总");
+		if ("0".equalsIgnoreCase(pId)) {
+			model.addAttribute("pName", "无");
 		} else {
+			//一级菜单的父id为空，报空指针异常。
 			model.addAttribute("pName", bloodRoutineService.get(pId).getScaleTitle());
 		}
 		return  "base/bloodRoutine/add";
@@ -83,8 +76,8 @@ public class BloodRoutineController {
 	String edit(@PathVariable("id") String id,Model model){
 		BloodRoutineDO bloodRoutine = bloodRoutineService.get(id);
 		model.addAttribute("bloodRoutine", bloodRoutine);
-		if(Constant.DEPT_ROOT_ID2.equals(bloodRoutine.getParentId())) {
-			model.addAttribute("scaleTitle", "无");
+		if(bloodRoutine.getParentId() == null) {
+			model.addAttribute("parentScaleTitle", "无");
 		}else {
 			BloodRoutineDO bloodRoutineDO = bloodRoutineService.get(bloodRoutine.getParentId());
 			model.addAttribute("parentScaleTitle", bloodRoutineDO.getScaleTitle());
@@ -99,6 +92,9 @@ public class BloodRoutineController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:bloodRoutine:add")
 	public R save( BloodRoutineDO bloodRoutine){
+		if ("0".equalsIgnoreCase(bloodRoutine.getParentId())){
+			bloodRoutine.setParentId(null);
+		}
 		bloodRoutine.setCreateTime(new Date());
 		bloodRoutine.setCreateUser(ShiroUtils.getUserId().toString());
 		bloodRoutine.setDelFlag("0");
@@ -114,6 +110,9 @@ public class BloodRoutineController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:bloodRoutine:edit")
 	public R update( BloodRoutineDO bloodRoutine){
+		if (bloodRoutine.getParentId().equalsIgnoreCase("")){
+			bloodRoutine.setParentId(null);
+		}
 		bloodRoutineService.update(bloodRoutine);
 		return R.ok();
 	}

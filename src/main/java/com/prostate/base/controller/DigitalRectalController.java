@@ -49,14 +49,6 @@ public class DigitalRectalController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("base:digitalRectal:digitalRectal")
-//	public PageUtils list(@RequestParam Map<String, Object> params){
-//		//查询列表数据
-//        Query query = new Query(params);
-//		List<DigitalRectalDO> digitalRectalList = digitalRectalService.list(query);
-//		int total = digitalRectalService.count(query);
-//		PageUtils pageUtils = new PageUtils(digitalRectalList, total);
-//		return pageUtils;
-//	}
 	public List<DigitalRectalDO> list() {
 		Map<String, Object> query = new HashMap<>(16);
 		List<DigitalRectalDO> digitalRectalDOS = digitalRectalService.list(query);
@@ -68,7 +60,7 @@ public class DigitalRectalController {
 	String add(@PathVariable("pId") String pId, Model model) {
 		model.addAttribute("pId", pId);
 		if (pId.equalsIgnoreCase("0")) {
-			model.addAttribute("pName", "总");
+			model.addAttribute("pName", "无");
 		} else {
 			model.addAttribute("pName", digitalRectalService.get(pId).getScaleTitle());
 		}
@@ -81,8 +73,8 @@ public class DigitalRectalController {
 	String edit(@PathVariable("id") String id,Model model){
 		DigitalRectalDO digitalRectalDO = digitalRectalService.get(id);
 		model.addAttribute("digitalRectal", digitalRectalDO);
-		if(Constant.DEPT_ROOT_ID2.equals(digitalRectalDO.getParentId())) {
-			model.addAttribute("scaleTitle", "无");
+		if(digitalRectalDO.getParentId() == null) {
+			model.addAttribute("parentScaleTitle", "无");
 		}else {
 			DigitalRectalDO digitalRectalDO1 = digitalRectalService.get(digitalRectalDO.getParentId());
 			model.addAttribute("parentScaleTitle", digitalRectalDO1.getScaleTitle());
@@ -97,6 +89,9 @@ public class DigitalRectalController {
 	@PostMapping("/save")
 	@RequiresPermissions("base:digitalRectal:add")
 	public R save( DigitalRectalDO digitalRectal){
+		if ("0".equalsIgnoreCase(digitalRectal.getParentId())){
+			digitalRectal.setParentId(null);
+		}
 		digitalRectal.setCreateTime(new Date());
 		digitalRectal.setCreateUser(ShiroUtils.getUserId().toString());
 		digitalRectal.setDelFlag("0");
@@ -112,6 +107,9 @@ public class DigitalRectalController {
 	@RequestMapping("/update")
 	@RequiresPermissions("base:digitalRectal:edit")
 	public R update( DigitalRectalDO digitalRectal){
+		if (digitalRectal.getParentId().equalsIgnoreCase("")){
+			digitalRectal.setParentId(null);
+		}
 		digitalRectalService.update(digitalRectal);
 		return R.ok();
 	}
