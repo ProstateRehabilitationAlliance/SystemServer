@@ -33,7 +33,7 @@
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
-		  		  <if test="cityName != null and cityName != ''"> and city_name = #{cityName} </if>
+		  		  <if test="cityName != null and cityName != ''"> and city_name LIKE CONCAT(CONCAT('%', #{cityName}), '%') </if>
 		  		  <if test="cityType != null and cityType != ''"> and city_type = #{cityType} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
@@ -102,7 +102,7 @@
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
-		  		  <if test="cityName != null and cityName != ''"> and city_name = #{cityName} </if>
+		  		  <if test="cityName != null and cityName != ''"> and city_name LIKE CONCAT(CONCAT('%', #{cityName}), '%')</if>
 		  		  <if test="cityType != null and cityType != ''"> and city_type = #{cityType} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>

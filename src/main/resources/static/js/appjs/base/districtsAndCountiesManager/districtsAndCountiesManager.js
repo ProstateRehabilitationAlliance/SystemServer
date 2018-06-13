@@ -35,7 +35,7 @@ function load(id) {
 						// 说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit : params.limit,
 						offset : params.offset,
-						name : $('#searchName').val(),
+                        cityName : $('#cityName').val(),
                         parentCityId : id
 					};
 				},
@@ -89,7 +89,14 @@ function load(id) {
 			});
 }
 function reLoad() {
-	$('#exampleTable').bootstrapTable('refresh');
+	var cityName=$("#cityName").val()
+
+    var opt = {
+        query : {
+            cityName : cityName,
+        }
+    }
+	$('#exampleTable').bootstrapTable('refresh',opt);
 }
 function add() {
 	// iframe层
@@ -102,6 +109,7 @@ function add() {
 		content : prefix + '/add'
 	});
 }
+
 function remove(id) {
 	layer.confirm('确定要删除选中的记录？', {
 		btn : [ '确定', '取消' ]
@@ -123,6 +131,7 @@ function remove(id) {
 		});
 	})
 }
+
 function edit(id) {
 	layer.open({
 		type : 2,
@@ -133,6 +142,7 @@ function edit(id) {
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
+
 function resetPwd(id) {
 	layer.open({
 		type : 2,
@@ -143,6 +153,7 @@ function resetPwd(id) {
 		content : prefix + '/resetPwd/' + id // iframe的url
 	});
 }
+
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {
@@ -175,6 +186,7 @@ function batchRemove() {
 		});
 	}, function() {});
 }
+
 function getTreeData() {
 	$.ajax({
 		type : "GET",
@@ -184,6 +196,7 @@ function getTreeData() {
 		}
 	});
 }
+
 function loadTree(tree) {
 	$('#jstree').jstree({
 		'core' : {
@@ -193,11 +206,14 @@ function loadTree(tree) {
 	});
 	$('#jstree').jstree().open_all();
 }
+
 $('#jstree').on("changed.jstree", function(e, data) {
 	if (data.selected == -1) {
+        var cityName=$("#cityName").val()
 		var opt = {
 			query : {
                 parentCityId : '',
+               // cityName : cityName,
 			}
 		}
 		$('#exampleTable').bootstrapTable('refresh', opt);

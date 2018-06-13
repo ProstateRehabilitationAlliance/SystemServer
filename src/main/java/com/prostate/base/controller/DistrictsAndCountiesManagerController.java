@@ -47,6 +47,7 @@ public class DistrictsAndCountiesManagerController {
     PageUtils list(@RequestParam Map<String, Object> params) {
         // 查询列表数据
         Query query = new Query(params);
+        System.out.println("参数都有"+params);
         List<CityDO> cityDOList = districtsAndCountiesManagerService.list(query);
         int total = districtsAndCountiesManagerService.count(query);
         PageUtils pageUtil = new PageUtils(cityDOList, total);
