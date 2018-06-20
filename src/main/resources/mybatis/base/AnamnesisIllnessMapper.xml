@@ -31,7 +31,7 @@
 		select <include refid="Base_Column_List" /> from base_anamnesis_illness
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="anamnesisIllnessName != null and anamnesisIllnessName != ''"> and anamnesis_illness_name = #{anamnesisIllnessName} </if>
+		  		  <if test="anamnesisIllnessName != null and anamnesisIllnessName != ''"> and anamnesis_illness_name  LIKE CONCAT(CONCAT('%', #{anamnesisIllnessName}), '%')  </if>
 		  		  <if test="spellName != null and spellName != ''"> and spell_name = #{spellName} </if>
 		  		  <if test="anamnesisIllnessNumber != null and anamnesisIllnessNumber != ''"> and anamnesis_illness_number = #{anamnesisIllnessNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
@@ -60,7 +60,7 @@
 		select count(*) from base_anamnesis_illness
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="anamnesisIllnessName != null and anamnesisIllnessName != ''"> and anamnesis_illness_name = #{anamnesisIllnessName} </if>
+		  		  <if test="anamnesisIllnessName != null and anamnesisIllnessName != ''"> and anamnesis_illness_name LIKE CONCAT(CONCAT('%', #{anamnesisIllnessName}), '%')</if>
 		  		  <if test="spellName != null and spellName != ''"> and spell_name = #{spellName} </if>
 		  		  <if test="anamnesisIllnessNumber != null and anamnesisIllnessNumber != ''"> and anamnesis_illness_number = #{anamnesisIllnessNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>

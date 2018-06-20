@@ -32,7 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
+								offset:params.offset,
+                                anamnesisTypeName : $('#anamnesisTypeName').val()
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -79,7 +80,14 @@ function load() {
 					});
 }
 function reLoad() {
-	$('#exampleTable').bootstrapTable('refresh');
+    var anamnesisTypeName=$("#anamnesisTypeName").val()
+
+    var opt = {
+        query : {
+            anamnesisTypeName : anamnesisTypeName,
+        }
+    }
+	$('#exampleTable').bootstrapTable('refresh',opt);
 }
 function add() {
 	layer.open({

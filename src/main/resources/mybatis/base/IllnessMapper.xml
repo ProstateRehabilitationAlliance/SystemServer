@@ -26,7 +26,7 @@
 		select <include refid="Base_Column_List" /> from base_illness
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="illnessName != null and illnessName != ''"> and illness_name = #{illnessName} </if>
+		  		  <if test="illnessName != null and illnessName != ''"> and illness_name  LIKE CONCAT(CONCAT('%', #{illnessName}), '%')  </if>
 		  		  <if test="illnessNumber != null and illnessNumber != ''"> and illness_number = #{illnessNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
@@ -71,7 +71,7 @@
 		select count(*) from base_illness
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="illnessName != null and illnessName != ''"> and illness_name = #{illnessName} </if>
+		  		  <if test="illnessName != null and illnessName != ''"> and illness_name LIKE CONCAT(CONCAT('%', #{illnessName}), '%')  </if>
 		  		  <if test="illnessNumber != null and illnessNumber != ''"> and illness_number = #{illnessNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>

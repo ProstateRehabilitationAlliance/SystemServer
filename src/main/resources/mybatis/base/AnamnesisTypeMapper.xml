@@ -31,7 +31,7 @@
 		from base_anamnesis_type
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="anamnesisTypeName != null and anamnesisTypeName != ''"> and anamnesis_type_name = #{anamnesisTypeName} </if>
+		  		  <if test="anamnesisTypeName != null and anamnesisTypeName != ''"> and anamnesis_type_name LIKE CONCAT(CONCAT('%', #{anamnesisTypeName}), '%')</if>
 		  		  <if test="anamnesisTypeNumber != null and anamnesisTypeNumber != ''"> and anamnesis_type_number = #{anamnesisTypeNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
@@ -70,86 +70,12 @@
 	</select>
 
 
-	<!--<select id="listByName" parameterType="java.lang.String">
-		select <include refid="Base_Column_List" />
-		from base_anamnesis_type
-		<where>
-			and anamnesis_type_name = #{anamnesisTypeName}
-
-			and del_flag = '0'
-		</where>
-
-	</select>-->
-
-	<!--<select id="listByNumber" parameterType="java.lang.String">
-		select <include refid="Base_Column_List" />
-		from base_anamnesis_type
-		<where>
-			and anamnesis_type_number = #{anamnesisTypeNumber}
-			and del_flag = '0'
-		</where>
-
-	</select>-->
-
-	<!--<select id="listByName" resultType="com.prostate.base.domain.AnamnesisTypeDO">
-		select <include refid="Base_Column_List" />
-		from base_anamnesis_type
-		<where>
-			<if test="id != null and id != ''"> and id = #{id} </if>
-			<if test="anamnesisTypeName != null and anamnesisTypeName != ''"> and anamnesis_type_name = #{anamnesisTypeName} </if>
-			<if test="anamnesisTypeNumber != null and anamnesisTypeNumber != ''"> and anamnesis_type_number = #{anamnesisTypeNumber} </if>
-			<if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
-			<if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
-			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-			<if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
-			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
-			and del_flag ='0'
-		</where>
-		<choose>
-			<when test="orderWeight != null and orderWeight.trim() != ''">
-				order by ${orderWeight}
-			</when>
-			<otherwise>
-				order by order_weight ASC
-			</otherwise>
-		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>-->
-
-	<!--<select id="listByNumber" resultType="com.prostate.base.domain.AnamnesisTypeDO">
-		select <include refid="Base_Column_List" />
-		from base_anamnesis_type
-		<where>
-			<if test="id != null and id != ''"> and id = #{id} </if>
-			<if test="anamnesisTypeName != null and anamnesisTypeName != ''"> and anamnesis_type_name = #{anamnesisTypeName} </if>
-			<if test="anamnesisTypeNumber != null and anamnesisTypeNumber != ''"> and anamnesis_type_number = #{anamnesisTypeNumber} </if>
-			<if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
-			<if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
-			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-			<if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
-			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
-			and del_flag ='0'
-		</where>
-		<choose>
-			<when test="orderWeight != null and orderWeight.trim() != ''">
-				order by ${orderWeight}
-			</when>
-			<otherwise>
-				order by order_weight ASC
-			</otherwise>
-		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>-->
 	
  	<select id="count" resultType="int">
 		select count(*) from base_anamnesis_type
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="anamnesisTypeName != null and anamnesisTypeName != ''"> and anamnesis_type_name = #{anamnesisTypeName} </if>
+		  		  <if test="anamnesisTypeName != null and anamnesisTypeName != ''"> and  anamnesis_type_name LIKE CONCAT(CONCAT('%', #{anamnesisTypeName}), '%') </if>
 		  		  <if test="anamnesisTypeNumber != null and anamnesisTypeNumber != ''"> and anamnesis_type_number = #{anamnesisTypeNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>

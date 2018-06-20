@@ -59,7 +59,7 @@ function load() {
 																{
 									field : 'orderWeight', 
 									title : '排序' 
-								},
+								},/*
 																{
 									field : 'createUser', 
 									title : '创建人员' 
@@ -75,7 +75,7 @@ function load() {
 																{
 									field : 'updateTime', 
 									title : '更新时间' 
-								},
+								},*/
 																{
 									title : '操作',
 									field : 'id',
@@ -96,7 +96,7 @@ function load() {
 					});
 }
 function reLoad() {
-    var professionName=$("#cityName").val()
+    var professionName=$("#professionName").val()
     var opt = {
         query : {
             professionName : professionName,
