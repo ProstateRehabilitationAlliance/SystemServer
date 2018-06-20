@@ -23,7 +23,9 @@
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="doctorTitleNumber != null and doctorTitleNumber != ''"> and doctor_title_number = #{doctorTitleNumber} </if>
-		  		  <if test="doctorTitleName != null and doctorTitleName != ''"> and doctor_title_name = #{doctorTitleName} </if>
+			<if test="doctorTitleName != null and doctorTitleName != ''"> and doctor_title_name LIKE CONCAT(CONCAT('%', #{doctorTitleName}), '%')</if>
+
+			<!--<if test="doctorTitleName != null and doctorTitleName != ''"> and doctor_title_name = #{doctorTitleName} </if>-->
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
 		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
@@ -51,7 +53,7 @@
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="doctorTitleNumber != null and doctorTitleNumber != ''"> and doctor_title_number = #{doctorTitleNumber} </if>
-		  		  <if test="doctorTitleName != null and doctorTitleName != ''"> and doctor_title_name = #{doctorTitleName} </if>
+			 <if test="doctorTitleName != null and doctorTitleName != ''"> and doctor_title_name LIKE CONCAT(CONCAT('%', #{doctorTitleName}), '%')</if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
 		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>

@@ -30,7 +30,9 @@
 		select `id`,`hospital_type_name`,`hospital_type_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time` from base_hospital_type
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="hospitalTypeName != null and hospitalTypeName != ''"> and hospital_type_name = #{hospitalTypeName} </if>
+			<if test="hospitalTypeName != null and hospitalTypeName != ''"> and hospital_type_name LIKE CONCAT(CONCAT('%', #{hospitalTypeName}), '%')</if>
+
+			<!--<if test="hospitalTypeName != null and hospitalTypeName != ''"> and hospital_type_name = #{hospitalTypeName} </if>-->
 		  		  <if test="hospitalTypeNumber != null and hospitalTypeNumber != ''"> and hospital_type_number = #{hospitalTypeNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
@@ -73,7 +75,7 @@
 		select count(*) from base_hospital_type
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="hospitalTypeName != null and hospitalTypeName != ''"> and hospital_type_name = #{hospitalTypeName} </if>
+			 <if test="hospitalTypeName != null and hospitalTypeName != ''"> and hospital_type_name LIKE CONCAT(CONCAT('%', #{hospitalTypeName}), '%')</if>
 		  		  <if test="hospitalTypeNumber != null and hospitalTypeNumber != ''"> and hospital_type_number = #{hospitalTypeNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>

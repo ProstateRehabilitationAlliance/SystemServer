@@ -54,7 +54,9 @@
 		`delete_user`,`delete_time`,`del_flag` from base_hospital
         <where>
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="hospitalName != null and hospitalName != ''"> and hospital_name = #{hospitalName} </if>
+			<if test="hospitalName != null and hospitalName != ''"> and hospital_name LIKE CONCAT(CONCAT('%', #{hospitalName}), '%')</if>
+
+			<!--<if test="hospitalName != null and hospitalName != ''"> and hospital_name = #{hospitalName} </if>-->
 		  		  <if test="hospitalNumber != null and hospitalNumber != ''"> and hospital_number = #{hospitalNumber} </if>
 		  		  <if test="hospitalAlias != null and hospitalAlias != ''"> and hospital_alias = #{hospitalAlias} </if>
 		  		  <if test="hospitalInform != null and hospitalInform != ''"> and hospital_inform = #{hospitalInform} </if>
@@ -89,7 +91,9 @@
 		select count(*) from base_hospital
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="hospitalName != null and hospitalName != ''"> and hospital_name = #{hospitalName} </if>
+			 <if test="hospitalName != null and hospitalName != ''"> and hospital_name LIKE CONCAT(CONCAT('%', #{hospitalName}), '%')</if>
+
+			 <!--<if test="hospitalName != null and hospitalName != ''"> and hospital_name = #{hospitalName} </if>-->
 		  		  <if test="hospitalNumber != null and hospitalNumber != ''"> and hospital_number = #{hospitalNumber} </if>
 		  		  <if test="hospitalAlias != null and hospitalAlias != ''"> and hospital_alias = #{hospitalAlias} </if>
 		  		  <if test="hospitalInform != null and hospitalInform != ''"> and hospital_inform = #{hospitalInform} </if>

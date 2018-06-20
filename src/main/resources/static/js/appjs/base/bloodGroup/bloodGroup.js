@@ -63,22 +63,22 @@ function load() {
 									field : 'orderWeight', 
 									title : '权重'
 								},
-																{
-									field : 'createUser', 
-									title : '创建者'
-								},
-																{
-									field : 'createTime', 
-									title : '创建时间'
-								},
-																{
-									field : 'updateUser', 
-									title : '更新者'
-								},
-																{
-									field : 'updateTime', 
-									title : '更新时间'
-								},
+								// 								{
+								// 	field : 'createUser',
+								// 	title : '创建者'
+								// },
+								// 								{
+								// 	field : 'createTime',
+								// 	title : '创建时间'
+								// },
+								// 								{
+								// 	field : 'updateUser',
+								// 	title : '更新者'
+								// },
+								// 								{
+								// 	field : 'updateTime',
+								// 	title : '更新时间'
+								// },
 								// 								{
                             // 	field : 'deleteUser',
                             // 	title : '删除者'
@@ -113,7 +113,6 @@ function load() {
 function reLoad() {
 	// $('#exampleTable').bootstrapTable('refresh');
     var bloodGroupName=$("#bloodGroupName").val()
-    alert(bloodGroupName);
 
     var opt = {
         query : {
@@ -121,7 +120,6 @@ function reLoad() {
         }
     }
     $('#exampleTable').bootstrapTable('refresh',opt);
-    alert(bloodGroupName);
 }
 function add() {
 	layer.open({

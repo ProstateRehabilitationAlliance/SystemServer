@@ -22,7 +22,9 @@
 		select `id`,`nation_name`,`nation_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_nation
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="nationName != null and nationName != ''"> and nation_name = #{nationName} </if>
+			<if test="nationName != null and nationName != ''"> and nation_name LIKE CONCAT(CONCAT('%', #{nationName}), '%')</if>
+
+			<!--<if test="nationName != null and nationName != ''"> and nation_name = #{nationName} </if>-->
 		  		  <if test="nationNumber != null and nationNumber != ''"> and nation_number = #{nationNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
@@ -50,7 +52,7 @@
 		select count(*) from base_nation
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="nationName != null and nationName != ''"> and nation_name = #{nationName} </if>
+			 <if test="nationName != null and nationName != ''"> and nation_name LIKE CONCAT(CONCAT('%', #{nationName}), '%')</if>
 		  		  <if test="nationNumber != null and nationNumber != ''"> and nation_number = #{nationNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>

@@ -25,7 +25,9 @@
 		select `id`,`education_name`,`education_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_education
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="educationName != null and educationName != ''"> and education_name = #{educationName} </if>
+			<if test="educationName != null and educationName != ''"> and education_name LIKE CONCAT(CONCAT('%', #{educationName}), '%')</if>
+
+			<!--<if test="educationName != null and educationName != ''"> and education_name = #{educationName} </if>-->
 		  		  <if test="educationNumber != null and educationNumber != ''"> and education_number = #{educationNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
@@ -53,7 +55,7 @@
 		select count(*) from base_education
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="educationName != null and educationName != ''"> and education_name = #{educationName} </if>
+			 <if test="educationName != null and educationName != ''"> and education_name LIKE CONCAT(CONCAT('%', #{educationName}), '%')</if>
 		  		  <if test="educationNumber != null and educationNumber != ''"> and education_number = #{educationNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>

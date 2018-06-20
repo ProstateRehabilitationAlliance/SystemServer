@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+					           allergyDrugName:$('#allergyDrugName').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -47,10 +47,10 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
-									field : 'id', 
-									title : '主键ID' 
-								},
+								// 								{
+								// 	field : 'id',
+								// 	title : '主键ID'
+								// },
 																{
 									field : 'allergyDrugName', 
 									title : '过敏药物名称' 
@@ -67,34 +67,34 @@ function load() {
 									field : 'orderWeight', 
 									title : '排序' 
 								},
-																{
-									field : 'createUser', 
-									title : '创建人员' 
-								},
-																{
-									field : 'createTime', 
-									title : '创建时间' 
-								},
-																{
-									field : 'updateUser', 
-									title : '更新人员' 
-								},
-																{
-									field : 'updateTime', 
-									title : '更新时间' 
-								},
-																{
-									field : 'deleteUser', 
-									title : '删除人员' 
-								},
-																{
-									field : 'deleteTime', 
-									title : '删除时间' 
-								},
-																{
-									field : 'delFlag', 
-									title : '删除标记' 
-								},
+								// 								{
+								// 	field : 'createUser',
+								// 	title : '创建人员'
+								// },
+								// 								{
+								// 	field : 'createTime',
+								// 	title : '创建时间'
+								// },
+								// 								{
+								// 	field : 'updateUser',
+								// 	title : '更新人员'
+								// },
+								// 								{
+								// 	field : 'updateTime',
+								// 	title : '更新时间'
+								// },
+								// 								{
+								// 	field : 'deleteUser',
+								// 	title : '删除人员'
+								// },
+								// 								{
+								// 	field : 'deleteTime',
+								// 	title : '删除时间'
+								// },
+								// 								{
+								// 	field : 'delFlag',
+								// 	title : '删除标记'
+								// },
 																{
 									title : '操作',
 									field : 'id',
@@ -115,7 +115,14 @@ function load() {
 					});
 }
 function reLoad() {
-	$('#exampleTable').bootstrapTable('refresh');
+    var allergyDrugName=$("#allergyDrugName").val()
+
+    var opt = {
+        query : {
+            allergyDrugName : allergyDrugName,
+        }
+    }
+    $('#exampleTable').bootstrapTable('refresh',opt);
 }
 function add() {
 	layer.open({

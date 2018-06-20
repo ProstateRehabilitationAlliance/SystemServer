@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+					           educationName:$('#educationName').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -52,28 +52,28 @@ function load() {
 								},
 																{
 									field : 'educationNumber',
-									title : '学历编号'
+									title : '编号'
 								},
 																{
 									field : 'orderWeight',
 									title : '排序'
 								},
-																{
-									field : 'createUser',
-									title : '创建人员'
-								},
-																{
-									field : 'createTime',
-									title : '创建时间'
-								},
-																{
-									field : 'updateUser',
-									title : '更新人员'
-								},
-																{
-									field : 'updateTime',
-									title : '更新时间'
-								},
+								// 								{
+								// 	field : 'createUser',
+								// 	title : '创建人员'
+								// },
+								// 								{
+								// 	field : 'createTime',
+								// 	title : '创建时间'
+								// },
+								// 								{
+								// 	field : 'updateUser',
+								// 	title : '更新人员'
+								// },
+								// 								{
+								// 	field : 'updateTime',
+								// 	title : '更新时间'
+								// },
 								// 								{
 								// 	field : 'deleteUser',
 								// 	title : '删除人员'
@@ -106,7 +106,14 @@ function load() {
 					});
 }
 function reLoad() {
-	$('#exampleTable').bootstrapTable('refresh');
+    var educationName=$("#educationName").val()
+
+    var opt = {
+        query : {
+            educationName : educationName,
+        }
+    }
+    $('#exampleTable').bootstrapTable('refresh',opt);
 }
 function add() {
 	layer.open({

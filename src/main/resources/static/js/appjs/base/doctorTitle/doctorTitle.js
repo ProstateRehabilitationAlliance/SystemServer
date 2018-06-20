@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+					            doctorTitleNumber:$('#doctorTitleNumber').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -64,22 +64,22 @@ function load() {
 									field : 'orderWeight', 
 									title : '排序' 
 								},
-																{
-									field : 'createUser', 
-									title : '创建人' 
-								},
-																{
-									field : 'createTime', 
-									title : '创建时间' 
-								},
-																{
-									field : 'updateUser', 
-									title : '修改人' 
-								},
-																{
-									field : 'updateTime', 
-									title : '修改时间' 
-								},
+								// 								{
+								// 	field : 'createUser',
+								// 	title : '创建人'
+								// },
+								// 								{
+								// 	field : 'createTime',
+								// 	title : '创建时间'
+								// },
+								// 								{
+								// 	field : 'updateUser',
+								// 	title : '修改人'
+								// },
+								// 								{
+								// 	field : 'updateTime',
+								// 	title : '修改时间'
+								// },
 								// 								{
 								// 	field : 'deleteUser',
 								// 	title : '删除人'
@@ -112,7 +112,14 @@ function load() {
 					});
 }
 function reLoad() {
-	$('#exampleTable').bootstrapTable('refresh');
+    var doctorTitleName=$("#doctorTitleName").val()
+
+    var opt = {
+        query : {
+            doctorTitleName : doctorTitleName,
+        }
+    }
+    $('#exampleTable').bootstrapTable('refresh',opt);
 }
 function add() {
 	layer.open({
