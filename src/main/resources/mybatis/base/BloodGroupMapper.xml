@@ -22,7 +22,8 @@
 		select `id`,`blood_group_name`,`blood_group_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_blood_group
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="bloodGroupName != null and bloodGroupName != ''"> and blood_group_name = #{bloodGroupName} </if>
+			<if test="bloodGroupName != null and bloodGroupName != ''"> and blood_group_name LIKE CONCAT(CONCAT('%', #{bloodGroupName}), '%')</if>
+			<!--<if test="bloodGroupName != null and bloodGroupName != ''"> and blood_group_name = #{bloodGroupName} </if>-->
 		  		  <if test="bloodGroupNumber != null and bloodGroupNumber != ''"> and blood_group_number = #{bloodGroupNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
@@ -50,7 +51,9 @@
 		select count(*) from base_blood_group
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="bloodGroupName != null and bloodGroupName != ''"> and blood_group_name = #{bloodGroupName} </if>
+			 <if test="bloodGroupName != null and bloodGroupName != ''"> and blood_group_name LIKE CONCAT(CONCAT('%', #{bloodGroupName}), '%')</if>
+
+			 <!--<if test="bloodGroupName != null and bloodGroupName != ''"> and blood_group_name = #{bloodGroupName} </if>-->
 		  		  <if test="bloodGroupNumber != null and bloodGroupNumber != ''"> and blood_group_number = #{bloodGroupNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
