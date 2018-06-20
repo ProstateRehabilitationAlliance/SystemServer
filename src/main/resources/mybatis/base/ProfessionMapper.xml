@@ -31,7 +31,7 @@
 		select <include refid="Base_Column_List" /> from base_profession
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="professionName != null and professionName != ''"> and profession_name = #{professionName} </if>
+		  		  <if test="professionName != null and professionName != ''"> and profession_name LIKE CONCAT(CONCAT('%', #{professionName}), '%') </if>
 		  		  <if test="professionNumber != null and professionNumber != ''"> and profession_number = #{professionNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
@@ -76,7 +76,7 @@
 		select count(*) from base_profession
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="professionName != null and professionName != ''"> and profession_name = #{professionName} </if>
+		  		  <if test="professionName != null and professionName != ''"> and profession_name LIKE CONCAT(CONCAT('%', #{professionName}), '%') </if>
 		  		  <if test="professionNumber != null and professionNumber != ''"> and profession_number = #{professionNumber} </if>
 		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
 		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
