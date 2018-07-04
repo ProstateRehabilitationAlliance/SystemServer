@@ -11,8 +11,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +57,7 @@ public class BloodGroupController {
 
     @GetMapping("/edit/{id}")
     @RequiresPermissions("base:bloodGroup:edit")
-    String edit(@PathVariable("id") String id, Model model) {
+    String edit(@PathVariable("id")  String id, Model model) {
         BloodGroupDO bloodGroup = bloodGroupService.get(id);
         model.addAttribute("bloodGroup", bloodGroup);
         return "base/bloodGroup/edit";
@@ -67,7 +69,7 @@ public class BloodGroupController {
     @ResponseBody
     @PostMapping("/save")
     @RequiresPermissions("base:bloodGroup:add")
-    public R save(BloodGroupDO bloodGroup) {
+    public R save(@Valid BloodGroupDO bloodGroup) {
         if (bloodGroupService.getByName(bloodGroup.getBloodGroupName()) == null
                 && bloodGroupService.getByNumBer(bloodGroup.getBloodGroupNumber()) == null) {
             bloodGroup.setCreateTime(new Date());
@@ -86,7 +88,7 @@ public class BloodGroupController {
     @ResponseBody
     @RequestMapping("/update")
     @RequiresPermissions("base:bloodGroup:edit")
-    public R update(BloodGroupDO bloodGroup) {
+    public R update(@Valid BloodGroupDO bloodGroup) {
         //根据ID，获取修改前对象的信息
         BloodGroupDO bloodGroup01 = bloodGroupService.get(bloodGroup.getId());
         //如果对象的名称发生变化，
@@ -119,7 +121,7 @@ public class BloodGroupController {
     @PostMapping("/remove")
     @ResponseBody
     @RequiresPermissions("base:bloodGroup:remove")
-    public R remove(String id) {
+    public R remove(@Valid String id) {
         BloodGroupDO bloodGroup = bloodGroupService.get(id);
         bloodGroup.setDelFlag("1");
         bloodGroup.setDeleteTime(new Date());
@@ -137,7 +139,7 @@ public class BloodGroupController {
     @ResponseBody
     @RequiresPermissions("base:bloodGroup:batchRemove")
     public R remove(@RequestParam("ids[]") String[] ids) {
-        for (String id:ids) {
+        for ( String id:ids) {
             BloodGroupDO bloodGroup = bloodGroupService.get(id);
             bloodGroup.setDelFlag("1");
             bloodGroup.setDeleteTime(new Date());

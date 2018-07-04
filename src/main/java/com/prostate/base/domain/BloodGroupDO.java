@@ -1,5 +1,9 @@
 package com.prostate.base.domain;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,12 +18,16 @@ import java.util.Date;
  */
 public class BloodGroupDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	//
+
+
+	//id必须是32位字符串
+	@Pattern(regexp = "^[A-Za-z0-9]{32}",message = "id不符合规范")
 	private String id;
-	//
+
+	@NotNull(message = "名称不能为空")
 	private String bloodGroupName;
-	//
+
+	@NotNull(message = "编号不能为空")
 	private String bloodGroupNumber;
 	//
 	private Integer orderWeight;
