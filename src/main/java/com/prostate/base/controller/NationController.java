@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,7 +78,7 @@ public class NationController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:nation:add")
-	public R save( NationDO nation){
+	public R save(@Validated(GroupWithoutID.class) NationDO nation){
 		NationDO nationDOByName = nationService.getByName(nation.getNationName());
 		NationDO nationDOByNumber = nationService.getByNumber(nation.getNationNumber());
 		if (nationDOByName == null && nationDOByNumber == null){
@@ -93,7 +96,7 @@ public class NationController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:nation:edit")
-	public R update( NationDO nation){
+	public R update(@Validated({GroupID.class,GroupWithoutID.class})  NationDO nation){
 		//根据id查询数据库中原来的数据
 		NationDO nationDOByID = nationService.get(nation.getId());
 		//如果新的名称和原来的名称不一致

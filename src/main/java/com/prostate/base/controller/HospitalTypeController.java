@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,7 +78,7 @@ public class HospitalTypeController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:hospitalType:add")
-	public R save( HospitalTypeDO hospitalType){
+	public R save(@Validated(GroupWithoutID.class) HospitalTypeDO hospitalType){
 
 		if (hospitalTypeService.listByName(hospitalType.getHospitalTypeName()).size()==0&&
 				hospitalTypeService.listByNumber(hospitalType.getHospitalTypeNumber()).size()==0){
@@ -97,7 +100,7 @@ public class HospitalTypeController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:hospitalType:edit")
-	public R update( HospitalTypeDO hospitalType){
+	public R update(@Validated({GroupID.class,GroupWithoutID.class}) HospitalTypeDO hospitalType){
 
 		HospitalTypeDO hospitalTypeDO=hospitalTypeService.get(hospitalType.getId());
 		if (!hospitalTypeDO.getHospitalTypeName().equalsIgnoreCase(hospitalType.getHospitalTypeName())){

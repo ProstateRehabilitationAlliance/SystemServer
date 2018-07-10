@@ -3,12 +3,15 @@ package com.prostate.base.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.service.CityService;
 import com.prostate.base.vo.CityVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,7 +91,7 @@ public class CityController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:city:add")
-	public R save( CityDO city){
+	public R save(@Validated(GroupWithoutID.class) CityDO city){
 		if(cityService.save(city)>0){
 			return R.ok();
 		}
@@ -100,7 +103,7 @@ public class CityController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:city:edit")
-	public R update( CityDO city){
+	public R update(@Validated({GroupID.class,GroupWithoutID.class}) CityDO city){
 		cityService.update(city);
 		return R.ok();
 	}

@@ -3,10 +3,13 @@ package com.prostate.base.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,7 +76,7 @@ public class AnamnesisAllergyDrugController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:anamnesisAllergyDrug:add")
-	public R save( AnamnesisAllergyDrugDO anamnesisAllergyDrug){
+	public R save( @Validated(GroupWithoutID.class) AnamnesisAllergyDrugDO anamnesisAllergyDrug){
 		if(anamnesisAllergyDrugService.save(anamnesisAllergyDrug)>0){
 			return R.ok();
 		}
@@ -85,7 +88,7 @@ public class AnamnesisAllergyDrugController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:anamnesisAllergyDrug:edit")
-	public R update( AnamnesisAllergyDrugDO anamnesisAllergyDrug){
+	public R update( @Validated({GroupID.class,GroupWithoutID.class}) AnamnesisAllergyDrugDO anamnesisAllergyDrug){
 		anamnesisAllergyDrugService.update(anamnesisAllergyDrug);
 		return R.ok();
 	}

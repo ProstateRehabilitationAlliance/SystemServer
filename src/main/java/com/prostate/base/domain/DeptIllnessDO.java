@@ -1,5 +1,7 @@
 package com.prostate.base.domain;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,8 +16,9 @@ import java.util.Date;
  */
 public class DeptIllnessDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	//
+
+	@NotNull(message = "id不能为空",groups = GroupID.class)
+	@Pattern(regexp = "^[A-Za-z0-9]{32}",message = "id必须是32位字符串",groups = GroupID.class)
 	private String id;
 	//疾病所属科室ID
 	private String deptId;

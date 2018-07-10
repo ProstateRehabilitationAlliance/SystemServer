@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,7 +78,7 @@ public class EducationController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:education:add")
-	public R save( EducationDO education){
+	public R save(@Validated(GroupWithoutID.class) EducationDO education){
 //		if (education.getEducationNumber() == null || education.getEducationNumber().equalsIgnoreCase("")){
 //			return R.error(20003,"编号不能为空");
 //		}
@@ -101,7 +104,7 @@ public class EducationController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:education:edit")
-	public R update( EducationDO education){
+	public R update( @Validated({GroupID.class,GroupWithoutID.class})EducationDO education){
 //		if (education.getEducationNumber() == null || education.getEducationNumber().equalsIgnoreCase("")){
 //			return R.error(20003,"编号不能为空");
 //		}

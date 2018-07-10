@@ -1,5 +1,9 @@
 package com.prostate.base.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,12 +20,16 @@ public class AnamnesisEatingDrugDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//主键
+	@NotNull(message = "id不能为空",groups = GroupID.class)
+	@Pattern(regexp = "^[A-Za-z0-9]{32}",message = "id必须是32位字符串",groups = GroupID.class)
 	private String id;
 	//药物名
+	@NotBlank(message =" 名称不能为空，且长度必须大于0" ,groups = {GroupWithoutID.class})
 	private String eatingDrugName;
 	//中文缩写
 	private String spellName;
 	//药品编号
+	@NotBlank(message =" 编号不能为空，且长度必须大于0" ,groups = {GroupWithoutID.class})
 	private String eatingDrugNumber;
 	//排序
 	private Integer orderWeight;

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.config.Constant;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.ShiroUtils;
@@ -12,6 +14,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -107,7 +110,7 @@ public class SpecificAntigenController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:specificAntigen:add")
-	public R save( SpecificAntigenDO specificAntigen){
+	public R save( @Validated(GroupWithoutID.class)SpecificAntigenDO specificAntigen){
 		if ("0".equalsIgnoreCase(specificAntigen.getParentId())){
 			specificAntigen.setParentId(null);
 		}
@@ -125,7 +128,7 @@ public class SpecificAntigenController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:specificAntigen:edit")
-	public R update( SpecificAntigenDO specificAntigen){
+	public R update(@Validated({GroupID.class,GroupWithoutID.class}) SpecificAntigenDO specificAntigen){
 		if (specificAntigen.getParentId().equalsIgnoreCase("")){
 			specificAntigen.setParentId(null);
 		}

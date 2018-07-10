@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.config.Constant;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.ShiroUtils;
@@ -13,6 +15,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -99,7 +102,7 @@ public class UrineRoutineController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:urineRoutine:add")
-	public R save(UrineRoutineDO urineRoutine) {
+	public R save(@Validated(GroupWithoutID.class)UrineRoutineDO urineRoutine) {
 		if (urineRoutine.getParentId().equals("0")){
 			urineRoutine.setScaleType("1");
 		}
@@ -121,8 +124,7 @@ public class UrineRoutineController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:urineRoutine:edit")
-	public R update(UrineRoutineDO urineRoutine) {
-		System.out.println("--------------"+urineRoutine);
+	public R update( @Validated({GroupID.class,GroupWithoutID.class}) UrineRoutineDO urineRoutine) {
 		if (urineRoutineService.update(urineRoutine) > 0) {
 			return R.ok();
 		}

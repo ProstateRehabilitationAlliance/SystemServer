@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.utils.ShiroUtils;
 import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +52,7 @@ public class AnamnesisEatingDrugController {
 	@RequiresPermissions("base:anamnesisEatingDrug:anamnesisEatingDrug")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params);
+		Query query = new Query(params);
 		List<AnamnesisEatingDrugDO> anamnesisEatingDrugList = anamnesisEatingDrugService.list(query);
 		int total = anamnesisEatingDrugService.count(query);
 		PageUtils pageUtils = new PageUtils(anamnesisEatingDrugList, total);
@@ -76,7 +79,7 @@ public class AnamnesisEatingDrugController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:anamnesisEatingDrug:add")
-	public R save( AnamnesisEatingDrugDO anamnesisEatingDrug){
+	public R save( @Validated(GroupWithoutID.class) AnamnesisEatingDrugDO anamnesisEatingDrug){
 		//先判断再插入
 		//如果编号和名字都不重复的话
 		if (anamnesisEatingDrugService.getByName(anamnesisEatingDrug.getEatingDrugName()) == null
@@ -96,7 +99,7 @@ public class AnamnesisEatingDrugController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:anamnesisEatingDrug:edit")
-	public R update( AnamnesisEatingDrugDO anamnesisEatingDrug){
+	public R update( @Validated({GroupID.class,GroupWithoutID.class})AnamnesisEatingDrugDO anamnesisEatingDrug){
 		//先判断再修改
 		//根据新的信息在数据库中查找。判断数据是否发生变化
 		AnamnesisEatingDrugDO anamnesisEatingDrugById = anamnesisEatingDrugService.get(anamnesisEatingDrug.getId());

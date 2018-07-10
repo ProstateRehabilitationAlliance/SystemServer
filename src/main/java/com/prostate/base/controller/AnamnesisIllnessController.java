@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,7 +78,7 @@ public class AnamnesisIllnessController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:anamnesisIllness:add")
-	public R save( AnamnesisIllnessDO anamnesisIllness){
+	public R save(@Validated(GroupWithoutID.class) AnamnesisIllnessDO anamnesisIllness){
 
 		if (anamnesisIllnessService.listByName(anamnesisIllness.getAnamnesisIllnessName()).size()==0&&
 				anamnesisIllnessService.listByNumber(anamnesisIllness.getAnamnesisIllnessNumber()).size()==0){
@@ -95,7 +98,7 @@ public class AnamnesisIllnessController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:anamnesisIllness:edit")
-	public R update( AnamnesisIllnessDO anamnesisIllness){
+	public R update( @Validated({GroupID.class,GroupWithoutID.class}) AnamnesisIllnessDO anamnesisIllness){
 		AnamnesisIllnessDO anamnesisIllnessDO01=anamnesisIllnessService.get(anamnesisIllness.getId());
 		if (!anamnesisIllnessDO01.getAnamnesisIllnessName().equalsIgnoreCase(anamnesisIllness.getAnamnesisIllnessName())){
 			if (anamnesisIllnessService.listByName(anamnesisIllness.getAnamnesisIllnessName()).size()>0){

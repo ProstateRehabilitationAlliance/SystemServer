@@ -1,6 +1,8 @@
 package com.prostate.base.controller;
 
 import com.prostate.base.domain.CityDO;
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.domain.ScaleDO;
 import com.prostate.base.service.DistrictsAndCountiesManagerService;
 import com.prostate.base.service.ScaleManagerService;
@@ -17,6 +19,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -85,7 +88,7 @@ public class ScaleManagerController {
     @Log("保存题目或选项")
     @PostMapping("/save")
     @ResponseBody
-    R save(ScaleDO scaleDO) {
+    R save(@Validated(GroupWithoutID.class)ScaleDO scaleDO) {
 
         ScaleDO scale=scaleManagerService.get(scaleDO.getParentId());
         if (scale!=null||scale.equals("")){
@@ -115,7 +118,7 @@ public class ScaleManagerController {
     @Log("更新题目或选项")
     @PostMapping("/update")
     @ResponseBody
-    R update(ScaleDO scaleDO) {
+    R update(@Validated({GroupID.class,GroupWithoutID.class}) ScaleDO scaleDO) {
 
 
         ScaleDO scale=scaleManagerService.get(scaleDO.getParentId());

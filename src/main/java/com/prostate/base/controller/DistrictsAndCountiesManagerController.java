@@ -1,6 +1,8 @@
 package com.prostate.base.controller;
 
 import com.prostate.base.domain.CityDO;
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.service.DistrictsAndCountiesManagerService;
 import com.prostate.common.annotation.Log;
 import com.prostate.common.config.Constant;
@@ -15,6 +17,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -47,7 +50,6 @@ public class DistrictsAndCountiesManagerController {
     PageUtils list(@RequestParam Map<String, Object> params) {
         // 查询列表数据
         Query query = new Query(params);
-        System.out.println("参数都有"+params);
         List<CityDO> cityDOList = districtsAndCountiesManagerService.list(query);
         int total = districtsAndCountiesManagerService.count(query);
         PageUtils pageUtil = new PageUtils(cityDOList, total);
@@ -78,7 +80,7 @@ public class DistrictsAndCountiesManagerController {
     @Log("保存区县")
     @PostMapping("/save")
     @ResponseBody
-    R save(CityDO cityDO) {
+    R save( @Validated(GroupWithoutID.class) CityDO cityDO) {
 
         if (districtsAndCountiesManagerService.get(cityDO.getParentCityId()).getCityType().equalsIgnoreCase("0")){
             cityDO.setCityType("1");
@@ -106,7 +108,7 @@ public class DistrictsAndCountiesManagerController {
     @Log("更新用户")
     @PostMapping("/update")
     @ResponseBody
-    R update(CityDO cityDO) {
+    R update( @Validated({GroupID.class,GroupWithoutID.class})CityDO cityDO) {
 
 
         CityDO cityDO1=districtsAndCountiesManagerService.get(cityDO.getId());

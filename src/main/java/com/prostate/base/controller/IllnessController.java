@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,11 +78,7 @@ public class IllnessController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:illness:add")
-	public R save( IllnessDO illness){
-
-
-
-
+	public R save( @Validated(GroupWithoutID.class)IllnessDO illness){
 		if (illnessService.listByName(illness.getIllnessName()).size()==0&&
 				illnessService.listByNumber(illness.getIllnessNumber()).size()==0){
 			illness.setCreateUser(ShiroUtils.getUserId().toString());
@@ -99,7 +98,7 @@ public class IllnessController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:illness:edit")
-	public R update( IllnessDO illness){
+	public R update( @Validated({GroupID.class,GroupWithoutID.class})IllnessDO illness){
 
 		IllnessDO illnessDO01=illnessService.get(illness.getId());
 		if (!illnessDO01.getIllnessName().equalsIgnoreCase(illness.getIllnessName())){

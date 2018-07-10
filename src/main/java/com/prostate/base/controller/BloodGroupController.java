@@ -1,6 +1,8 @@
 package com.prostate.base.controller;
 
 import com.prostate.base.domain.BloodGroupDO;
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.service.BloodGroupService;
 import com.prostate.common.utils.PageUtils;
 import com.prostate.common.utils.Query;
@@ -69,7 +71,7 @@ public class BloodGroupController {
     @ResponseBody
     @PostMapping("/save")
     @RequiresPermissions("base:bloodGroup:add")
-    public R save(@Valid BloodGroupDO bloodGroup) {
+    public R save(@Validated(GroupWithoutID.class) BloodGroupDO bloodGroup) {
         if (bloodGroupService.getByName(bloodGroup.getBloodGroupName()) == null
                 && bloodGroupService.getByNumBer(bloodGroup.getBloodGroupNumber()) == null) {
             bloodGroup.setCreateTime(new Date());
@@ -88,7 +90,7 @@ public class BloodGroupController {
     @ResponseBody
     @RequestMapping("/update")
     @RequiresPermissions("base:bloodGroup:edit")
-    public R update(@Valid BloodGroupDO bloodGroup) {
+    public R update(@Validated({GroupID.class,GroupWithoutID.class}) BloodGroupDO bloodGroup) {
         //根据ID，获取修改前对象的信息
         BloodGroupDO bloodGroup01 = bloodGroupService.get(bloodGroup.getId());
         //如果对象的名称发生变化，
@@ -121,7 +123,7 @@ public class BloodGroupController {
     @PostMapping("/remove")
     @ResponseBody
     @RequiresPermissions("base:bloodGroup:remove")
-    public R remove(@Valid String id) {
+    public R remove(@Validated(GroupID.class) String id) {
         BloodGroupDO bloodGroup = bloodGroupService.get(id);
         bloodGroup.setDelFlag("1");
         bloodGroup.setDeleteTime(new Date());

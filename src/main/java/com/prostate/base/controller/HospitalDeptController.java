@@ -3,10 +3,13 @@ package com.prostate.base.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,7 +76,7 @@ public class HospitalDeptController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:hospitalDept:add")
-	public R save( HospitalDeptDO hospitalDept){
+	public R save( @Validated(GroupWithoutID.class)HospitalDeptDO hospitalDept){
 		if(hospitalDeptService.save(hospitalDept)>0){
 			return R.ok();
 		}
@@ -85,7 +88,7 @@ public class HospitalDeptController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:hospitalDept:edit")
-	public R update( HospitalDeptDO hospitalDept){
+	public R update(@Validated({GroupID.class,GroupWithoutID.class}) HospitalDeptDO hospitalDept){
 		hospitalDeptService.update(hospitalDept);
 		return R.ok();
 	}

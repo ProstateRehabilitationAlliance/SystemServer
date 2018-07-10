@@ -1,5 +1,9 @@
 package com.prostate.base.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,10 +20,14 @@ public class NationDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//主键id
+	@NotNull(message = "id不能为空",groups = GroupID.class)
+	@Pattern(regexp = "^[A-Za-z0-9]{32}",message = "id必须是32位字符串",groups = GroupID.class)
 	private String id;
 	//民族名称
+	@NotBlank(message =" 名称不能为空，且长度必须大于0" ,groups = {GroupWithoutID.class})
 	private String nationName;
 	//民族编号
+	@NotBlank(message =" 编号不能为空，且长度必须大于0" ,groups = {GroupWithoutID.class})
 	private String nationNumber;
 	//排序
 	private Integer orderWeight;

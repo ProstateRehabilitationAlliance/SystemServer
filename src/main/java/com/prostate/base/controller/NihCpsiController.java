@@ -3,10 +3,13 @@ package com.prostate.base.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,7 +76,7 @@ public class NihCpsiController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:nihCpsi:add")
-	public R save( NihCpsiDO nihCpsi){
+	public R save( @Validated(GroupWithoutID.class)NihCpsiDO nihCpsi){
 		if(nihCpsiService.save(nihCpsi)>0){
 			return R.ok();
 		}
@@ -85,7 +88,7 @@ public class NihCpsiController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:nihCpsi:edit")
-	public R update( NihCpsiDO nihCpsi){
+	public R update( @Validated({GroupID.class,GroupWithoutID.class}) NihCpsiDO nihCpsi){
 		nihCpsiService.update(nihCpsi);
 		return R.ok();
 	}

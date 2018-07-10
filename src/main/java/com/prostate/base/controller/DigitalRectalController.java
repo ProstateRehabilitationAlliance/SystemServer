@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.config.Constant;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.ShiroUtils;
@@ -12,6 +14,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,7 +91,7 @@ public class DigitalRectalController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:digitalRectal:add")
-	public R save( DigitalRectalDO digitalRectal){
+	public R save( @Validated(GroupWithoutID.class) DigitalRectalDO digitalRectal){
 		if ("0".equalsIgnoreCase(digitalRectal.getParentId())){
 			digitalRectal.setParentId(null);
 		}
@@ -106,7 +109,7 @@ public class DigitalRectalController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:digitalRectal:edit")
-	public R update( DigitalRectalDO digitalRectal){
+	public R update( @Validated({GroupID.class,GroupWithoutID.class})DigitalRectalDO digitalRectal){
 		if (digitalRectal.getParentId().equalsIgnoreCase("")){
 			digitalRectal.setParentId(null);
 		}

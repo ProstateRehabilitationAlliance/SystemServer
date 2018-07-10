@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.prostate.base.domain.CityDO;
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.service.CityService;
 import com.prostate.base.service.HospitalService;
 import com.prostate.base.service.HospitalTypeService;
@@ -13,6 +15,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,7 +98,7 @@ public class HospitalController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("base:hospital:add")
-	public R save( HospitalDO hospital){
+	public R save( @Validated(GroupWithoutID.class)HospitalDO hospital){
 		HospitalDO hospitalDOByName = hospitalService.getByName(hospital.getHospitalName());
 		HospitalDO hospitalDOByNumber = hospitalService.getByNumber(hospital.getHospitalNumber());
 		if (hospitalDOByName == null && hospitalDOByNumber == null){
@@ -114,7 +117,7 @@ public class HospitalController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("base:hospital:edit")
-	public R update( HospitalDO hospital){
+	public R update( @Validated({GroupID.class,GroupWithoutID.class})HospitalDO hospital){
 		//获取正在修改的对象信息
 		HospitalDO hospitalById = hospitalService.get(hospital.getId());
 		if( !hospital.getHospitalName().equalsIgnoreCase(hospitalById.getHospitalName())){

@@ -1,5 +1,7 @@
 package com.prostate.base.controller;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.domain.NihCpsiDO;
 import com.prostate.base.service.NihCpsiManagerService;
 import com.prostate.common.annotation.Log;
@@ -15,6 +17,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -84,7 +87,7 @@ public class NihCpsiManagerController {
     @Log("保存题目或选项")
     @PostMapping("/save")
     @ResponseBody
-    R save(NihCpsiDO nihCpsiDO) {
+    R save(@Validated(GroupWithoutID.class)NihCpsiDO nihCpsiDO) {
 
         NihCpsiDO nihCpsi=nihCpsiManagerService.get(nihCpsiDO.getParentId());
         if (nihCpsi!=null||nihCpsi.equals("")){
@@ -114,7 +117,7 @@ public class NihCpsiManagerController {
     @Log("更新题目或选项")
     @PostMapping("/update")
     @ResponseBody
-    R update(NihCpsiDO nihCpsiDO) {
+    R update(@Validated({GroupID.class,GroupWithoutID.class})NihCpsiDO nihCpsiDO) {
 
 
         NihCpsiDO nihCpsi=nihCpsiManagerService.get(nihCpsiDO.getParentId());

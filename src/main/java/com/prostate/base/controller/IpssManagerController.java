@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.domain.GroupID;
+import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.common.annotation.Log;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.ShiroUtils;
@@ -14,6 +16,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -92,7 +95,7 @@ public class IpssManagerController {
 	@Log("保存区县")
 	@PostMapping("/save")
 	@ResponseBody
-	R save(IpssDO ipssDO) {
+	R save(@Validated(GroupWithoutID.class)IpssDO ipssDO) {
 
 		IpssDO ipss=ipssManagerService.get(ipssDO.getParentId());
 		if (ipss!=null||ipss.equals("")){
@@ -122,7 +125,7 @@ public class IpssManagerController {
 	@Log("更新用户")
 	@PostMapping("/update")
 	@ResponseBody
-	R update(IpssDO ipssDO) {
+	R update( @Validated({GroupID.class,GroupWithoutID.class})IpssDO ipssDO) {
 
 
 		IpssDO ipss=ipssManagerService.get(ipssDO.getParentId());
