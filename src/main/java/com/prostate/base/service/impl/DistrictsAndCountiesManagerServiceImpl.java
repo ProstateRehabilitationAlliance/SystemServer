@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.CityDao;
-import com.prostate.base.dao.DistrictsAndCountiesManageDao;
+import com.prostate.base.dao.read.DistrictsAndCountiesManageReadMapper;
+import com.prostate.base.dao.write.DistrictsAndCountiesManageWriteMapper;
 import com.prostate.base.domain.CityDO;
 import com.prostate.base.service.DistrictsAndCountiesManagerService;
 import com.prostate.common.domain.Tree;
@@ -21,31 +21,36 @@ import java.util.Map;
  */
 @Service
 public class DistrictsAndCountiesManagerServiceImpl implements DistrictsAndCountiesManagerService {
+
     @Autowired
-    private DistrictsAndCountiesManageDao districtsAndCountiesManageDao;
+    private DistrictsAndCountiesManageWriteMapper districtsAndCountiesManageWriteMapper;
+
+
+    @Autowired
+    private DistrictsAndCountiesManageReadMapper districtsAndCountiesManageReadMapper;
     @Override
     public CityDO get(String id) {
-        return districtsAndCountiesManageDao.get(id);
+        return districtsAndCountiesManageReadMapper.get(id);
     }
 
     @Override
     public List<CityDO> list(Map<String, Object> map) {
-        return districtsAndCountiesManageDao.list(map);
+        return districtsAndCountiesManageReadMapper.list(map);
     }
 
     @Override
     public int count(Map<String, Object> map) {
-        return districtsAndCountiesManageDao.count(map);
+        return districtsAndCountiesManageReadMapper.count(map);
     }
 
     @Override
     public int save(CityDO city) {
-        return districtsAndCountiesManageDao.save(city);
+        return districtsAndCountiesManageWriteMapper.save(city);
     }
 
     @Override
     public int update(CityDO city) {
-        return districtsAndCountiesManageDao.update(city);
+        return districtsAndCountiesManageWriteMapper.update(city);
     }
 
     @Override
@@ -61,7 +66,7 @@ public class DistrictsAndCountiesManagerServiceImpl implements DistrictsAndCount
     @Override
     public Tree<CityDO> getTree() {
         List<Tree<CityDO>> trees = new ArrayList<Tree<CityDO>>();
-        List<CityDO> cityDOS = districtsAndCountiesManageDao.getTree(new HashMap<String, Object>(16));
+        List<CityDO> cityDOS = districtsAndCountiesManageReadMapper.getTree(new HashMap<String, Object>(16));
         for (CityDO cityDO:cityDOS){
             Tree<CityDO> tree = new Tree<CityDO>();
             tree.setId(cityDO.getId());
@@ -84,7 +89,7 @@ public class DistrictsAndCountiesManagerServiceImpl implements DistrictsAndCount
 
     @Override
     public List<CityDO> listByName(String name) {
-        return districtsAndCountiesManageDao.listByName(name);
+        return districtsAndCountiesManageReadMapper.listByName(name);
     }
 }
 

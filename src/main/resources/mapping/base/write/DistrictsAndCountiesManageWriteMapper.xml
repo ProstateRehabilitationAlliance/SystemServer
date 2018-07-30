@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mapping.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.prostate.base.dao.write.DistrictsAndCountiesManageWriteMapper">
+
+	<resultMap id="BaseResultMap" type="com.prostate.base.domain.CityDO">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="parent_city_id" jdbcType="VARCHAR" property="parentCityId" />
+		<result column="city_name" jdbcType="VARCHAR" property="cityName" />
+		<result column="city_type" jdbcType="CHAR" property="cityType" />
+		<result column="order_weight" jdbcType="INTEGER" property="orderWeight" />
+		<result column="create_user" jdbcType="VARCHAR" property="createUser" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="city_weight" jdbcType="INTEGER" property="cityWeight" />
+		<result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="delete_user" jdbcType="VARCHAR" property="deleteUser" />
+		<result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+		<result column="del_flag" jdbcType="CHAR" property="delFlag" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, parent_city_id, city_name, city_type,order_weight, create_user, create_time, city_weight,
+		update_user, update_time
+	</sql>
+
+
+	<select id="get" resultType="com.prostate.base.domain.CityDO">
+		select `id`,`parent_city_id`,`city_name`,`city_type`,`order_weight`,`create_user`,`create_time`,`city_weight`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_city where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.prostate.base.domain.CityDO">
+		select `id`,`parent_city_id`,`city_name`,`city_type`,`order_weight`,`create_user`,`create_time`,`city_weight`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_city
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
+		  		  <if test="cityName != null and cityName != ''"> and city_name LIKE CONCAT(CONCAT('%', #{cityName}), '%') </if>
+		  		  <if test="cityType != null and cityType != ''"> and city_type = #{cityType} </if>
+		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="cityWeight != null and cityWeight != ''"> and city_weight = #{cityWeight} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
+		  		 and del_flag = '0'
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by order_weight
+            </when>
+			<otherwise>
+                order by order_weight ASC
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="listByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from base_city
+		where del_flag = '0'
+		AND city_name = #{cityName,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getTree" resultType="com.prostate.base.domain.CityDO">
+		select `id`,`parent_city_id`,`city_name`,`city_type`,`order_weight`,`create_user`,`create_time`,`city_weight`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_city
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
+			<if test="cityName != null and cityName != ''"> and city_name = #{cityName} </if>
+			and (city_type = '1' or city_type = '2'or city_type = '0')
+			<if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+			<if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="cityWeight != null and cityWeight != ''"> and city_weight = #{cityWeight} </if>
+			<if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+			<if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+			<if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
+			AND  del_flag = '0'
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by order_weight
+			</when>
+			<otherwise>
+				order by order_weight desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+
+ 	<select id="count" resultType="int">
+		select count(*) from base_city
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
+		  		  <if test="cityName != null and cityName != ''"> and city_name LIKE CONCAT(CONCAT('%', #{cityName}), '%')</if>
+		  		  <if test="cityType != null and cityType != ''"> and city_type = #{cityType} </if>
+		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="cityWeight != null and cityWeight != ''"> and city_weight = #{cityWeight} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
+		  		  and del_flag ='0'
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.prostate.base.domain.CityDO">
+		<selectKey keyProperty="id" resultType="string" order="BEFORE">
+			select replace(uuid(), '-', '') as id from dual
+		</selectKey>
+		insert into base_city
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="parentCityId != null">
+				parent_city_id,
+			</if>
+			<if test="cityName != null">
+				city_name,
+			</if>
+			<if test="cityType != null">
+				city_type,
+			</if>
+			<if test="orderWeight != null">
+				order_weight,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="cityWeight != null">
+				city_weight,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="deleteUser != null">
+				delete_user,
+			</if>
+			<if test="deleteTime != null">
+				delete_time,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="parentCityId != null">
+				#{parentCityId,jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				#{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="cityType != null">
+				#{cityType,jdbcType=CHAR},
+			</if>
+			<if test="orderWeight != null">
+				#{orderWeight,jdbcType=INTEGER},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cityWeight != null">
+				#{cityWeight,jdbcType=INTEGER},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteUser != null">
+				#{deleteUser,jdbcType=VARCHAR},
+			</if>
+			<if test="deleteTime != null">
+				#{deleteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	 
+	<update id="update" parameterType="com.prostate.base.domain.CityDO">
+		update base_city 
+		<set>
+			<if test="parentCityId != null">`parent_city_id` = #{parentCityId}, </if>
+			<if test="cityName != null">`city_name` = #{cityName}, </if>
+			<if test="cityType != null">`city_type` = #{cityType}, </if>
+			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
+			<if test="createUser != null">`create_user` = #{createUser}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="cityWeight != null">`city_weight` = #{cityWeight}, </if>
+			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="deleteUser != null">`delete_user` = #{deleteUser}, </if>
+			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from base_city where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from base_city where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

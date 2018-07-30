@@ -1,12 +1,13 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.BloodGroupReadMapper;
+import com.prostate.base.dao.write.BloodGroupWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.BloodGroupDao;
 import com.prostate.base.domain.BloodGroupDO;
 import com.prostate.base.service.BloodGroupService;
 
@@ -14,53 +15,57 @@ import com.prostate.base.service.BloodGroupService;
 
 @Service
 public class BloodGroupServiceImpl implements BloodGroupService {
+
 	@Autowired
-	private BloodGroupDao bloodGroupDao;
-	
+	private BloodGroupWriteMapper bloodGroupWriteMapper;
+
+	@Autowired
+	private BloodGroupReadMapper bloodGroupReadMapper;
+
 	@Override
 	public BloodGroupDO get(String id){
-		return bloodGroupDao.get(id);
+		return bloodGroupReadMapper.get(id);
 	}
 
 	@Override
 	public BloodGroupDO getByName(String bloodGroupName) {
-		return bloodGroupDao.getByName(bloodGroupName);
+		return bloodGroupReadMapper.getByName(bloodGroupName);
 	}
 
 	@Override
 	public BloodGroupDO getByNumBer(String bloodGroupNumber) {
-		return bloodGroupDao.getByNumBer(bloodGroupNumber);
+		return bloodGroupReadMapper.getByNumBer(bloodGroupNumber);
 	}
 
 	@Override
 	public List<BloodGroupDO> list(Map<String, Object> map){
-		return bloodGroupDao.list(map);
+		return bloodGroupReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return bloodGroupDao.count(map);
+		return bloodGroupReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(BloodGroupDO bloodGroup){
-		return bloodGroupDao.save(bloodGroup);
+		return bloodGroupWriteMapper.save(bloodGroup);
 	}
 	
 	@Override
 	public int update(BloodGroupDO bloodGroup){
-		return bloodGroupDao.update(bloodGroup);
+		return bloodGroupWriteMapper.update(bloodGroup);
 	}
 
 
 	@Override
 	public int remove(String id){
-		return bloodGroupDao.remove(id);
+		return bloodGroupWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return bloodGroupDao.batchRemove(ids);
+		return bloodGroupWriteMapper.batchRemove(ids);
 	}
 	
 }

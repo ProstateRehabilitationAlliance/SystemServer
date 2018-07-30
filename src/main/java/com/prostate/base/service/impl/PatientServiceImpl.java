@@ -1,6 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.PatientDao;
+import com.prostate.base.dao.read.PatientReadMapper;
+import com.prostate.base.dao.write.PatientWriteMapper;
 import com.prostate.base.domain.PatientDO;
 import com.prostate.base.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,42 +15,46 @@ import java.util.Map;
 
 @Service
 public class PatientServiceImpl implements PatientService {
+
 	@Autowired
-	private PatientDao patientDao;
-	
+	private PatientWriteMapper patientWriteMapper;
+
+	@Autowired
+	private PatientReadMapper patientReadMapper;
+
 	@Override
 	public PatientDO get(String id){
-		return patientDao.get(id);
+		return patientReadMapper.get(id);
 	}
 	
 	@Override
 	public List<PatientDO> list(Map<String, Object> map){
-		return patientDao.list(map);
+		return patientReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return patientDao.count(map);
+		return patientReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(PatientDO patient){
-		return patientDao.save(patient);
+		return patientWriteMapper.save(patient);
 	}
 	
 	@Override
 	public int update(PatientDO patient){
-		return patientDao.update(patient);
+		return patientWriteMapper.update(patient);
 	}
 	
 	@Override
 	public int remove(String id){
-		return patientDao.remove(id);
+		return patientWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return patientDao.batchRemove(ids);
+		return patientWriteMapper.batchRemove(ids);
 	}
 	
 }

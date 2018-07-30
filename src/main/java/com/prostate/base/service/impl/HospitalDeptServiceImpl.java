@@ -1,12 +1,13 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.HospitalDeptReadMapper;
+import com.prostate.base.dao.write.HospitalDeptWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.HospitalDeptDao;
 import com.prostate.base.domain.HospitalDeptDO;
 import com.prostate.base.service.HospitalDeptService;
 
@@ -14,42 +15,46 @@ import com.prostate.base.service.HospitalDeptService;
 
 @Service
 public class HospitalDeptServiceImpl implements HospitalDeptService {
+
 	@Autowired
-	private HospitalDeptDao hospitalDeptDao;
+	private HospitalDeptWriteMapper hospitalDeptWriteMapper;
+
+	@Autowired
+	private HospitalDeptReadMapper hospitalDeptReadMapper;
 	
 	@Override
 	public HospitalDeptDO get(String id){
-		return hospitalDeptDao.get(id);
+		return hospitalDeptReadMapper.get(id);
 	}
 	
 	@Override
 	public List<HospitalDeptDO> list(Map<String, Object> map){
-		return hospitalDeptDao.list(map);
+		return hospitalDeptReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return hospitalDeptDao.count(map);
+		return hospitalDeptReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(HospitalDeptDO hospitalDept){
-		return hospitalDeptDao.save(hospitalDept);
+		return hospitalDeptWriteMapper.save(hospitalDept);
 	}
 	
 	@Override
 	public int update(HospitalDeptDO hospitalDept){
-		return hospitalDeptDao.update(hospitalDept);
+		return hospitalDeptWriteMapper.update(hospitalDept);
 	}
 	
 	@Override
 	public int remove(String id){
-		return hospitalDeptDao.remove(id);
+		return hospitalDeptWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return hospitalDeptDao.batchRemove(ids);
+		return hospitalDeptWriteMapper.batchRemove(ids);
 	}
 	
 }

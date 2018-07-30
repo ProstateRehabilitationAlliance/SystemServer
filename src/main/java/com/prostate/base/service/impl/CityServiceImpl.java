@@ -1,5 +1,7 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.CityReadMapper;
+import com.prostate.base.dao.write.CityWriteMapper;
 import com.prostate.base.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,58 +9,61 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.CityDao;
 import com.prostate.base.domain.CityDO;
 
 
 @Service
 public class CityServiceImpl implements CityService {
+
 	@Autowired
-	private CityDao cityDao;
+	private CityWriteMapper cityWriteMapper;
+
+	@Autowired
+	private CityReadMapper cityReadMapper;
 	
 	@Override
 	public CityDO get(String id){
-		return cityDao.get(id);
+		return cityReadMapper.get(id);
 	}
 
 	@Override
 	public CityDO getParent(String id) {
-		return cityDao.getParent(id);
+		return cityReadMapper.getParent(id);
 	}
 
 	@Override
 	public List<CityDO> getChild(Map<String, Object> map) {
-		return cityDao.getChild(map);
+		return cityReadMapper.getChild(map);
 	}
 	
 	@Override
 	public List<CityDO> list(Map<String, Object> map){
-		return cityDao.list(map);
+		return cityReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return cityDao.count(map);
+		return cityReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(CityDO city){
-		return cityDao.save(city);
+		return cityWriteMapper.save(city);
 	}
 	
 	@Override
 	public int update(CityDO city){
-		return cityDao.update(city);
+		return cityWriteMapper.update(city);
 	}
 	
 	@Override
 	public int remove(String id){
-		return cityDao.remove(id);
+		return cityWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return cityDao.batchRemove(ids);
+		return cityWriteMapper.batchRemove(ids);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.IpssManagerDao;
+import com.prostate.base.dao.read.IpssManagerReadMapper;
+import com.prostate.base.dao.write.IpssManagerWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,48 +20,51 @@ import com.prostate.base.service.IpssManagerService;
 @Service
 public class IpssServiceImpl implements IpssManagerService {
 	@Autowired
-	private IpssManagerDao ipssManagerDao;
+	private IpssManagerWriteMapper ipssManagerWriteMapper;
+
+	@Autowired
+	private IpssManagerReadMapper ipssManagerReadMapper;
 	
 	@Override
 	public IpssDO get(String id){
-		return ipssManagerDao.get(id);
+		return ipssManagerReadMapper.get(id);
 	}
 	
 	@Override
 	public List<IpssDO> list(Map<String, Object> map){
-		return ipssManagerDao.list(map);
+		return ipssManagerReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return ipssManagerDao.count(map);
+		return ipssManagerReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(IpssDO ipss){
-		return ipssManagerDao.save(ipss);
+		return ipssManagerWriteMapper.save(ipss);
 	}
 	
 	@Override
 	public int update(IpssDO ipss){
-		return ipssManagerDao.update(ipss);
+		return ipssManagerWriteMapper.update(ipss);
 	}
 	
 	@Override
 	public int remove(String id){
-		return ipssManagerDao.remove(id);
+		return ipssManagerWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return ipssManagerDao.batchRemove(ids);
+		return ipssManagerWriteMapper.batchRemove(ids);
 	}
 
 
 	@Override
 	public Tree<IpssDO> getTree() {
 		List<Tree<IpssDO>> trees = new ArrayList<Tree<IpssDO>>();
-		List<IpssDO> ipssDOS = ipssManagerDao.getTree(new HashMap<String, Object>(16));
+		List<IpssDO> ipssDOS = ipssManagerReadMapper.getTree(new HashMap<String, Object>(16));
 		for (IpssDO ipssDO:ipssDOS){
 			Tree<IpssDO> tree = new Tree<IpssDO>();
 			tree.setId(ipssDO.getId());
@@ -84,7 +88,7 @@ public class IpssServiceImpl implements IpssManagerService {
 
 	@Override
 	public List<IpssDO> listByName(String name) {
-		return ipssManagerDao.listByName(name);
+		return ipssManagerReadMapper.listByName(name);
 	}
 	
 }

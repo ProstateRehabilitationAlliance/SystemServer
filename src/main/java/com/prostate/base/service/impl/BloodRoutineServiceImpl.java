@@ -1,5 +1,7 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.BloodRoutineReadMapper;
+import com.prostate.base.dao.write.BloodRoutineWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.BloodRoutineDao;
 import com.prostate.base.domain.BloodRoutineDO;
 import com.prostate.base.service.BloodRoutineService;
 
@@ -18,13 +19,17 @@ import com.prostate.base.service.BloodRoutineService;
 
 @Service
 public class BloodRoutineServiceImpl implements BloodRoutineService {
+
 	@Autowired
-	private BloodRoutineDao bloodRoutineDao;
+	private BloodRoutineWriteMapper bloodRoutineWriteMapper;
+
+	@Autowired
+	private BloodRoutineReadMapper bloodRoutineReadMapper;
 
 	@Override
 	public Tree<BloodRoutineDO> getTree() {
 		List<Tree<BloodRoutineDO>> trees = new ArrayList<Tree<BloodRoutineDO>>();
-		List<BloodRoutineDO> bloodRoutineDOS = bloodRoutineDao.list(new HashMap<String,Object>(16));
+		List<BloodRoutineDO> bloodRoutineDOS = bloodRoutineReadMapper.list(new HashMap<String,Object>(16));
 
 		for (BloodRoutineDO bloodRoutineDO : bloodRoutineDOS) {
 			Tree<BloodRoutineDO> tree = new Tree<BloodRoutineDO>();
@@ -43,47 +48,47 @@ public class BloodRoutineServiceImpl implements BloodRoutineService {
 
 	@Override
 	public BloodRoutineDO getByNumber(String deptNumber) {
-		return bloodRoutineDao.getByNumber(deptNumber);
+		return bloodRoutineReadMapper.getByNumber(deptNumber);
 	}
 
 	@Override
 	public BloodRoutineDO getByName(String deptName) {
-		return bloodRoutineDao.getByName(deptName);
+		return bloodRoutineReadMapper.getByName(deptName);
 	}
 
 	@Override
 	public BloodRoutineDO get(String id){
-		return bloodRoutineDao.get(id);
+		return bloodRoutineReadMapper.get(id);
 	}
 	
 	@Override
 	public List<BloodRoutineDO> list(Map<String, Object> map){
-		return bloodRoutineDao.list(map);
+		return bloodRoutineReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return bloodRoutineDao.count(map);
+		return bloodRoutineReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(BloodRoutineDO bloodRoutine){
-		return bloodRoutineDao.save(bloodRoutine);
+		return bloodRoutineWriteMapper.save(bloodRoutine);
 	}
 	
 	@Override
 	public int update(BloodRoutineDO bloodRoutine){
-		return bloodRoutineDao.update(bloodRoutine);
+		return bloodRoutineWriteMapper.update(bloodRoutine);
 	}
 	
 	@Override
 	public int remove(String id){
-		return bloodRoutineDao.remove(id);
+		return bloodRoutineWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return bloodRoutineDao.batchRemove(ids);
+		return bloodRoutineWriteMapper.batchRemove(ids);
 	}
 	
 }

@@ -1,12 +1,14 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.DoctorTitleReadMapper;
+import com.prostate.base.dao.write.DigitalRectalWriteMapper;
+import com.prostate.base.dao.write.DoctorTitleWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.DoctorTitleDao;
 import com.prostate.base.domain.DoctorTitleDO;
 import com.prostate.base.service.DoctorTitleService;
 
@@ -14,52 +16,58 @@ import com.prostate.base.service.DoctorTitleService;
 
 @Service
 public class DoctorTitleServiceImpl implements DoctorTitleService {
+
+
 	@Autowired
-	private DoctorTitleDao doctorTitleDao;
+	private DoctorTitleWriteMapper doctorTitleWriteMapper;
+
+	@Autowired
+	private DoctorTitleReadMapper doctorTitleReadMapper;
+
 	
 	@Override
 	public DoctorTitleDO get(String id){
-		return doctorTitleDao.get(id);
+		return doctorTitleReadMapper.get(id);
 	}
 
 	@Override
 	public DoctorTitleDO getByName(String doctorTitleName) {
-		return doctorTitleDao.getByName(doctorTitleName);
+		return doctorTitleReadMapper.getByName(doctorTitleName);
 	}
 
 	@Override
 	public DoctorTitleDO getByNumber(String doctorTitleNumber) {
-		return doctorTitleDao.getByNumber(doctorTitleNumber);
+		return doctorTitleReadMapper.getByNumber(doctorTitleNumber);
 	}
 
 	@Override
 	public List<DoctorTitleDO> list(Map<String, Object> map){
-		return doctorTitleDao.list(map);
+		return doctorTitleReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return doctorTitleDao.count(map);
+		return doctorTitleReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(DoctorTitleDO doctorTitle){
-		return doctorTitleDao.save(doctorTitle);
+		return doctorTitleWriteMapper.save(doctorTitle);
 	}
 	
 	@Override
 	public int update(DoctorTitleDO doctorTitle){
-		return doctorTitleDao.update(doctorTitle);
+		return doctorTitleWriteMapper.update(doctorTitle);
 	}
 	
 	@Override
 	public int remove(String id){
-		return doctorTitleDao.remove(id);
+		return doctorTitleWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return doctorTitleDao.batchRemove(ids);
+		return doctorTitleWriteMapper.batchRemove(ids);
 	}
 	
 }

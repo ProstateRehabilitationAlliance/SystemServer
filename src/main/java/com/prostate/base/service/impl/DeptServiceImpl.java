@@ -1,5 +1,7 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.DeptReadMapper;
+import com.prostate.base.dao.write.DeptWriteMapper;
 import com.prostate.base.domain.DeptDO;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
@@ -11,65 +13,68 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.DeptDao;
 import com.prostate.base.service.DeptService;
 
 
 
 @Service
 public class DeptServiceImpl implements DeptService {
+
 	@Autowired
-	private DeptDao deptDao;
+	private DeptWriteMapper deptWriteMapper;
+
+	@Autowired
+	private DeptReadMapper deptReadMapper;
 
 	@Override
 	public DeptDO getByNumber(String deptNumber) {
-		return deptDao.getByNumber(deptNumber);
+		return deptReadMapper.getByNumber(deptNumber);
 	}
 
 	@Override
 	public DeptDO getByName(String deptName) {
-		return deptDao.getByName(deptName);
+		return deptReadMapper.getByName(deptName);
 	}
 
 	@Override
 	public DeptDO get(String id){
-		return deptDao.get(id);
+		return deptReadMapper.get(id);
 	}
 
 	@Override
 	public List<DeptDO> list(Map<String, Object> map){
-		return deptDao.list(map);
+		return deptReadMapper.list(map);
 	}
 
 	@Override
 	public int count(Map<String, Object> map){
-		return deptDao.count(map);
+		return deptReadMapper.count(map);
 	}
 
 	@Override
 	public int save(DeptDO dept){
-		return deptDao.save(dept);
+		return deptWriteMapper.save(dept);
 	}
 
 	@Override
 	public int update(DeptDO dept){
-		return deptDao.update(dept);
+		return deptWriteMapper.update(dept);
 	}
 
 	@Override
 	public int remove(String id){
-		return deptDao.remove(id);
+		return deptWriteMapper.remove(id);
 	}
 
 	@Override
 	public int batchRemove(String[] ids){
-		return deptDao.batchRemove(ids);
+		return deptWriteMapper.batchRemove(ids);
 	}
 
 	@Override
 	public Tree<DeptDO> getTree() {
 		List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
-		List<DeptDO> sysDepts = deptDao.list(new HashMap<String,Object>(16));
+		List<DeptDO> sysDepts = deptReadMapper.list(new HashMap<String,Object>(16));
 
 		for (DeptDO sysDept : sysDepts) {
 			Tree<DeptDO> tree = new Tree<DeptDO>();

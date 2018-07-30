@@ -1,12 +1,14 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.ProfessionReadMapper;
+import com.prostate.base.dao.write.PatientWriteMapper;
+import com.prostate.base.dao.write.ProfessionWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.ProfessionDao;
 import com.prostate.base.domain.ProfessionDO;
 import com.prostate.base.service.ProfessionService;
 
@@ -14,52 +16,56 @@ import com.prostate.base.service.ProfessionService;
 
 @Service
 public class ProfessionServiceImpl implements ProfessionService {
+
 	@Autowired
-	private ProfessionDao professionDao;
-	
+	private ProfessionWriteMapper professionWriteMapper;
+
+	@Autowired
+	private ProfessionReadMapper professionReadMapper;
+
 	@Override
 	public ProfessionDO get(String id){
-		return professionDao.get(id);
+		return professionReadMapper.get(id);
 	}
 	
 	@Override
 	public List<ProfessionDO> list(Map<String, Object> map){
-		return professionDao.list(map);
+		return professionReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return professionDao.count(map);
+		return professionReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(ProfessionDO profession){
-		return professionDao.save(profession);
+		return professionWriteMapper.save(profession);
 	}
 	
 	@Override
 	public int update(ProfessionDO profession){
-		return professionDao.update(profession);
+		return professionWriteMapper.update(profession);
 	}
 	
 	@Override
 	public int remove(String id){
-		return professionDao.remove(id);
+		return professionWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return professionDao.batchRemove(ids);
+		return professionWriteMapper.batchRemove(ids);
 	}
 
 	@Override
 	public List<ProfessionDO> listByName(String name) {
-		return professionDao.listByName(name);
+		return professionReadMapper.listByName(name);
 	}
 
 	@Override
 	public List<ProfessionDO> listByNumber(String number) {
-		return professionDao.listByNumber(number);
+		return professionReadMapper.listByNumber(number);
 	}
 
 }

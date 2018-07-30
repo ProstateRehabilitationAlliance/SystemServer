@@ -1,5 +1,7 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.SpecificAntigenReadMapper;
+import com.prostate.base.dao.write.SpecificAntigenWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.SpecificAntigenDao;
 import com.prostate.base.domain.SpecificAntigenDO;
 import com.prostate.base.service.SpecificAntigenService;
 
@@ -18,17 +19,20 @@ import com.prostate.base.service.SpecificAntigenService;
 
 @Service
 public class SpecificAntigenServiceImpl implements SpecificAntigenService {
-	@Autowired
-	private SpecificAntigenDao specificAntigenDao;
 
+	@Autowired
+	private SpecificAntigenWriteMapper specificAntigenWriteMapper;
+
+	@Autowired
+	private SpecificAntigenReadMapper specificAntigenReadMapper;
 	@Override
 	public List<SpecificAntigenDO> getByParentId(String id) {
-		return specificAntigenDao.getByParentId(id);
+		return specificAntigenReadMapper.getByParentId(id);
 	}
 
 	@Override
 	public SpecificAntigenDO get(String id){
-		return specificAntigenDao.get(id);
+		return specificAntigenReadMapper.get(id);
 	}
 
 	@Override
@@ -37,7 +41,7 @@ public class SpecificAntigenServiceImpl implements SpecificAntigenService {
 		List<Tree<SpecificAntigenDO>> trees = new ArrayList<Tree<SpecificAntigenDO>>();
 		//查询所有的信息存入列表中。
 		List<SpecificAntigenDO> specificAntigenDOS =
-				specificAntigenDao.list(new HashMap<String,Object>(16));
+				specificAntigenReadMapper.list(new HashMap<String,Object>(16));
 		for (SpecificAntigenDO specificAntigenDO : specificAntigenDOS) {
 			//声明树形结构
 			Tree<SpecificAntigenDO> tree = new Tree<SpecificAntigenDO>();
@@ -61,32 +65,32 @@ public class SpecificAntigenServiceImpl implements SpecificAntigenService {
 
 	@Override
 	public List<SpecificAntigenDO> list(Map<String, Object> map){
-		return specificAntigenDao.list(map);
+		return specificAntigenReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return specificAntigenDao.count(map);
+		return specificAntigenReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(SpecificAntigenDO specificAntigen){
-		return specificAntigenDao.save(specificAntigen);
+		return specificAntigenWriteMapper.save(specificAntigen);
 	}
 	
 	@Override
 	public int update(SpecificAntigenDO specificAntigen){
-		return specificAntigenDao.update(specificAntigen);
+		return specificAntigenWriteMapper.update(specificAntigen);
 	}
 	
 	@Override
 	public int remove(String id){
-		return specificAntigenDao.remove(id);
+		return specificAntigenWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return specificAntigenDao.batchRemove(ids);
+		return specificAntigenWriteMapper.batchRemove(ids);
 	}
 	
 }

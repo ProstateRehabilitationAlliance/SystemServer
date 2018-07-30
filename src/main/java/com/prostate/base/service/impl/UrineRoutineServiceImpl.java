@@ -1,34 +1,35 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.UrineRoutineReadMapper;
+import com.prostate.base.dao.write.UrineRoutineWriteMapper;
 import com.prostate.base.domain.UrineRoutineDO;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import com.prostate.base.dao.UrineRoutineDao;
 import com.prostate.base.service.UrineRoutineService;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 public class UrineRoutineServiceImpl implements UrineRoutineService {
 
 	@Autowired
-	private UrineRoutineDao urineRoutineDao;
+	private UrineRoutineWriteMapper urineRoutineWriteMapper;
+
+	@Autowired
+	private UrineRoutineReadMapper urineRoutineReadMapper;
 
 	@Override
 	public UrineRoutineDO get(String id) {
-		return urineRoutineDao.get(id);
+		return urineRoutineReadMapper.get(id);
 	}
 
 	@Override
 	public List<UrineRoutineDO> list(Map<String, Object> map) {
-		return urineRoutineDao.list(map);
+		return urineRoutineReadMapper.list(map);
 	}
 
 	@Override
@@ -38,12 +39,12 @@ public class UrineRoutineServiceImpl implements UrineRoutineService {
 
 	@Override
 	public int save(UrineRoutineDO urineRoutineDO) {
-		return urineRoutineDao.save(urineRoutineDO);
+		return urineRoutineWriteMapper.save(urineRoutineDO);
 	}
 
 	@Override
 	public int update(UrineRoutineDO urineRoutineDO) {
-		return urineRoutineDao.update(urineRoutineDO);
+		return urineRoutineWriteMapper.update(urineRoutineDO);
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class UrineRoutineServiceImpl implements UrineRoutineService {
 	@Override
 	public Tree<UrineRoutineDO> getTree() {
 		List<Tree<UrineRoutineDO>> trees = new ArrayList<Tree<UrineRoutineDO>>();
-		List<UrineRoutineDO> urineRoutineDOS = urineRoutineDao.getTree(new HashMap<String,Object>(16));
+		List<UrineRoutineDO> urineRoutineDOS = urineRoutineReadMapper.getTree(new HashMap<String,Object>(16));
 
 		for (UrineRoutineDO urineRoutineDO : urineRoutineDOS) {
 			Tree<UrineRoutineDO> tree = new Tree<UrineRoutineDO>();

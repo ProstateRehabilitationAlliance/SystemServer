@@ -1,12 +1,13 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.EducationReadMapper;
+import com.prostate.base.dao.write.EducationWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.EducationDao;
 import com.prostate.base.domain.EducationDO;
 import com.prostate.base.service.EducationService;
 
@@ -14,52 +15,56 @@ import com.prostate.base.service.EducationService;
 
 @Service
 public class EducationServiceImpl implements EducationService {
+
 	@Autowired
-	private EducationDao educationDao;
+	private EducationWriteMapper educationWriteMapper;
+
+	@Autowired
+	private EducationReadMapper educationReadMapper;
 	
 	@Override
 	public EducationDO get(String id){
-		return educationDao.get(id);
+		return educationReadMapper.get(id);
 	}
 
 	@Override
 	public EducationDO getByName(String educationName) {
-		return educationDao.getByName(educationName);
+		return educationReadMapper.getByName(educationName);
 	}
 
 	@Override
 	public EducationDO getByNumber(String educationNumber) {
-		return educationDao.getByNumber(educationNumber);
+		return educationReadMapper.getByNumber(educationNumber);
 	}
 
 	@Override
 	public List<EducationDO> list(Map<String, Object> map){
-		return educationDao.list(map);
+		return educationReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return educationDao.count(map);
+		return educationReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(EducationDO education){
-		return educationDao.save(education);
+		return educationWriteMapper.save(education);
 	}
 	
 	@Override
 	public int update(EducationDO education){
-		return educationDao.update(education);
+		return educationWriteMapper.update(education);
 	}
 	
 	@Override
 	public int remove(String id){
-		return educationDao.remove(id);
+		return educationWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return educationDao.batchRemove(ids);
+		return educationWriteMapper.batchRemove(ids);
 	}
 	
 }

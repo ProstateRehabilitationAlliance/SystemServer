@@ -1,5 +1,7 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.UltrasonographyBReadMapper;
+import com.prostate.base.dao.write.UltrasonographyBWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.UltrasonographyBDao;
 import com.prostate.base.domain.UltrasonographyBDO;
 import com.prostate.base.service.UltrasonographyBService;
 
@@ -18,18 +19,21 @@ import com.prostate.base.service.UltrasonographyBService;
 
 @Service
 public class UltrasonographyBServiceImpl implements UltrasonographyBService {
+
 	@Autowired
-	private UltrasonographyBDao ultrasonographyBDao;
+	private UltrasonographyBWriteMapper ultrasonographyBWriteMapper;
 
-
+	@Autowired
+	private UltrasonographyBReadMapper ultrasonographyBReadMapper;
+	
 	@Override
 	public UltrasonographyBDO get(String id) {
-		return ultrasonographyBDao.get(id);
+		return ultrasonographyBReadMapper.get(id);
 	}
 
 	@Override
 	public List<UltrasonographyBDO> list(Map<String, Object> map) {
-		return ultrasonographyBDao.list(map);
+		return ultrasonographyBReadMapper.list(map);
 	}
 
 	@Override
@@ -39,12 +43,12 @@ public class UltrasonographyBServiceImpl implements UltrasonographyBService {
 
 	@Override
 	public int save(UltrasonographyBDO ultrasonographyBDO) {
-		return ultrasonographyBDao.save(ultrasonographyBDO);
+		return ultrasonographyBWriteMapper.save(ultrasonographyBDO);
 	}
 
 	@Override
 	public int update(UltrasonographyBDO ultrasonographyBDO) {
-		return ultrasonographyBDao.update(ultrasonographyBDO);
+		return ultrasonographyBWriteMapper.update(ultrasonographyBDO);
 	}
 
 	@Override
@@ -70,7 +74,7 @@ public class UltrasonographyBServiceImpl implements UltrasonographyBService {
 	@Override
 	public Tree<UltrasonographyBDO> getTree() {
 		List<Tree<UltrasonographyBDO>> trees = new ArrayList<Tree<UltrasonographyBDO>>();
-		List<UltrasonographyBDO> urineFlowRateDOS = ultrasonographyBDao.getTree(new HashMap<String,Object>(16));
+		List<UltrasonographyBDO> urineFlowRateDOS = ultrasonographyBReadMapper.getTree(new HashMap<String,Object>(16));
 
 		for (UltrasonographyBDO urineFlowRateDO : urineFlowRateDOS) {
 			Tree<UltrasonographyBDO> tree = new Tree<UltrasonographyBDO>();

@@ -1,12 +1,13 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.AnamnesisEatingDrugReadMapper;
+import com.prostate.base.dao.write.AnamnesisEatingDrugWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.AnamnesisEatingDrugDao;
 import com.prostate.base.domain.AnamnesisEatingDrugDO;
 import com.prostate.base.service.AnamnesisEatingDrugService;
 
@@ -14,52 +15,56 @@ import com.prostate.base.service.AnamnesisEatingDrugService;
 
 @Service
 public class AnamnesisEatingDrugServiceImpl implements AnamnesisEatingDrugService {
+
 	@Autowired
-	private AnamnesisEatingDrugDao anamnesisEatingDrugDao;
+	private AnamnesisEatingDrugWriteMapper anamnesisEatingDrugWriteMapper;
+
+	@Autowired
+	private AnamnesisEatingDrugReadMapper anamnesisEatingDrugReadMapper;
 	
 	@Override
 	public AnamnesisEatingDrugDO get(String id){
-		return anamnesisEatingDrugDao.get(id);
+		return anamnesisEatingDrugReadMapper.get(id);
 	}
 
 	@Override
 	public AnamnesisEatingDrugDO getByName(String eatingDrugName) {
-		return anamnesisEatingDrugDao.getByName(eatingDrugName);
+		return anamnesisEatingDrugReadMapper.getByName(eatingDrugName);
 	}
 
 	@Override
 	public AnamnesisEatingDrugDO getByNumber(String eatingDrugNumber) {
-		return anamnesisEatingDrugDao.getByNumber(eatingDrugNumber);
+		return anamnesisEatingDrugReadMapper.getByNumber(eatingDrugNumber);
 	}
 
 	@Override
 	public List<AnamnesisEatingDrugDO> list(Map<String, Object> map){
-		return anamnesisEatingDrugDao.list(map);
+		return anamnesisEatingDrugReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return anamnesisEatingDrugDao.count(map);
+		return anamnesisEatingDrugReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(AnamnesisEatingDrugDO anamnesisEatingDrug){
-		return anamnesisEatingDrugDao.save(anamnesisEatingDrug);
+		return anamnesisEatingDrugWriteMapper.save(anamnesisEatingDrug);
 	}
 	
 	@Override
 	public int update(AnamnesisEatingDrugDO anamnesisEatingDrug){
-		return anamnesisEatingDrugDao.update(anamnesisEatingDrug);
+		return anamnesisEatingDrugWriteMapper.update(anamnesisEatingDrug);
 	}
 	
 	@Override
 	public int remove(String id){
-		return anamnesisEatingDrugDao.remove(id);
+		return anamnesisEatingDrugWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return anamnesisEatingDrugDao.batchRemove(ids);
+		return anamnesisEatingDrugWriteMapper.batchRemove(ids);
 	}
 	
 }

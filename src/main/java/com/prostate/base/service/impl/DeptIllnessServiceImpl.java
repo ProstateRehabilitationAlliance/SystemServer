@@ -1,12 +1,13 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.DeptIllnessReadMapper;
+import com.prostate.base.dao.write.DeptIllnessWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.DeptIllnessDao;
 import com.prostate.base.domain.DeptIllnessDO;
 import com.prostate.base.service.DeptIllnessService;
 
@@ -14,42 +15,47 @@ import com.prostate.base.service.DeptIllnessService;
 
 @Service
 public class DeptIllnessServiceImpl implements DeptIllnessService {
+
 	@Autowired
-	private DeptIllnessDao deptIllnessDao;
+	private DeptIllnessWriteMapper deptIllnessWriteMapper;
+
+
+	@Autowired
+	private DeptIllnessReadMapper deptIllnessReadMapper;
 	
 	@Override
 	public DeptIllnessDO get(String id){
-		return deptIllnessDao.get(id);
+		return deptIllnessReadMapper.get(id);
 	}
 	
 	@Override
 	public List<DeptIllnessDO> list(Map<String, Object> map){
-		return deptIllnessDao.list(map);
+		return deptIllnessReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return deptIllnessDao.count(map);
+		return deptIllnessReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(DeptIllnessDO deptIllness){
-		return deptIllnessDao.save(deptIllness);
+		return deptIllnessWriteMapper.save(deptIllness);
 	}
 	
 	@Override
 	public int update(DeptIllnessDO deptIllness){
-		return deptIllnessDao.update(deptIllness);
+		return deptIllnessWriteMapper.update(deptIllness);
 	}
 	
 	@Override
 	public int remove(String id){
-		return deptIllnessDao.remove(id);
+		return deptIllnessWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return deptIllnessDao.batchRemove(ids);
+		return deptIllnessWriteMapper.batchRemove(ids);
 	}
 	
 }

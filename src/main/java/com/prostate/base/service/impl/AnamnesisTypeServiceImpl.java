@@ -1,12 +1,13 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.AnamnesisTypeReadMapper;
+import com.prostate.base.dao.write.AnamnesisTypeWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.AnamnesisTypeDao;
 import com.prostate.base.domain.AnamnesisTypeDO;
 import com.prostate.base.service.AnamnesisTypeService;
 
@@ -14,52 +15,56 @@ import com.prostate.base.service.AnamnesisTypeService;
 
 @Service
 public class AnamnesisTypeServiceImpl implements AnamnesisTypeService {
+
 	@Autowired
-	private AnamnesisTypeDao anamnesisTypeDao;
+	private AnamnesisTypeWriteMapper anamnesisTypeWriteMapper;
+
+	@Autowired
+	private AnamnesisTypeReadMapper anamnesisTypeReadMapper;
 	
 	@Override
 	public AnamnesisTypeDO get(String id){
-		return anamnesisTypeDao.get(id);
+		return anamnesisTypeReadMapper.get(id);
 	}
 	
 	@Override
 	public List<AnamnesisTypeDO> list(Map<String, Object> map){
-		return anamnesisTypeDao.list(map);
+		return anamnesisTypeReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return anamnesisTypeDao.count(map);
+		return anamnesisTypeReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(AnamnesisTypeDO anamnesisType){
-		return anamnesisTypeDao.save(anamnesisType);
+		return anamnesisTypeWriteMapper.save(anamnesisType);
 	}
 	
 	@Override
 	public int update(AnamnesisTypeDO anamnesisType){
-		return anamnesisTypeDao.update(anamnesisType);
+		return anamnesisTypeWriteMapper.update(anamnesisType);
 	}
 	
 	@Override
 	public int remove(String id){
-		return anamnesisTypeDao.remove(id);
+		return anamnesisTypeWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return anamnesisTypeDao.batchRemove(ids);
+		return anamnesisTypeWriteMapper.batchRemove(ids);
 	}
 
 	@Override
 	public List<AnamnesisTypeDO> listByName(String name) {
-		return anamnesisTypeDao.listByName(name);
+		return anamnesisTypeReadMapper.listByName(name);
 	}
 
 	@Override
 	public List<AnamnesisTypeDO> listByNumber(String number) {
-		return anamnesisTypeDao.listByNumber(number);
+		return anamnesisTypeReadMapper.listByNumber(number);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.CityDao;
+import com.prostate.base.dao.read.CityReadMapper;
+import com.prostate.base.dao.write.CityWriteMapper;
 import com.prostate.base.domain.CityDO;
 import com.prostate.base.service.ProvinceAndCityManageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,36 +17,41 @@ import java.util.Map;
  */
 @Service
 public class ProvinceAndCityManageServiceImpl implements ProvinceAndCityManageService{
+
     @Autowired
-    private CityDao cityDao;
+    private CityWriteMapper cityWriteMapper;
+
+    @Autowired
+    private CityReadMapper cityReadMapper;
+
     @Override
     public CityDO get(String id) {
-        return cityDao.get(id);
+        return cityReadMapper.get(id);
     }
 
     @Override
     public List<CityDO> list(Map<String, Object> map) {
-        return cityDao.list(map);
+        return cityReadMapper.list(map);
     }
 
     @Override
     public int count(Map<String, Object> map) {
-        return cityDao.count(map);
+        return cityReadMapper.count(map);
     }
 
     @Override
     public int save(CityDO cityDO) {
-        return cityDao.save(cityDO);
+        return cityWriteMapper.save(cityDO);
     }
 
     @Override
     public int update(CityDO cityDO) {
-        return cityDao.update(cityDO);
+        return cityWriteMapper.update(cityDO);
     }
 
     @Override
     public int remove(String id) {
-        return cityDao.remove(id);
+        return cityWriteMapper.remove(id);
     }
 
     @Override

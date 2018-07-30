@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mapping.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.prostate.base.dao.write.AnamnesisAllergyDrugWriteMapper">
+
+	<select id="get" resultType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
+		select `id`,`allergy_drug_name`,`spell_name`,`allergy_drug_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_anamnesis_allergy_drug where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
+		select `id`,`allergy_drug_name`,`spell_name`,`allergy_drug_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_anamnesis_allergy_drug
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="allergyDrugName != null and allergyDrugName != ''"> and allergy_drug_name LIKE CONCAT(CONCAT('%', #{allergyDrugName}), '%')</if>
+
+			<!--<if test="allergyDrugName != null and allergyDrugName != ''"> and allergy_drug_name = #{allergyDrugName} </if>-->
+		  		  <if test="spellName != null and spellName != ''"> and spell_name = #{spellName} </if>
+		  		  <if test="allergyDrugNumber != null and allergyDrugNumber != ''"> and allergy_drug_number = #{allergyDrugNumber} </if>
+		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from base_anamnesis_allergy_drug
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+			 <if test="allergyDrugName != null and allergyDrugName != ''"> and allergy_drug_name LIKE CONCAT(CONCAT('%', #{allergyDrugName}), '%')</if>
+		  		  <if test="spellName != null and spellName != ''"> and spell_name = #{spellName} </if>
+		  		  <if test="allergyDrugNumber != null and allergyDrugNumber != ''"> and allergy_drug_number = #{allergyDrugNumber} </if>
+		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
+		insert into base_anamnesis_allergy_drug
+		(
+			`id`, 
+			`allergy_drug_name`, 
+			`spell_name`, 
+			`allergy_drug_number`, 
+			`order_weight`, 
+			`create_user`, 
+			`create_time`, 
+			`update_user`, 
+			`update_time`, 
+			`delete_user`, 
+			`delete_time`, 
+			`del_flag`
+		)
+		values
+		(
+			#{id}, 
+			#{allergyDrugName}, 
+			#{spellName}, 
+			#{allergyDrugNumber}, 
+			#{orderWeight}, 
+			#{createUser}, 
+			#{createTime}, 
+			#{updateUser}, 
+			#{updateTime}, 
+			#{deleteUser}, 
+			#{deleteTime}, 
+			#{delFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
+		update base_anamnesis_allergy_drug 
+		<set>
+			<if test="allergyDrugName != null">`allergy_drug_name` = #{allergyDrugName}, </if>
+			<if test="spellName != null">`spell_name` = #{spellName}, </if>
+			<if test="allergyDrugNumber != null">`allergy_drug_number` = #{allergyDrugNumber}, </if>
+			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
+			<if test="createUser != null">`create_user` = #{createUser}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="deleteUser != null">`delete_user` = #{deleteUser}, </if>
+			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from base_anamnesis_allergy_drug where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from base_anamnesis_allergy_drug where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

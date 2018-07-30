@@ -1,5 +1,7 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.DigitalRectalReadMapper;
+import com.prostate.base.dao.write.DigitalRectalWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.DigitalRectalDao;
 import com.prostate.base.domain.DigitalRectalDO;
 import com.prostate.base.service.DigitalRectalService;
 
@@ -18,48 +19,51 @@ import com.prostate.base.service.DigitalRectalService;
 
 @Service
 public class DigitalRectalServiceImpl implements DigitalRectalService {
+
 	@Autowired
-	private DigitalRectalDao digitalRectalDao;
-	
+	private DigitalRectalWriteMapper digitalRectalWriteMapper;
+
+	@Autowired
+	private DigitalRectalReadMapper digitalRectalReadMapper;
 	@Override
 	public DigitalRectalDO get(String id){
-		return digitalRectalDao.get(id);
+		return digitalRectalReadMapper.get(id);
 	}
 	
 	@Override
 	public List<DigitalRectalDO> list(Map<String, Object> map){
-		return digitalRectalDao.list(map);
+		return digitalRectalReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return digitalRectalDao.count(map);
+		return digitalRectalReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(DigitalRectalDO digitalRectal){
-		return digitalRectalDao.save(digitalRectal);
+		return digitalRectalWriteMapper.save(digitalRectal);
 	}
 	
 	@Override
 	public int update(DigitalRectalDO digitalRectal){
-		return digitalRectalDao.update(digitalRectal);
+		return digitalRectalWriteMapper.update(digitalRectal);
 	}
 	
 	@Override
 	public int remove(String id){
-		return digitalRectalDao.remove(id);
+		return digitalRectalWriteMapper.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(String[] ids){
-		return digitalRectalDao.batchRemove(ids);
+		return digitalRectalWriteMapper.batchRemove(ids);
 	}
 
 	@Override
 	public Tree<DigitalRectalDO> getTree() {
 		List<Tree<DigitalRectalDO>> trees = new ArrayList<Tree<DigitalRectalDO>>();
-		List<DigitalRectalDO> digitalRectalDOS = digitalRectalDao.list(new HashMap<String,Object>(16));
+		List<DigitalRectalDO> digitalRectalDOS = digitalRectalReadMapper.list(new HashMap<String,Object>(16));
 		for (DigitalRectalDO digitalRectalDO : digitalRectalDOS) {
 			Tree<DigitalRectalDO> tree = new Tree<DigitalRectalDO>();
 			tree.setId(digitalRectalDO.getId().toString());

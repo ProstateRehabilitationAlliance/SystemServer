@@ -1,10 +1,8 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.DistrictsAndCountiesManageDao;
-import com.prostate.base.dao.ScaleManagerDao;
-import com.prostate.base.domain.CityDO;
+import com.prostate.base.dao.read.ScaleManagerReadMapper;
+import com.prostate.base.dao.write.ScaleManagerWriteMapper;
 import com.prostate.base.domain.ScaleDO;
-import com.prostate.base.service.DistrictsAndCountiesManagerService;
 import com.prostate.base.service.ScaleManagerService;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
@@ -23,31 +21,39 @@ import java.util.Map;
  */
 @Service
 public class ScaleManagerServiceImpl implements ScaleManagerService {
+
+
     @Autowired
-    private ScaleManagerDao scaleManagerDao;
+    private ScaleManagerWriteMapper scaleManagerWriteMapper;
+
+
+    @Autowired
+    private ScaleManagerReadMapper scaleManagerReadMapper;
+
+
     @Override
     public ScaleDO get(String id) {
-        return scaleManagerDao.get(id);
+        return scaleManagerReadMapper.get(id);
     }
 
     @Override
     public List<ScaleDO> list(Map<String, Object> map) {
-        return scaleManagerDao.list(map);
+        return scaleManagerReadMapper.list(map);
     }
 
     @Override
     public int count(Map<String, Object> map) {
-        return scaleManagerDao.count(map);
+        return scaleManagerReadMapper.count(map);
     }
 
     @Override
     public int save(ScaleDO scaleDO) {
-        return scaleManagerDao.save(scaleDO);
+        return scaleManagerWriteMapper.save(scaleDO);
     }
 
     @Override
     public int update(ScaleDO scaleDO) {
-        return scaleManagerDao.update(scaleDO);
+        return scaleManagerWriteMapper.update(scaleDO);
     }
 
     @Override
@@ -63,7 +69,7 @@ public class ScaleManagerServiceImpl implements ScaleManagerService {
     @Override
     public Tree<ScaleDO> getTree() {
         List<Tree<ScaleDO>> trees = new ArrayList<Tree<ScaleDO>>();
-        List<ScaleDO> scaleDOS = scaleManagerDao.getTree(new HashMap<String, Object>(16));
+        List<ScaleDO> scaleDOS = scaleManagerReadMapper.getTree(new HashMap<String, Object>(16));
         for (ScaleDO scaleDO:scaleDOS){
             Tree<ScaleDO> tree = new Tree<ScaleDO>();
             tree.setId(scaleDO.getId());
@@ -87,7 +93,7 @@ public class ScaleManagerServiceImpl implements ScaleManagerService {
 
     @Override
     public List<ScaleDO> listByName(String name) {
-        return scaleManagerDao.listByName(name);
+        return scaleManagerReadMapper.listByName(name);
     }
 }
 

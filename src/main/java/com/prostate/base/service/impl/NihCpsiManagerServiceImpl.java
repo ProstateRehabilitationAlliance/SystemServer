@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.NihCpsiDao;
-import com.prostate.base.dao.NihCpsiManagerDao;
+import com.prostate.base.dao.read.NihCpsiManagerReadMapper;
+import com.prostate.base.dao.write.NihCpsiManagerWriteMapper;
 import com.prostate.base.domain.NihCpsiDO;
 import com.prostate.base.service.NihCpsiManagerService;
 import com.prostate.common.domain.Tree;
@@ -21,31 +21,36 @@ import java.util.Map;
  */
 @Service
 public class NihCpsiManagerServiceImpl implements NihCpsiManagerService {
+
     @Autowired
-    private NihCpsiManagerDao nihCpsiManagerDao;
+    private NihCpsiManagerWriteMapper nihCpsiManagerWriteMapper;
+
+
+    @Autowired
+    private NihCpsiManagerReadMapper nihCpsiManagerReadMapper;
     @Override
     public NihCpsiDO get(String id) {
-        return nihCpsiManagerDao.get(id);
+        return nihCpsiManagerReadMapper.get(id);
     }
 
     @Override
     public List<NihCpsiDO> list(Map<String, Object> map) {
-        return nihCpsiManagerDao.list(map);
+        return nihCpsiManagerReadMapper.list(map);
     }
 
     @Override
     public int count(Map<String, Object> map) {
-        return nihCpsiManagerDao.count(map);
+        return nihCpsiManagerReadMapper.count(map);
     }
 
     @Override
     public int save(NihCpsiDO scaleDO) {
-        return nihCpsiManagerDao.save(scaleDO);
+        return nihCpsiManagerWriteMapper.save(scaleDO);
     }
 
     @Override
     public int update(NihCpsiDO scaleDO) {
-        return nihCpsiManagerDao.update(scaleDO);
+        return nihCpsiManagerWriteMapper.update(scaleDO);
     }
 
     @Override
@@ -61,7 +66,7 @@ public class NihCpsiManagerServiceImpl implements NihCpsiManagerService {
     @Override
     public Tree<NihCpsiDO> getTree() {
         List<Tree<NihCpsiDO>> trees = new ArrayList<Tree<NihCpsiDO>>();
-        List<NihCpsiDO> nihCpsiDOS = nihCpsiManagerDao.getTree(new HashMap<String, Object>(16));
+        List<NihCpsiDO> nihCpsiDOS = nihCpsiManagerReadMapper.getTree(new HashMap<String, Object>(16));
         for (NihCpsiDO nihCpsiDO:nihCpsiDOS){
             Tree<NihCpsiDO> tree = new Tree<NihCpsiDO>();
             tree.setId(nihCpsiDO.getId());
@@ -85,6 +90,6 @@ public class NihCpsiManagerServiceImpl implements NihCpsiManagerService {
 
     @Override
     public List<NihCpsiDO> listByName(String name) {
-        return nihCpsiManagerDao.listByName(name);
+        return nihCpsiManagerReadMapper.listByName(name);
     }
 }

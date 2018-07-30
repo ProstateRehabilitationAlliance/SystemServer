@@ -1,5 +1,7 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.ExpressedProstaticSecretionReadMapper;
+import com.prostate.base.dao.write.ExpressedProstaticSecretionWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.ExpressedProstaticSecretionDao;
 import com.prostate.base.domain.ExpressedProstaticSecretionDO;
 import com.prostate.base.service.ExpressedProstaticSecretionService;
 
@@ -19,36 +20,39 @@ import com.prostate.base.service.ExpressedProstaticSecretionService;
 @Service
 public class ExpressedProstaticSecretionServiceImpl implements ExpressedProstaticSecretionService {
 	@Autowired
-	private ExpressedProstaticSecretionDao expressedProstaticSecretionDao;
-	
+	private ExpressedProstaticSecretionWriteMapper expressedProstaticSecretionWriteMapper;
+	@Autowired
+	private ExpressedProstaticSecretionReadMapper expressedProstaticSecretionReadMapper;
+
+
 	@Override
 	public ExpressedProstaticSecretionDO get(String id){
-		return expressedProstaticSecretionDao.get(id);
+		return expressedProstaticSecretionReadMapper.get(id);
 	}
 	
 	@Override
 	public List<ExpressedProstaticSecretionDO> list(Map<String, Object> map){
-		return expressedProstaticSecretionDao.list(map);
+		return expressedProstaticSecretionReadMapper.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return expressedProstaticSecretionDao.count(map);
+		return expressedProstaticSecretionReadMapper.count(map);
 	}
 	
 	@Override
 	public int save(ExpressedProstaticSecretionDO expressedProstaticSecretion){
-		return expressedProstaticSecretionDao.save(expressedProstaticSecretion);
+		return expressedProstaticSecretionWriteMapper.save(expressedProstaticSecretion);
 	}
 	
 	@Override
 	public int update(ExpressedProstaticSecretionDO expressedProstaticSecretion){
-		return expressedProstaticSecretionDao.update(expressedProstaticSecretion);
+		return expressedProstaticSecretionWriteMapper.update(expressedProstaticSecretion);
 	}
 	
 	@Override
 	public int remove(String id){
-		return expressedProstaticSecretionDao.remove(id);
+		return expressedProstaticSecretionWriteMapper.remove(id);
 	}
 
 	@Override
@@ -57,7 +61,7 @@ public class ExpressedProstaticSecretionServiceImpl implements ExpressedProstati
 		List<Tree<ExpressedProstaticSecretionDO>> trees = new ArrayList<Tree<ExpressedProstaticSecretionDO>>();
 		//查询所有的信息存入列表中。
 		List<ExpressedProstaticSecretionDO> bloodRoutineDOS =
-				expressedProstaticSecretionDao.list(new HashMap<String,Object>(16));
+				expressedProstaticSecretionReadMapper.list(new HashMap<String,Object>(16));
 		for (ExpressedProstaticSecretionDO bloodRoutineDO : bloodRoutineDOS) {
 			//声明树形结构
 			Tree<ExpressedProstaticSecretionDO> tree = new Tree<ExpressedProstaticSecretionDO>();
@@ -81,7 +85,7 @@ public class ExpressedProstaticSecretionServiceImpl implements ExpressedProstati
 
 	@Override
 	public int batchRemove(String[] ids){
-		return expressedProstaticSecretionDao.batchRemove(ids);
+		return expressedProstaticSecretionWriteMapper.batchRemove(ids);
 	}
 	
 }

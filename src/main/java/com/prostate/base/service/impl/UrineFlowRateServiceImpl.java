@@ -1,5 +1,7 @@
 package com.prostate.base.service.impl;
 
+import com.prostate.base.dao.read.UrineFlowRateReadMapper;
+import com.prostate.base.dao.write.UrineFlowRateWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.dao.UrineFlowRateDao;
 import com.prostate.base.domain.UrineFlowRateDO;
 import com.prostate.base.service.UrineFlowRateService;
 
@@ -18,17 +19,21 @@ import com.prostate.base.service.UrineFlowRateService;
 
 @Service
 public class UrineFlowRateServiceImpl implements UrineFlowRateService {
-	@Autowired
-	private UrineFlowRateDao urineFlowRateDao;
 
+	@Autowired
+	private UrineFlowRateWriteMapper urineFlowRateWriteMapper;
+
+	@Autowired
+	private UrineFlowRateReadMapper urineFlowRateReadMapper;
+	
 	@Override
 	public UrineFlowRateDO get(String id) {
-		return urineFlowRateDao.get(id);
+		return urineFlowRateReadMapper.get(id);
 	}
 
 	@Override
 	public List<UrineFlowRateDO> list(Map<String, Object> map) {
-		return urineFlowRateDao.list(map);
+		return urineFlowRateReadMapper.list(map);
 	}
 
 	@Override
@@ -38,12 +43,12 @@ public class UrineFlowRateServiceImpl implements UrineFlowRateService {
 
 	@Override
 	public int save(UrineFlowRateDO urineFlowRateDO) {
-		return urineFlowRateDao.save(urineFlowRateDO);
+		return urineFlowRateWriteMapper.save(urineFlowRateDO);
 	}
 
 	@Override
 	public int update(UrineFlowRateDO urineFlowRateDO) {
-		return urineFlowRateDao.update(urineFlowRateDO);
+		return urineFlowRateWriteMapper.update(urineFlowRateDO);
 	}
 
 	@Override
@@ -69,7 +74,7 @@ public class UrineFlowRateServiceImpl implements UrineFlowRateService {
 	@Override
 	public Tree<UrineFlowRateDO> getTree() {
 		List<Tree<UrineFlowRateDO>> trees = new ArrayList<Tree<UrineFlowRateDO>>();
-		List<UrineFlowRateDO> urineFlowRateDOS = urineFlowRateDao.getTree(new HashMap<String,Object>(16));
+		List<UrineFlowRateDO> urineFlowRateDOS = urineFlowRateReadMapper.getTree(new HashMap<String,Object>(16));
 
 		for (UrineFlowRateDO urineFlowRateDO : urineFlowRateDOS) {
 			Tree<UrineFlowRateDO> tree = new Tree<UrineFlowRateDO>();
