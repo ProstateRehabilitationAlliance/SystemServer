@@ -1,23 +1,24 @@
 package com.prostate.system.service.impl;
 
+import com.prostate.system.mapper.read.RoleMenuReadMapper;
+import com.prostate.system.mapper.read.RoleReadMapper;
+import com.prostate.system.mapper.read.UserReadMapper;
+import com.prostate.system.mapper.read.UserRoleReadMapper;
+import com.prostate.system.mapper.write.RoleMenuWriteMapper;
+import com.prostate.system.mapper.write.RoleWriteMapper;
+import com.prostate.system.mapper.write.UserRoleWriteMapper;
+import com.prostate.system.mapper.write.UserWriteMapper;
+import com.prostate.system.domain.RoleDO;
+import com.prostate.system.domain.RoleMenuDO;
+import com.prostate.system.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.prostate.system.dao.RoleDao;
-import com.prostate.system.dao.RoleMenuDao;
-import com.prostate.system.dao.UserDao;
-import com.prostate.system.dao.UserRoleDao;
-import com.prostate.system.domain.RoleDO;
-import com.prostate.system.domain.RoleMenuDO;
-import com.prostate.system.service.RoleService;
 
 
 @Service
@@ -27,26 +28,42 @@ public class RoleServiceImpl implements RoleService {
 
     public static final String DEMO_CACHE_NAME = "role";
 
+
     @Autowired
-    RoleDao roleMapper;
+    private RoleWriteMapper roleWriteMapper;
+
     @Autowired
-    RoleMenuDao roleMenuMapper;
+    private RoleReadMapper roleReadMapper;
+
     @Autowired
-    UserDao userMapper;
+    private RoleMenuWriteMapper roleMenuWriteMapper;
+
     @Autowired
-    UserRoleDao userRoleMapper;
+    private RoleMenuReadMapper roleMenuReadMapper;
+
+    @Autowired
+    private UserWriteMapper userWriteMapper;
+
+    @Autowired
+    private UserReadMapper userReadMapper;
+
+    @Autowired
+    private UserRoleWriteMapper userRoleWriteMapper;
+
+    @Autowired
+    private UserRoleReadMapper userRoleReadMapper;
 
     @Override
     public List<RoleDO> list() {
-        List<RoleDO> roles = roleMapper.list(new HashMap<>(16));
+        List<RoleDO> roles = roleReadMapper.list(new HashMap<>(16));
         return roles;
     }
 
 
     @Override
     public List<RoleDO> list(Long userId) {
-        List<Long> rolesIds = userRoleMapper.listRoleId(userId);
-        List<RoleDO> roles = roleMapper.list(new HashMap<>(16));
+        List<Long> rolesIds = userRoleReadMapper.listRoleId(userId);
+        List<RoleDO> roles = roleReadMapper.list(new HashMap<>(16));
         for (RoleDO roleDO : roles) {
             roleDO.setRoleSign("false");
             for (Long roleId : rolesIds) {
@@ -58,10 +75,11 @@ public class RoleServiceImpl implements RoleService {
         }
         return roles;
     }
+
     @Transactional
     @Override
     public int save(RoleDO role) {
-        int count = roleMapper.save(role);
+        int count = roleWriteMapper.save(role);
         List<Long> menuIds = role.getMenuIds();
         Long roleId = role.getRoleId();
         List<RoleMenuDO> rms = new ArrayList<>();
@@ -71,9 +89,9 @@ public class RoleServiceImpl implements RoleService {
             rmDo.setMenuId(menuId);
             rms.add(rmDo);
         }
-        roleMenuMapper.removeByRoleId(roleId);
+        roleMenuWriteMapper.removeByRoleId(roleId);
         if (rms.size() > 0) {
-            roleMenuMapper.batchSave(rms);
+            roleMenuWriteMapper.batchSave(rms);
         }
         return count;
     }
@@ -81,24 +99,24 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public int remove(Long id) {
-        int count = roleMapper.remove(id);
-        userRoleMapper.removeByRoleId(id);
-        roleMenuMapper.removeByRoleId(id);
+        int count = roleWriteMapper.remove(id);
+        userRoleWriteMapper.removeByRoleId(id);
+        roleMenuWriteMapper.removeByRoleId(id);
         return count;
     }
 
     @Override
     public RoleDO get(Long id) {
-        RoleDO roleDO = roleMapper.get(id);
+        RoleDO roleDO = roleReadMapper.get(id);
         return roleDO;
     }
 
     @Override
     public int update(RoleDO role) {
-        int r = roleMapper.update(role);
+        int r = roleWriteMapper.update(role);
         List<Long> menuIds = role.getMenuIds();
         Long roleId = role.getRoleId();
-        roleMenuMapper.removeByRoleId(roleId);
+        roleMenuWriteMapper.removeByRoleId(roleId);
         List<RoleMenuDO> rms = new ArrayList<>();
         for (Long menuId : menuIds) {
             RoleMenuDO rmDo = new RoleMenuDO();
@@ -107,14 +125,14 @@ public class RoleServiceImpl implements RoleService {
             rms.add(rmDo);
         }
         if (rms.size() > 0) {
-            roleMenuMapper.batchSave(rms);
+            roleMenuWriteMapper.batchSave(rms);
         }
         return r;
     }
 
     @Override
     public int batchremove(Long[] ids) {
-        int r = roleMapper.batchRemove(ids);
+        int r = roleWriteMapper.batchRemove(ids);
         return r;
     }
 

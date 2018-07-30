@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.prostate.common.config.ApplicationContextRegister;
-import com.prostate.system.domain.UserToken;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -17,10 +16,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.prostate.common.utils.ShiroUtils;
-import com.prostate.system.dao.UserDao;
 import com.prostate.system.domain.UserDO;
 import com.prostate.system.service.MenuService;
 
@@ -29,7 +26,7 @@ import com.prostate.system.service.MenuService;
  */
 public class UserRealm extends AuthorizingRealm {
 /*	@Autowired
-	UserDao userMapper;
+	UserWriteMapper userMapper;
 	@Autowired
 	MenuService menuService;*/
 

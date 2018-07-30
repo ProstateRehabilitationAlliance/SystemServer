@@ -1,5 +1,7 @@
 package com.prostate.system.service.impl;
 
+import com.prostate.system.mapper.read.DeptReadMapper;
+import com.prostate.system.mapper.write.DeptWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,6 @@ import java.util.Map;
 
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
-import com.prostate.system.dao.DeptDao01;
 import com.prostate.system.domain.DeptDO;
 import com.prostate.system.service.DeptService01;
 
@@ -19,47 +20,50 @@ import com.prostate.system.service.DeptService01;
 @Service
 public class DeptServiceImpl01 implements DeptService01 {
 	@Autowired
-	private DeptDao01 sysDeptMapper;
+	private DeptWriteMapper deptWriteMapper;
+
+	@Autowired
+	private DeptReadMapper deptReadMapper;
 
 	@Override
 	public DeptDO get(Long deptId){
-		return sysDeptMapper.get(deptId);
+		return deptReadMapper.get(deptId);
 	}
 
 	@Override
 	public List<DeptDO> list(Map<String, Object> map){
-		return sysDeptMapper.list(map);
+		return deptReadMapper.list(map);
 	}
 
 	@Override
 	public int count(Map<String, Object> map){
-		return sysDeptMapper.count(map);
+		return deptReadMapper.count(map);
 	}
 
 	@Override
 	public int save(DeptDO sysDept){
-		return sysDeptMapper.save(sysDept);
+		return deptWriteMapper.save(sysDept);
 	}
 
 	@Override
 	public int update(DeptDO sysDept){
-		return sysDeptMapper.update(sysDept);
+		return deptWriteMapper.update(sysDept);
 	}
 
 	@Override
 	public int remove(Long deptId){
-		return sysDeptMapper.remove(deptId);
+		return deptWriteMapper.remove(deptId);
 	}
 
 	@Override
 	public int batchRemove(Long[] deptIds){
-		return sysDeptMapper.batchRemove(deptIds);
+		return deptWriteMapper.batchRemove(deptIds);
 	}
 
 	@Override
 	public Tree<DeptDO> getTree() {
 		List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
-		List<DeptDO> sysDepts = sysDeptMapper.list(new HashMap<String,Object>(16));
+		List<DeptDO> sysDepts = deptReadMapper.list(new HashMap<String,Object>(16));
 
 		for (DeptDO sysDept : sysDepts) {
 			Tree<DeptDO> tree = new Tree<DeptDO>();
@@ -80,7 +84,7 @@ public class DeptServiceImpl01 implements DeptService01 {
 	public boolean checkDeptHasUser(Long deptId) {
 		// TODO Auto-generated method stub
 		//查询部门以及此部门的下级部门
-		int result = sysDeptMapper.getDeptUserNumber(deptId);
+		int result = deptReadMapper.getDeptUserNumber(deptId);
 		return result==0?true:false;
 	}
 

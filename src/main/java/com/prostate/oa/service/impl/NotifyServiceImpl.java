@@ -2,8 +2,6 @@ package com.prostate.oa.service.impl;
 
 import com.prostate.system.domain.UserDO;
 import com.prostate.system.service.SessionService;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,6 @@ import com.prostate.oa.domain.NotifyDO;
 import com.prostate.oa.domain.NotifyDTO;
 import com.prostate.oa.domain.NotifyRecordDO;
 import com.prostate.oa.service.NotifyService;
-import com.prostate.system.dao.UserDao;
 
 @Service
 public class NotifyServiceImpl implements NotifyService {

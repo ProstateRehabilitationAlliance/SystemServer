@@ -3,8 +3,10 @@ package com.prostate.system.service.impl;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import com.prostate.common.utils.ShiroUtils;
-import com.prostate.system.dao.MenuDao;
-import com.prostate.system.dao.RoleMenuDao;
+import com.prostate.system.mapper.read.MenuReadMapper;
+import com.prostate.system.mapper.read.RoleMenuReadMapper;
+import com.prostate.system.mapper.write.MenuWriteMapper;
+import com.prostate.system.mapper.write.RoleMenuWriteMapper;
 import com.prostate.system.domain.MenuDO;
 import com.prostate.system.domain.RoleMenuDO;
 import com.prostate.system.service.MenuService;
@@ -20,9 +22,14 @@ import java.util.*;
 @Transactional(readOnly = true,rollbackFor = Exception.class)
 public class MenuServiceImpl implements MenuService {
 	@Autowired
-	MenuDao menuMapper;
+	private MenuWriteMapper menuWriteMapper;
 	@Autowired
-	RoleMenuDao roleMenuMapper;
+	private MenuReadMapper menuReadMapper;
+
+	@Autowired
+	private RoleMenuWriteMapper roleMenuWriteMapper;
+	@Autowired
+	private RoleMenuReadMapper roleMenuReadMapper;
 
 	/**
 	 * @param
@@ -32,7 +39,7 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public Tree<MenuDO> getSysMenuTree(Long id) {
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.listMenuByUserId(id);
+		List<MenuDO> menuDOs = menuReadMapper.listMenuByUserId(id);
 		for (MenuDO sysMenuDO : menuDOs) {
 			Tree<MenuDO> tree = new Tree<MenuDO>();
 			tree.setId(sysMenuDO.getMenuId().toString());
@@ -51,48 +58,48 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public List<MenuDO> list(Map<String, Object> params) {
-		List<MenuDO> menus = menuMapper.list(params);
+		List<MenuDO> menus = menuReadMapper.list(params);
 		return menus;
 	}
 
 	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	@Override
 	public int remove(Long id) {
-		int result = menuMapper.remove(id);
+		int result = menuWriteMapper.remove(id);
 		RoleMenuDO roleMenuDO =new RoleMenuDO();
 		roleMenuDO.setRoleId(ShiroUtils.getUserId());
 		roleMenuDO.setMenuId(id);
-		roleMenuMapper.save(roleMenuDO);
+		roleMenuWriteMapper.save(roleMenuDO);
 		return result;
 	}
 	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	@Override
 	public int save(MenuDO menu) {
-		int r = menuMapper.save(menu);
+		int r = menuWriteMapper.save(menu);
 		RoleMenuDO roleMenuDO =new RoleMenuDO();
 		roleMenuDO.setRoleId(ShiroUtils.getUserId());
 		roleMenuDO.setMenuId(menu.getMenuId());
-		roleMenuMapper.save(roleMenuDO);
+		roleMenuWriteMapper.save(roleMenuDO);
 		return r;
 	}
 
 	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	@Override
 	public int update(MenuDO menu) {
-		int r = menuMapper.update(menu);
+		int r = menuWriteMapper.update(menu);
 		return r;
 	}
 
 	@Override
 	public MenuDO get(Long id) {
-		MenuDO menuDO = menuMapper.get(id);
+		MenuDO menuDO = menuReadMapper.get(id);
 		return menuDO;
 	}
 
 	@Override
 	public Tree<MenuDO> getTree() {
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.list(new HashMap<>(16));
+		List<MenuDO> menuDOs = menuReadMapper.list(new HashMap<>(16));
 		for (MenuDO sysMenuDO : menuDOs) {
 			Tree<MenuDO> tree = new Tree<MenuDO>();
 			tree.setId(sysMenuDO.getMenuId().toString());
@@ -108,8 +115,8 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public Tree<MenuDO> getTree(Long id) {
 		// 根据roleId查询权限
-		List<MenuDO> menus = menuMapper.list(new HashMap<String, Object>(16));
-		List<Long> menuIds = roleMenuMapper.listMenuIdByRoleId(id);
+		List<MenuDO> menus = menuReadMapper.list(new HashMap<String, Object>(16));
+		List<Long> menuIds = roleMenuReadMapper.listMenuIdByRoleId(id);
 		List<Long> temp = menuIds;
 		for (MenuDO menu : menus) {
 			if (temp.contains(menu.getParentId())) {
@@ -117,7 +124,7 @@ public class MenuServiceImpl implements MenuService {
 			}
 		}
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.list(new HashMap<String, Object>(16));
+		List<MenuDO> menuDOs = menuReadMapper.list(new HashMap<String, Object>(16));
 		for (MenuDO sysMenuDO : menuDOs) {
 			Tree<MenuDO> tree = new Tree<MenuDO>();
 			tree.setId(sysMenuDO.getMenuId().toString());
@@ -140,7 +147,7 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public Set<String> listPerms(Long userId) {
-		List<String> perms = menuMapper.listUserPerms(userId);
+		List<String> perms = menuReadMapper.listUserPerms(userId);
 		Set<String> permsSet = new HashSet<>();
 		for (String perm : perms) {
 			if (StringUtils.isNotBlank(perm)) {
@@ -153,7 +160,7 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public List<Tree<MenuDO>> listMenuTree(Long id) {
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.listMenuByUserId(id);
+		List<MenuDO> menuDOs = menuReadMapper.listMenuByUserId(id);
 		for (MenuDO sysMenuDO : menuDOs) {
 			Tree<MenuDO> tree = new Tree<MenuDO>();
 			tree.setId(sysMenuDO.getMenuId().toString());

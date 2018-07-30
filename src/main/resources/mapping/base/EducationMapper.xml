@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mapping.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.prostate.base.dao.EducationDao">
+
+	<!--根据id查询信息-->
+	<select id="get" resultType="com.prostate.base.domain.EducationDO">
+		select `id`,`education_name`,`education_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
+			from base_education where id = #{value} AND del_flag = '0'
+	</select>
+
+<!--根据名称查询数据-->
+	<select id="getByName" resultType="com.prostate.base.domain.EducationDO">
+		select `id`,`education_name`,`education_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
+		from base_education where education_name = #{value} AND del_flag = '0'
+	</select>
+
+	<!--根据编号查询数据-->
+	<select id="getByNumber" resultType="com.prostate.base.domain.EducationDO">
+		select `id`,`education_name`,`education_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
+		from base_education where education_number = #{value} AND del_flag = '0'
+	</select>
+
+	<select id="list" resultType="com.prostate.base.domain.EducationDO">
+		select `id`,`education_name`,`education_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_education
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="educationName != null and educationName != ''"> and education_name LIKE CONCAT(CONCAT('%', #{educationName}), '%')</if>
+
+			<!--<if test="educationName != null and educationName != ''"> and education_name = #{educationName} </if>-->
+		  		  <if test="educationNumber != null and educationNumber != ''"> and education_number = #{educationNumber} </if>
+		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
+		  		  and del_flag = '0'
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by order_weight
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from base_education
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+			 <if test="educationName != null and educationName != ''"> and education_name LIKE CONCAT(CONCAT('%', #{educationName}), '%')</if>
+		  		  <if test="educationNumber != null and educationNumber != ''"> and education_number = #{educationNumber} </if>
+		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
+		  		   and del_flag = '0'
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.prostate.base.domain.EducationDO">
+		<selectKey keyProperty="id" resultType="string" order="BEFORE">
+			select replace(uuid(), '-', '') as id from dual
+		</selectKey>
+		insert into base_education
+		(
+			`id`, 
+			`education_name`, 
+			`education_number`, 
+			`order_weight`, 
+			`create_user`, 
+			`create_time`, 
+			`update_user`, 
+			`update_time`, 
+			`delete_user`, 
+			`delete_time`, 
+			`del_flag`
+		)
+		values
+		(
+			#{id}, 
+			#{educationName}, 
+			#{educationNumber}, 
+			#{orderWeight}, 
+			#{createUser}, 
+			#{createTime}, 
+			#{updateUser}, 
+			#{updateTime}, 
+			#{deleteUser}, 
+			#{deleteTime}, 
+			#{delFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.prostate.base.domain.EducationDO">
+		update base_education 
+		<set>
+			<if test="educationName != null">`education_name` = #{educationName}, </if>
+			<if test="educationNumber != null">`education_number` = #{educationNumber}, </if>
+			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
+			<if test="createUser != null">`create_user` = #{createUser}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="deleteUser != null">`delete_user` = #{deleteUser}, </if>
+			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from base_education where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from base_education where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

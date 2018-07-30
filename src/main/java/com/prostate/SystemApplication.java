@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @ServletComponentScan
-@MapperScan("com.prostate.*.dao")
+@MapperScan("com.prostate.*.mapper")
 @SpringBootApplication
 @EnableCaching
 public class SystemApplication {
