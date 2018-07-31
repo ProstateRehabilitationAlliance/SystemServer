@@ -3,12 +3,19 @@
 
 <mapper namespace="com.prostate.blog.dao.ContentDao">
 
+	<sql id="Base_column_list">
+		`cid` AS cid,`title` AS title,`slug` AS slug,`created` AS created,`modified` AS modified,`content` AS content,
+		`type` AS type,`tags` AS tags,`categories` AS categories,`hits` AS hits,`comments_num` AS commentsNum,
+		`allow_comment` AS allowComment,`allow_ping` AS allowPing,`allow_feed` AS allowFeed,`status` AS status,
+		`author` AS author,`gtm_create` AS gtmCreate,`gtm_modified`  AS gtmModified
+	</sql>
+
 	<select id="get" resultType="com.prostate.blog.domain.ContentDO">
-		select `cid`,`title`,`slug`,`created`,`modified`,`content`,`type`,`tags`,`categories`,`hits`,`comments_num`,`allow_comment`,`allow_ping`,`allow_feed`,`status`,`author`,`gtm_create`,`gtm_modified` from blog_content where cid = #{value}
+		select <include refid="Base_column_list"/> from blog_content where cid = #{value}
 	</select>
 
 	<select id="list" resultType="com.prostate.blog.domain.ContentDO">
-		select `cid`,`title`,`slug`,`created`,`modified`,`content`,`type`,`tags`,`categories`,`hits`,`comments_num`,`allow_comment`,`allow_ping`,`allow_feed`,`status`,`author`,`gtm_create`,`gtm_modified` from blog_content
+		select <include refid="Base_column_list"/> from blog_content
         <where>  
 		  		  <if test="cid != null and cid != ''"> and cid = #{cid} </if>
 		  		  <if test="title != null and title != ''"> and title = #{title} </if>
