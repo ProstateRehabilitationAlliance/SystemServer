@@ -20,21 +20,6 @@ public interface UserRoleReadMapper {
 
 	int count(Map<String, Object> map);
 
-	int save(UserRoleDO userRole);
-
-	int update(UserRoleDO userRole);
-
-	int remove(Long id);
-
-	int batchRemove(Long[] ids);
-
 	List<Long> listRoleId(Long userId);
 
-	int removeByUserId(Long userId);
-
-	int removeByRoleId(Long roleId);
-
-	int batchSave(List<UserRoleDO> list);
-
-	int batchRemoveByUserId(Long[] ids);
 }

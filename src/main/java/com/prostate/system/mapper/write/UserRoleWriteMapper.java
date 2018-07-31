@@ -14,11 +14,6 @@ import java.util.Map;
  */
 public interface UserRoleWriteMapper {
 
-	UserRoleDO get(Long id);
-
-	List<UserRoleDO> list(Map<String, Object> map);
-
-	int count(Map<String, Object> map);
 
 	int save(UserRoleDO userRole);
 
@@ -27,8 +22,6 @@ public interface UserRoleWriteMapper {
 	int remove(Long id);
 
 	int batchRemove(Long[] ids);
-
-	List<Long> listRoleId(Long userId);
 
 	int removeByUserId(Long userId);
 

@@ -18,12 +18,5 @@ public interface RoleReadMapper {
 	List<RoleDO> list(Map<String, Object> map);
 
 	int count(Map<String, Object> map);
-	
-	int save(RoleDO role);
-	
-	int update(RoleDO role);
-	
-	int remove(Long roleId);
-	
-	int batchRemove(Long[] roleIds);
+
 }

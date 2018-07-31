@@ -13,12 +13,6 @@ import java.util.Map;
  */
 public interface RoleWriteMapper {
 
-	RoleDO get(Long roleId);
-	
-	List<RoleDO> list(Map<String, Object> map);
-
-	int count(Map<String, Object> map);
-	
 	int save(RoleDO role);
 	
 	int update(RoleDO role);

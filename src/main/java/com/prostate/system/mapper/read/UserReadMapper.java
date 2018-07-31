@@ -19,14 +19,6 @@ public interface UserReadMapper {
 
 	int count(Map<String, Object> map);
 	
-	int save(UserDO user);
-	
-	int update(UserDO user);
-	
-	int remove(Long userId);
-	
-	int batchRemove(Long[] userIds);
-	
 	Long[] listAllDept();
 
 }

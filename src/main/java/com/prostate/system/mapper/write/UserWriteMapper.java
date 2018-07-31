@@ -13,12 +13,7 @@ import java.util.Map;
  */
 public interface UserWriteMapper {
 
-	UserDO get(Long userId);
-	
-	List<UserDO> list(Map<String, Object> map);
 
-	int count(Map<String, Object> map);
-	
 	int save(UserDO user);
 	
 	int update(UserDO user);
@@ -27,6 +22,4 @@ public interface UserWriteMapper {
 	
 	int batchRemove(Long[] userIds);
 	
-	Long[] listAllDept();
-
 }

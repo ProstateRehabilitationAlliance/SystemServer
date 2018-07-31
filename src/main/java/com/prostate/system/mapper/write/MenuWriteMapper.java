@@ -15,12 +15,6 @@ import java.util.Map;
 @Repository
 public interface MenuWriteMapper {
 
-	MenuDO get(Long menuId);
-	
-	List<MenuDO> list(Map<String, Object> map);
-
-	int count(Map<String, Object> map);
-	
 	int save(MenuDO menu);
 	
 	int update(MenuDO menu);
@@ -29,7 +23,4 @@ public interface MenuWriteMapper {
 	
 	int batchRemove(Long[] menuIds);
 	
-	List<MenuDO> listMenuByUserId(Long id);
-	
-	List<String> listUserPerms(Long id);
 }

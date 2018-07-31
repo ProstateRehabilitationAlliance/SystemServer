@@ -13,12 +13,12 @@ import java.util.Map;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import com.prostate.system.domain.DeptDO;
-import com.prostate.system.service.DeptService01;
+import com.prostate.system.service.DeptService;
 
 
 
 @Service
-public class DeptServiceImpl01 implements DeptService01 {
+public class DeptServiceImpl implements DeptService {
 	@Autowired
 	private DeptWriteMapper deptWriteMapper;
 

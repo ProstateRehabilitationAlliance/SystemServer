@@ -15,10 +15,6 @@ import java.util.Map;
 @Repository
 public interface RoleMenuWriteMapper {
 
-	RoleMenuDO get(Long id);
-	
-	List<RoleMenuDO> list(Map<String, Object> map);
-
 	int count(Map<String, Object> map);
 	
 	int save(RoleMenuDO roleMenu);
@@ -28,9 +24,7 @@ public interface RoleMenuWriteMapper {
 	int remove(Long id);
 	
 	int batchRemove(Long[] ids);
-	
-	List<Long> listMenuIdByRoleId(Long roleId);
-	
+
 	int removeByRoleId(Long roleId);
 
 	int removeByMenuId(Long menuId);
