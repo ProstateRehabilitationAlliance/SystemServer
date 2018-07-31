@@ -1,7 +1,10 @@
 package com.prostate.oa.service.impl;
 
 import com.prostate.system.domain.UserDO;
+import com.prostate.system.mapper.read.UserReadMapper;
+import com.prostate.system.mapper.write.UserWriteMapper;
 import com.prostate.system.service.SessionService;
+import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -26,10 +29,12 @@ import com.prostate.oa.service.NotifyService;
 public class NotifyServiceImpl implements NotifyService {
     @Autowired
     private NotifyDao notifyDao;
+
     @Autowired
     private NotifyRecordDao recordDao;
+
     @Autowired
-    private UserDao userDao;
+    private UserReadMapper userReadMapper;
     @Autowired
     private DictService dictService;
     @Autowired
@@ -117,8 +122,9 @@ public class NotifyServiceImpl implements NotifyService {
     public PageUtils selfList(Map<String, Object> map) {
         List<NotifyDTO> rows = notifyDao.listDTO(map);
         for (NotifyDTO notifyDTO : rows) {
+            System.out.println("--------"+notifyDTO.toString());
             notifyDTO.setBefore(DateUtils.getTimeBefore(notifyDTO.getUpdateDate()));
-            notifyDTO.setSender(userDao.get(notifyDTO.getCreateBy()).getName());
+            notifyDTO.setSender(userReadMapper.get(notifyDTO.getCreateBy()).getName());
         }
         PageUtils page = new PageUtils(rows, notifyDao.countDTO(map));
         return page;

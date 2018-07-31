@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.EducationReadMapper;
-import com.prostate.base.dao.write.EducationWriteMapper;
+import com.prostate.base.mapper.read.EducationReadMapper;
+import com.prostate.base.mapper.write.EducationWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.ScaleManagerReadMapper;
-import com.prostate.base.dao.write.ScaleManagerWriteMapper;
+import com.prostate.base.mapper.read.ScaleManagerReadMapper;
+import com.prostate.base.mapper.write.ScaleManagerWriteMapper;
 import com.prostate.base.domain.ScaleDO;
 import com.prostate.base.service.ScaleManagerService;
 import com.prostate.common.domain.Tree;

@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.DeptIllnessReadMapper;
-import com.prostate.base.dao.write.DeptIllnessWriteMapper;
+import com.prostate.base.mapper.read.DeptIllnessReadMapper;
+import com.prostate.base.mapper.write.DeptIllnessWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

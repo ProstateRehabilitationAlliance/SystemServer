@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mapping.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.prostate.base.dao.read.DoctorTitleReadMapper">
+<mapper namespace="com.prostate.base.mapper.read.DoctorTitleReadMapper">
 
 	<select id="get" resultType="com.prostate.base.domain.DoctorTitleDO">
 		select `id`,`doctor_title_number`,`doctor_title_name`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`

@@ -18,23 +18,23 @@ import javax.sql.DataSource;
  * 读操作数据源
  */
 @Configuration
-@MapperScan(basePackages = "com.prostate.record.mapper.base.read", sqlSessionTemplateRef  = "readPraSqlSessionTemplate")
+@MapperScan(basePackages = "com.prostate.base.mapper.read", sqlSessionTemplateRef  = "readBaseSqlSessionTemplate")
 public class ReadBaseDataSourceConfiguration {
 
-    @Value("${spring.datasource.readPra.driver-class-name}")
+    @Value("${spring.datasource.readBase.driver-class-name}")
     private String driverClassName;
 
-    @Value("${spring.datasource.readPra.url}")
+    @Value("${spring.datasource.readBase.url}")
     private String url;
 
-    @Value("${spring.datasource.readPra.username}")
+    @Value("${spring.datasource.readBase.username}")
     private String username;
 
-    @Value("${spring.datasource.readPra.password}")
+    @Value("${spring.datasource.readBase.password}")
     private String password;
 
 
-    @Bean(name = "readPraDataSource")
+    @Bean(name = "readBaseDataSource")
     public DataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(this.driverClassName);
@@ -44,21 +44,21 @@ public class ReadBaseDataSourceConfiguration {
         return dataSource;
     }
 
-    @Bean(name = "readPraSqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("readPraDataSource") DataSource dataSource) throws Exception {
+    @Bean(name = "readBaseSqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("readBaseDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/pra/read/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/base/read/*.xml"));
         return bean.getObject();
     }
 
-    @Bean(name = "readPraTransactionManager")
-    public DataSourceTransactionManager transactionManager(@Qualifier("readPraDataSource") DataSource dataSource) {
+    @Bean(name = "readBaseTransactionManager")
+    public DataSourceTransactionManager transactionManager(@Qualifier("readBaseDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "readPraSqlSessionTemplate")
-    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("readPraSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    @Bean(name = "readBaseSqlSessionTemplate")
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("readBaseSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

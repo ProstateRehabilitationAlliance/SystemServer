@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mapping.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.prostate.base.dao.read.AnamnesisAllergyDrugReadMapper">
+<mapper namespace="com.prostate.base.mapper.read.AnamnesisAllergyDrugReadMapper">
 
 	<select id="get" resultType="com.prostate.base.domain.AnamnesisAllergyDrugDO">
 		select `id`,`allergy_drug_name`,`spell_name`,`allergy_drug_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_anamnesis_allergy_drug where id = #{value}

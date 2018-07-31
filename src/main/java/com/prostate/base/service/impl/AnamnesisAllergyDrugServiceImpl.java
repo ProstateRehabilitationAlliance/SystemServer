@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.AnamnesisAllergyDrugReadMapper;
-import com.prostate.base.dao.write.AnamnesisAllergyDrugWriteMapper;
+import com.prostate.base.mapper.read.AnamnesisAllergyDrugReadMapper;
+import com.prostate.base.mapper.write.AnamnesisAllergyDrugWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

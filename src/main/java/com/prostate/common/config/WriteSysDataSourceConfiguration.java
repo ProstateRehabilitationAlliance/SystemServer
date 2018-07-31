@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  * 写操作 数据源
  */
 @Configuration
-@MapperScan(basePackages = "com.prostate.system.mapper.write", sqlSessionTemplateRef  = "writeSysSqlSessionTemplate")
+@MapperScan(basePackages = {"com.prostate.system.mapper.write"}, sqlSessionTemplateRef  = "writeSysSqlSessionTemplate")
 public class WriteSysDataSourceConfiguration {
 
     @Value("${spring.datasource.writeSys.driver-class-name}")

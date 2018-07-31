@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.CityReadMapper;
-import com.prostate.base.dao.write.CityWriteMapper;
+import com.prostate.base.mapper.read.CityReadMapper;
+import com.prostate.base.mapper.write.CityWriteMapper;
 import com.prostate.base.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

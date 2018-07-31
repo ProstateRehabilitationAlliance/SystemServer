@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.InquiryReadMapper;
-import com.prostate.base.dao.write.InquiryWriteMapper;
+import com.prostate.base.mapper.read.InquiryReadMapper;
+import com.prostate.base.mapper.write.InquiryWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

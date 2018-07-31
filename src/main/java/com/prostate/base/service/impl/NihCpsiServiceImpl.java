@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.NihCpsiReadMapper;
-import com.prostate.base.dao.write.NihCpsiWriteMapper;
+import com.prostate.base.mapper.read.NihCpsiReadMapper;
+import com.prostate.base.mapper.write.NihCpsiWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

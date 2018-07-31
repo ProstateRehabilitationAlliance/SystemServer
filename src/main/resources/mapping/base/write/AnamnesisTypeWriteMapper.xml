@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mapping.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.prostate.base.dao.write.AnamnesisTypeWriteMapper">
+<mapper namespace="com.prostate.base.mapper.write.AnamnesisTypeWriteMapper">
 
 	<select id="get" resultType="com.prostate.base.domain.AnamnesisTypeDO">
 		select `id`,`anamnesis_type_name`,`anamnesis_type_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`from base_anamnesis_type where id = #{value}

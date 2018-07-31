@@ -44,6 +44,7 @@ public class LoginController extends BaseController {
 	@GetMapping({ "/index" })
 	String index(Model model) {
 		List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
+		getUser().toString();
 		model.addAttribute("menus", menus);
 		model.addAttribute("name", getUser().getName());
 		FileDO fileDO = fileService.get(getUser().getPicId());

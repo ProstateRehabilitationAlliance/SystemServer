@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.prostate.common.config.ApplicationContextRegister;
+import com.prostate.system.mapper.read.UserReadMapper;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -20,15 +21,12 @@ import org.apache.shiro.subject.PrincipalCollection;
 import com.prostate.common.utils.ShiroUtils;
 import com.prostate.system.domain.UserDO;
 import com.prostate.system.service.MenuService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 自定义realm 安全的数据库
  */
 public class UserRealm extends AuthorizingRealm {
-/*	@Autowired
-	UserWriteMapper userMapper;
-	@Autowired
-	MenuService menuService;*/
 
 	/**
 	 *
@@ -52,10 +50,9 @@ public class UserRealm extends AuthorizingRealm {
 		map.put("username", username);
 		String password = new String((char[]) token.getCredentials());
 
-		UserDao userMapper = ApplicationContextRegister.getBean(UserDao.class);
+		UserReadMapper userReadMapper = ApplicationContextRegister.getBean(UserReadMapper.class);
 		// 查询用户信息
-		UserDO user = userMapper.list(map).get(0);
-
+		UserDO user = userReadMapper.list(map).get(0);
 		// 账号不存在
 		if (user == null) {
 			throw new UnknownAccountException("账号或密码不正确");

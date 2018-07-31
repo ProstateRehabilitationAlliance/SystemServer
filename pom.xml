@@ -219,7 +219,12 @@
             <artifactId>jsoup</artifactId>
             <version>1.9.2</version>
         </dependency>
-
+        <!--logback 注解支持-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+        </dependency>
         <!--war包部署需要-->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->

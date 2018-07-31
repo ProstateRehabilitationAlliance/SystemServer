@@ -162,6 +162,7 @@ public class MenuServiceImpl implements MenuService {
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
 		List<MenuDO> menuDOs = menuReadMapper.listMenuByUserId(id);
 		for (MenuDO sysMenuDO : menuDOs) {
+			System.out.println("按钮>>>>>>>>>>>>>>>>>>>>>>"+sysMenuDO.toString());
 			Tree<MenuDO> tree = new Tree<MenuDO>();
 			tree.setId(sysMenuDO.getMenuId().toString());
 			tree.setParentId(sysMenuDO.getParentId().toString());

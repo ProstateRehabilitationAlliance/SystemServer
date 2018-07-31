@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.NihCpsiManagerReadMapper;
-import com.prostate.base.dao.write.NihCpsiManagerWriteMapper;
+import com.prostate.base.mapper.read.NihCpsiManagerReadMapper;
+import com.prostate.base.mapper.write.NihCpsiManagerWriteMapper;
 import com.prostate.base.domain.NihCpsiDO;
 import com.prostate.base.service.NihCpsiManagerService;
 import com.prostate.common.domain.Tree;

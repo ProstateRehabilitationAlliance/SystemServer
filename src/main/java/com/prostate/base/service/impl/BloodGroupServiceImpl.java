@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.BloodGroupReadMapper;
-import com.prostate.base.dao.write.BloodGroupWriteMapper;
+import com.prostate.base.mapper.read.BloodGroupReadMapper;
+import com.prostate.base.mapper.write.BloodGroupWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mapping.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.prostate.base.dao.write.AnamnesisEatingDrugWriteMapper">
+<mapper namespace="com.prostate.base.mapper.write.AnamnesisEatingDrugWriteMapper">
 
 	<select id="get" resultType="com.prostate.base.domain.AnamnesisEatingDrugDO">
 		select `id`,`eating_drug_name`,`spell_name`,`eating_drug_number`,`order_weight`,`create_name`,`create_time`,`update_name`,`update_time`,`delete_name`,`delete_time`,`del_flag`

@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.BloodRoutineReadMapper;
-import com.prostate.base.dao.write.BloodRoutineWriteMapper;
+import com.prostate.base.mapper.read.BloodRoutineReadMapper;
+import com.prostate.base.mapper.write.BloodRoutineWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;

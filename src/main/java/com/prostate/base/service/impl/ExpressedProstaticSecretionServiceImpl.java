@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.ExpressedProstaticSecretionReadMapper;
-import com.prostate.base.dao.write.ExpressedProstaticSecretionWriteMapper;
+import com.prostate.base.mapper.read.ExpressedProstaticSecretionReadMapper;
+import com.prostate.base.mapper.write.ExpressedProstaticSecretionWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;

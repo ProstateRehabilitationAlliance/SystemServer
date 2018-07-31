@@ -54,7 +54,6 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
-//    @Cacheable(key = "#id")
     public UserDO get(Long id) {
         List<Long> roleIds = userRoleReadMapper.listRoleId(id);
         UserDO user = userReadMapper.get(id);

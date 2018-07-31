@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.PatientReadMapper;
-import com.prostate.base.dao.write.PatientWriteMapper;
+import com.prostate.base.mapper.read.PatientReadMapper;
+import com.prostate.base.mapper.write.PatientWriteMapper;
 import com.prostate.base.domain.PatientDO;
 import com.prostate.base.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;

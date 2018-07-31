@@ -3,15 +3,21 @@
 
 <mapper namespace="com.prostate.system.mapper.read.DeptReadMapper">
 
+	<sql id="Base_column_list">
+		dept_id AS deptId,parent_id AS parentId,name,order_num AS orderNum,del_flag AS delFlag
+	</sql>
+
 	<select id="get" resultType="com.prostate.system.domain.DeptDO">
 		select
-		`dept_id`,`parent_id`,`name`,`order_num`,`del_flag` from sys_dept
+		<include refid="Base_column_list"/>
+		from sys_dept
 		where dept_id = #{value}
 	</select>
 
 	<select id="list" resultType="com.prostate.system.domain.DeptDO">
-		select `dept_id`,`parent_id`,`name`,`order_num`,`del_flag` from
-		sys_dept
+		select
+		<include refid="Base_column_list"/>
+		from sys_dept
 		<where>
 			<if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
 			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>

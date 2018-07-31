@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.UrineRoutineReadMapper;
-import com.prostate.base.dao.write.UrineRoutineWriteMapper;
+import com.prostate.base.mapper.read.UrineRoutineReadMapper;
+import com.prostate.base.mapper.write.UrineRoutineWriteMapper;
 import com.prostate.base.domain.UrineRoutineDO;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;

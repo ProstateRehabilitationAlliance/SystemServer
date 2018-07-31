@@ -19,23 +19,23 @@ import javax.sql.DataSource;
  * 读操作数据源
  */
 @Configuration
-@MapperScan(basePackages = "com.prostate.record.mapper.pomr.read", sqlSessionTemplateRef  = "readPomrSqlSessionTemplate")
+@MapperScan(basePackages = "com.prostate.system.mapper.read", sqlSessionTemplateRef  = "readSysSqlSessionTemplate")
 public class ReadSysDataSourceConfiguration {
 
-    @Value("${spring.datasource.readPomr.driver-class-name}")
+    @Value("${spring.datasource.readSys.driver-class-name}")
     private String driverClassName;
 
-    @Value("${spring.datasource.readPomr.url}")
+    @Value("${spring.datasource.readSys.url}")
     private String url;
 
-    @Value("${spring.datasource.readPomr.username}")
+    @Value("${spring.datasource.readSys.username}")
     private String username;
 
-    @Value("${spring.datasource.readPomr.password}")
+    @Value("${spring.datasource.readSys.password}")
     private String password;
 
 
-    @Bean(name = "readPomrDataSource")
+    @Bean(name = "readSysDataSource")
     public DataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(this.driverClassName);
@@ -45,21 +45,21 @@ public class ReadSysDataSourceConfiguration {
         return dataSource;
     }
 
-    @Bean(name = "readPomrSqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("readPomrDataSource") DataSource dataSource) throws Exception {
+    @Bean(name = "readSysSqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("readSysDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/system/read/*.xml"));
         return bean.getObject();
     }
 
-    @Bean(name = "readPomrTransactionManager")
-    public DataSourceTransactionManager transactionManager(@Qualifier("readPomrDataSource") DataSource dataSource) {
+    @Bean(name = "readSysTransactionManager")
+    public DataSourceTransactionManager transactionManager(@Qualifier("readSysDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "readPomrSqlSessionTemplate")
-    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("readPomrSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    @Bean(name = "readSysSqlSessionTemplate")
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("readSysSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

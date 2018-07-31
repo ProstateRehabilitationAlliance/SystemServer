@@ -6,13 +6,43 @@ logging:
     com.prostate: info
 spring:
   datasource:
-    master:
+    readSys:
       url: jdbc:mysql://bj-cdb-0srt3yo9.sql.tencentcdb.com:63422/dev_master_system?characterEncoding=utf-8
       username: root
       password: Qlxlm123456
       driver-class-name: com.mysql.jdbc.Driver
-    writeStatic:
+    readBase:
       url: jdbc:mysql://bj-cdb-0srt3yo9.sql.tencentcdb.com:63422/dev_master_static?characterEncoding=utf-8
+      username: root
+      password: Qlxlm123456
+      driver-class-name: com.mysql.jdbc.Driver
+    writeSys:
+      url: jdbc:mysql://bj-cdb-0srt3yo9.sql.tencentcdb.com:63422/dev_master_system?characterEncoding=utf-8
+      username: root
+      password: Qlxlm123456
+      driver-class-name: com.mysql.jdbc.Driver
+    writeBase:
+      url: jdbc:mysql://bj-cdb-0srt3yo9.sql.tencentcdb.com:63422/dev_master_static?characterEncoding=utf-8
+      username: root
+      password: Qlxlm123456
+      driver-class-name: com.mysql.jdbc.Driver
+    activiti:
+      url: jdbc:mysql://bj-cdb-0srt3yo9.sql.tencentcdb.com:63422/dev_master_system?characterEncoding=utf-8
+      username: root
+      password: Qlxlm123456
+      driver-class-name: com.mysql.jdbc.Driver
+    blog:
+      url: jdbc:mysql://bj-cdb-0srt3yo9.sql.tencentcdb.com:63422/dev_master_system?characterEncoding=utf-8
+      username: root
+      password: Qlxlm123456
+      driver-class-name: com.mysql.jdbc.Driver
+    common:
+      url: jdbc:mysql://bj-cdb-0srt3yo9.sql.tencentcdb.com:63422/dev_master_system?characterEncoding=utf-8
+      username: root
+      password: Qlxlm123456
+      driver-class-name: com.mysql.jdbc.Driver
+    oa:
+      url: jdbc:mysql://bj-cdb-0srt3yo9.sql.tencentcdb.com:63422/dev_master_system?characterEncoding=utf-8
       username: root
       password: Qlxlm123456
       driver-class-name: com.mysql.jdbc.Driver

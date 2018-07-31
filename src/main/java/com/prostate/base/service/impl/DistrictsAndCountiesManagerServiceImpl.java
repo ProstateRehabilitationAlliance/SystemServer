@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.DistrictsAndCountiesManageReadMapper;
-import com.prostate.base.dao.write.DistrictsAndCountiesManageWriteMapper;
+import com.prostate.base.mapper.read.DistrictsAndCountiesManageReadMapper;
+import com.prostate.base.mapper.write.DistrictsAndCountiesManageWriteMapper;
 import com.prostate.base.domain.CityDO;
 import com.prostate.base.service.DistrictsAndCountiesManagerService;
 import com.prostate.common.domain.Tree;

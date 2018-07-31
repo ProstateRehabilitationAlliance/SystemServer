@@ -1,7 +1,7 @@
 package com.prostate.base.service.impl;
 
-import com.prostate.base.dao.read.SpecificAntigenReadMapper;
-import com.prostate.base.dao.write.SpecificAntigenWriteMapper;
+import com.prostate.base.mapper.read.SpecificAntigenReadMapper;
+import com.prostate.base.mapper.write.SpecificAntigenWriteMapper;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
 import org.springframework.beans.factory.annotation.Autowired;
