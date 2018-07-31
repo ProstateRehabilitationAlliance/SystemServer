@@ -2,16 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mapping.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.prostate.common.dao.DictDao">
-
+	<sql id="Base_column_list">
+		`id` AS id,`name` AS name,`value` AS value,`type` AS type,`description` AS description,
+		`sort` AS sort,`parent_id` AS parentId,`create_by` AS createBy,`create_date` AS createDate,
+		`update_by` AS updateBy,`update_date` AS updateDate,`remarks` AS remarks,`del_flag` AS delFlag
+	</sql>
 	<select id="get" resultType="com.prostate.common.domain.DictDO">
 		select
-		`id`,`name`,`value`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
+		<include refid="Base_column_list"/>
 		from sys_dict where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.prostate.common.domain.DictDO">
 		select
-		`id`,`name`,`value`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
+		<include refid="Base_column_list"/>
 		from sys_dict
 		<where>
 			<if test="id != null and id != ''"> and id = #{id} </if>
