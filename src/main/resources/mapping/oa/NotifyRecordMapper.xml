@@ -3,14 +3,18 @@
 
 <mapper namespace="com.prostate.oa.dao.NotifyRecordDao">
 
+	<sql id="Base_column_list">
+		`id` AS id,`notify_id` AS notifyId,`user_id` AS userId,`is_read` AS isRead,`read_date`  AS readDate
+	</sql>
 	<select id="get" resultType="com.prostate.oa.domain.NotifyRecordDO">
 		select
-		`id`,`notify_id`,`user_id`,`is_read`,`read_date` from oa_notify_record
+		<include refid="Base_column_list"/>
+		from oa_notify_record
 		where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.prostate.oa.domain.NotifyRecordDO">
-		select `id`,`notify_id`,`user_id`,`is_read`,`read_date` from
+		select <include refid="Base_column_list"/> from
 		oa_notify_record
 		<where>
 			<if test="id != null and id != ''"> and id = #{id} </if>
