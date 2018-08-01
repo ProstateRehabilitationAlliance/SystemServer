@@ -3,12 +3,22 @@
 
 <mapper namespace="com.prostate.base.mapper.read.InquiryReadMapper">
 
+
+	<sql id="Base_Column_List">
+		id AS  id,
+			lable_name AS  lableName,
+			create_time AS  createTime,
+			create_user AS createUser
+	</sql>
+
+	
+	
 	<select id="get" resultType="com.prostate.base.domain.InquiryDO">
-		select `id`,`lable_name`,`create_time`,`create_user` from lable_inquiry where id = #{value}
+		select <include refid="Base_Column_List" /> from lable_inquiry where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.prostate.base.domain.InquiryDO">
-		select `id`,`lable_name`,`create_time`,`create_user` from lable_inquiry
+		select <include refid="Base_Column_List" /> from lable_inquiry
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="lableName != null and lableName != ''"> and lable_name = #{lableName} </if>
@@ -38,45 +48,6 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.prostate.base.domain.InquiryDO">
-		<selectKey keyProperty="id" resultType="string" order="BEFORE">
-			select replace(uuid(), '-', '') as id from dual
-		</selectKey>
-		insert into lable_inquiry
-		(
-			`id`, 
-			`lable_name`, 
-			`create_time`, 
-			`create_user`
-		)
-		values
-		(
-			#{id}, 
-			#{lableName}, 
-			#{createTime}, 
-			#{createUser}
-		)
-	</insert>
-	 
-	<update id="update" parameterType="com.prostate.base.domain.InquiryDO">
-		update lable_inquiry 
-		<set>
-			<if test="lableName != null">`lable_name` = #{lableName}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="createUser != null">`create_user` = #{createUser}</if>
-		</set>
-		where id = #{id}
-	</update>
 	
-	<delete id="remove">
-		delete from lable_inquiry where id = #{value}
-	</delete>
-	
-	<delete id="batchRemove">
-		delete from lable_inquiry where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
 
 </mapper>

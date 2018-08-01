@@ -19,17 +19,22 @@
 		<result column="del_flag" jdbcType="CHAR" property="delFlag" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, parent_city_id, city_name, city_type,order_weight, create_user, create_time, city_weight,
-		update_user, update_time
+		id AS id, parent_city_id AS parentCityId,
+		 city_name AS cityName, city_type AS cityType,
+		 order_weight AS orderWeight ,create_user AS createUser,
+		 create_time AS createTime, city_weight AS cityWeight,
+		 update_user AS updateUser, update_time AS updateTime,
+		 delete_user AS deleteUser, delete_time AS deleteTime,
+		 del_flag AS  delFlag
 	</sql>
 
 
 	<select id="get" resultType="com.prostate.base.domain.CityDO">
-		select `id`,`parent_city_id`,`city_name`,`city_type`,`order_weight`,`create_user`,`create_time`,`city_weight`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_city where id = #{value}
+		select <include refid="Base_Column_List" /> from base_city where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.prostate.base.domain.CityDO">
-		select `id`,`parent_city_id`,`city_name`,`city_type`,`order_weight`,`create_user`,`create_time`,`city_weight`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_city
+		select <include refid="Base_Column_List" /> from base_city
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
@@ -67,7 +72,7 @@
 	</select>
 
 	<select id="getTree" resultType="com.prostate.base.domain.CityDO">
-		select `id`,`parent_city_id`,`city_name`,`city_type`,`order_weight`,`create_user`,`create_time`,`city_weight`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_city
+		select <include refid="Base_Column_List" /> from base_city
 		<where>
 			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
@@ -116,123 +121,5 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.prostate.base.domain.CityDO">
-		<selectKey keyProperty="id" resultType="string" order="BEFORE">
-			select replace(uuid(), '-', '') as id from dual
-		</selectKey>
-		insert into base_city
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
-			<if test="parentCityId != null">
-				parent_city_id,
-			</if>
-			<if test="cityName != null">
-				city_name,
-			</if>
-			<if test="cityType != null">
-				city_type,
-			</if>
-			<if test="orderWeight != null">
-				order_weight,
-			</if>
-			<if test="createUser != null">
-				create_user,
-			</if>
-			<if test="createTime != null">
-				create_time,
-			</if>
-			<if test="cityWeight != null">
-				city_weight,
-			</if>
-			<if test="updateUser != null">
-				update_user,
-			</if>
-			<if test="updateTime != null">
-				update_time,
-			</if>
-			<if test="deleteUser != null">
-				delete_user,
-			</if>
-			<if test="deleteTime != null">
-				delete_time,
-			</if>
-			<if test="delFlag != null">
-				del_flag,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=VARCHAR},
-			</if>
-			<if test="parentCityId != null">
-				#{parentCityId,jdbcType=VARCHAR},
-			</if>
-			<if test="cityName != null">
-				#{cityName,jdbcType=VARCHAR},
-			</if>
-			<if test="cityType != null">
-				#{cityType,jdbcType=CHAR},
-			</if>
-			<if test="orderWeight != null">
-				#{orderWeight,jdbcType=INTEGER},
-			</if>
-			<if test="createUser != null">
-				#{createUser,jdbcType=VARCHAR},
-			</if>
-			<if test="createTime != null">
-				#{createTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="cityWeight != null">
-				#{cityWeight,jdbcType=INTEGER},
-			</if>
-			<if test="updateUser != null">
-				#{updateUser,jdbcType=VARCHAR},
-			</if>
-			<if test="updateTime != null">
-				#{updateTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="deleteUser != null">
-				#{deleteUser,jdbcType=VARCHAR},
-			</if>
-			<if test="deleteTime != null">
-				#{deleteTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="delFlag != null">
-				#{delFlag,jdbcType=CHAR},
-			</if>
-		</trim>
-	</insert>
-	 
-	<update id="update" parameterType="com.prostate.base.domain.CityDO">
-		update base_city 
-		<set>
-			<if test="parentCityId != null">`parent_city_id` = #{parentCityId}, </if>
-			<if test="cityName != null">`city_name` = #{cityName}, </if>
-			<if test="cityType != null">`city_type` = #{cityType}, </if>
-			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
-			<if test="createUser != null">`create_user` = #{createUser}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="cityWeight != null">`city_weight` = #{cityWeight}, </if>
-			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="deleteUser != null">`delete_user` = #{deleteUser}, </if>
-			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
-			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
-		</set>
-		where id = #{id}
-	</update>
 	
-	<delete id="remove">
-		delete from base_city where id = #{value}
-	</delete>
-	
-	<delete id="batchRemove">
-		delete from base_city where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
-
 </mapper>

@@ -3,23 +3,34 @@
 
 <mapper namespace="com.prostate.base.mapper.read.BloodGroupReadMapper">
 
+	<sql id="Base_Column_List">
+		 id AS id,
+			 blood_group_name AS bloodGroupName,
+			 blood_group_number  AS bloodGroupNumber,
+			 order_weight  AS orderWeight,
+			 create_user  AS createUser,
+			 create_time  AS createTime,
+			 update_user  AS updateUser,
+			 update_time  AS updateTime,
+			 delete_user  AS deleteUser,
+			 delete_time  AS deleteTime,
+			 del_flag  AS delFlag
+	</sql>
+	
 	<select id="get" resultType="com.prostate.base.domain.BloodGroupDO">
-		select `id`,`blood_group_name`,`blood_group_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-			from base_blood_group where id = #{value} AND del_flag = '0'
+		select <include refid="Base_Column_List" />from base_blood_group where id = #{value} AND del_flag = '0'
 	</select>
 
 	<select id="getByName" resultType="com.prostate.base.domain.BloodGroupDO">
-		select `id`,`blood_group_name`,`blood_group_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-			from base_blood_group where blood_group_name = #{value} AND del_flag = '0'
+		select <include refid="Base_Column_List" />from base_blood_group where blood_group_name = #{value} AND del_flag = '0'
 	</select>
 
 	<select id="getByNumBer" resultType="com.prostate.base.domain.BloodGroupDO">
-		select `id`,`blood_group_name`,`blood_group_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-		from base_blood_group where blood_group_number = #{value} AND del_flag = '0'
+		select <include refid="Base_Column_List" /> from base_blood_group where blood_group_number = #{value} AND del_flag = '0'
 	</select>
 
 	<select id="list" resultType="com.prostate.base.domain.BloodGroupDO">
-		select `id`,`blood_group_name`,`blood_group_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_blood_group
+		select <include refid="Base_Column_List" />from base_blood_group
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="bloodGroupName != null and bloodGroupName != ''"> and blood_group_name LIKE CONCAT(CONCAT('%', #{bloodGroupName}), '%')</if>
@@ -66,68 +77,5 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.prostate.base.domain.BloodGroupDO">
-		<selectKey keyProperty="id" resultType="string" order="BEFORE">
-			select replace(uuid(), '-', '') as id from dual
-		</selectKey>
-		insert into base_blood_group
-		(
-			`id`, 
-			`blood_group_name`, 
-			`blood_group_number`, 
-			`order_weight`, 
-			`create_user`, 
-			`create_time`, 
-			`update_user`, 
-			`update_time`, 
-			`delete_user`, 
-			`delete_time`, 
-			`del_flag`
-		)
-		values
-		(
-			#{id}, 
-			#{bloodGroupName}, 
-			#{bloodGroupNumber}, 
-			#{orderWeight}, 
-			#{createUser}, 
-			#{createTime}, 
-			#{updateUser}, 
-			#{updateTime}, 
-			#{deleteUser}, 
-			#{deleteTime}, 
-			#{delFlag}
-		)
-	</insert>
-	 
-	<update id="update" parameterType="com.prostate.base.domain.BloodGroupDO">
-		update base_blood_group
-		<set>
-			<if test="bloodGroupName != null">`blood_group_name` = #{bloodGroupName}, </if>
-			<if test="bloodGroupNumber != null">`blood_group_number` = #{bloodGroupNumber}, </if>
-			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
-			<if test="createUser != null">`create_user` = #{createUser}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="deleteUser != null">`delete_user` = #{deleteUser}, </if>
-			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
-			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
-		</set>
-		where id = #{id}
-	</update>
-
-
-
-	<delete id="remove">
-		delete from base_blood_group where id = #{value}
-	</delete>
-
-	<delete id="batchRemove">
-		delete from base_blood_group where id in
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
-
+	
 </mapper>

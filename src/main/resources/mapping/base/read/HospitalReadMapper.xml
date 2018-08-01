@@ -31,33 +31,51 @@
 					<!--javaType="com.prostate.base.domain.CityDO"></collection>-->
 	<!--</resultMap>-->
 
+
+	<sql id="Base_Column_List">
+			id  AS id,
+			hospital_name  AS hospitalName,
+			hospital_alias  AS hospitalAlias,
+			hospital_inform  AS hospitalInform,
+			hospital_grade  AS hospitalGrade,
+			hospital_weight  AS hospitalWeight,
+			type_id  AS typeId,
+			city_id  AS cityId,
+			activation_flag  AS activationFlag,
+			order_weight  AS orderWeight,
+			create_user  AS createUser,
+			create_time  AS createTime,
+			update_user  AS updateUser,
+			update_time  AS updateTime,
+			delete_user  AS deleteUser,
+			delete_time  AS deleteTime,
+			del_flag AS  delFlag
+	</sql>
+	
+	
+	
 	<select id="get" resultType="com.prostate.base.domain.HospitalDO">
-		select `id`,`hospital_name`,`hospital_number`,`hospital_alias`,`hospital_inform`,`hospital_grade`,`hospital_weight`,`type_id`,`city_id`,`activation_flag`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-			from base_hospital where id = #{value} and del_flag = '0'
+		select <include refid="Base_Column_List" /> from base_hospital where id = #{value} and del_flag = '0'
 	</select>
 
 
 	<select id="getByName" resultType="com.prostate.base.domain.HospitalDO">
-		select `id`,`hospital_name`,`hospital_number`,`hospital_alias`,`hospital_inform`,`hospital_grade`,`hospital_weight`,`type_id`,`city_id`,`activation_flag`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-		from base_hospital where hospital_name = #{value} and del_flag = '0'
+		select <include refid="Base_Column_List" /> from base_hospital where hospital_name = #{value} and del_flag = '0'
 	</select>
 
-	<select id="getByNumber" resultType="com.prostate.base.domain.HospitalDO">
-		select `id`,`hospital_name`,`hospital_number`,`hospital_alias`,`hospital_inform`,`hospital_grade`,`hospital_weight`,`type_id`,`city_id`,`activation_flag`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-		from base_hospital where hospital_number = #{value} and del_flag = '0'
-	</select>
+	<!--<select id="getByNumber" resultType="com.prostate.base.domain.HospitalDO">-->
+		<!--select <include refid="Base_Column_List" /> from base_hospital where hospital_number = #{value} and del_flag = '0'-->
+	<!--</select>-->
 
 
 	<select id="list" resultType="com.prostate.base.domain.HospitalDO">
-		select `id`,`hospital_name`,`hospital_number`,`hospital_alias`,`hospital_inform`,`hospital_grade`,`hospital_weight`,
-		`type_id`,`city_id`,`activation_flag`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,
-		`delete_user`,`delete_time`,`del_flag` from base_hospital
+		select <include refid="Base_Column_List" />  from base_hospital
         <where>
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="hospitalName != null and hospitalName != ''"> and hospital_name LIKE CONCAT(CONCAT('%', #{hospitalName}), '%')</if>
 
 			<!--<if test="hospitalName != null and hospitalName != ''"> and hospital_name = #{hospitalName} </if>-->
-		  		  <if test="hospitalNumber != null and hospitalNumber != ''"> and hospital_number = #{hospitalNumber} </if>
+		  		  <!--<if test="hospitalNumber != null and hospitalNumber != ''"> and hospital_number = #{hospitalNumber} </if>-->
 		  		  <if test="hospitalAlias != null and hospitalAlias != ''"> and hospital_alias = #{hospitalAlias} </if>
 		  		  <if test="hospitalInform != null and hospitalInform != ''"> and hospital_inform = #{hospitalInform} </if>
 		  		  <if test="hospitalGrade != null and hospitalGrade != ''"> and hospital_grade = #{hospitalGrade} </if>
@@ -94,7 +112,7 @@
 			 <if test="hospitalName != null and hospitalName != ''"> and hospital_name LIKE CONCAT(CONCAT('%', #{hospitalName}), '%')</if>
 
 			 <!--<if test="hospitalName != null and hospitalName != ''"> and hospital_name = #{hospitalName} </if>-->
-		  		  <if test="hospitalNumber != null and hospitalNumber != ''"> and hospital_number = #{hospitalNumber} </if>
+		  		  <!--<if test="hospitalNumber != null and hospitalNumber != ''"> and hospital_number = #{hospitalNumber} </if>-->
 		  		  <if test="hospitalAlias != null and hospitalAlias != ''"> and hospital_alias = #{hospitalAlias} </if>
 		  		  <if test="hospitalInform != null and hospitalInform != ''"> and hospital_inform = #{hospitalInform} </if>
 		  		  <if test="hospitalGrade != null and hospitalGrade != ''"> and hospital_grade = #{hospitalGrade} </if>
@@ -113,87 +131,5 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.prostate.base.domain.HospitalDO">
-		<selectKey keyProperty="id" resultType="string" order="BEFORE">
-			select replace(uuid(), '-', '') as id from dual
-		</selectKey>
-		insert into base_hospital
-		(
-			`id`, 
-			`hospital_name`, 
-			`hospital_number`, 
-			`hospital_alias`, 
-			`hospital_inform`, 
-			`hospital_grade`, 
-			`hospital_weight`, 
-			`type_id`, 
-			`city_id`, 
-			`activation_flag`, 
-			`order_weight`, 
-			`create_user`, 
-			`create_time`, 
-			`update_user`, 
-			`update_time`, 
-			`delete_user`, 
-			`delete_time`, 
-			`del_flag`
-		)
-		values
-		(
-			#{id}, 
-			#{hospitalName}, 
-			#{hospitalNumber}, 
-			#{hospitalAlias}, 
-			#{hospitalInform}, 
-			#{hospitalGrade}, 
-			#{hospitalWeight}, 
-			#{typeId}, 
-			#{cityId}, 
-			#{activationFlag}, 
-			#{orderWeight}, 
-			#{createUser}, 
-			#{createTime}, 
-			#{updateUser}, 
-			#{updateTime}, 
-			#{deleteUser}, 
-			#{deleteTime}, 
-			#{delFlag}
-		)
-	</insert>
-	 
-	<update id="update" parameterType="com.prostate.base.domain.HospitalDO">
-		update base_hospital 
-		<set>
-			<if test="hospitalName != null">`hospital_name` = #{hospitalName}, </if>
-			<if test="hospitalNumber != null">`hospital_number` = #{hospitalNumber}, </if>
-			<if test="hospitalAlias != null">`hospital_alias` = #{hospitalAlias}, </if>
-			<if test="hospitalInform != null">`hospital_inform` = #{hospitalInform}, </if>
-			<if test="hospitalGrade != null">`hospital_grade` = #{hospitalGrade}, </if>
-			<if test="hospitalWeight != null">`hospital_weight` = #{hospitalWeight}, </if>
-			<if test="typeId != null">`type_id` = #{typeId}, </if>
-			<if test="cityId != null">`city_id` = #{cityId}, </if>
-			<if test="activationFlag != null">`activation_flag` = #{activationFlag}, </if>
-			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
-			<if test="createUser != null">`create_user` = #{createUser}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="deleteUser != null">`delete_user` = #{deleteUser}, </if>
-			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
-			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
-		</set>
-		where id = #{id}
-	</update>
 	
-	<delete id="remove">
-		delete from base_hospital where id = #{value}
-	</delete>
-	
-	<delete id="batchRemove">
-		delete from base_hospital where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
-
 </mapper>

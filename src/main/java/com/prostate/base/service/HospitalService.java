@@ -18,7 +18,7 @@ public interface HospitalService {
 
 	HospitalDO getByName(String hospitalName);
 
-	HospitalDO getByNumber(String hospitalNumber);
+	//HospitalDO getByNumber(String hospitalNumber);
 	
 	List<HospitalDO> list(Map<String, Object> map);
 	

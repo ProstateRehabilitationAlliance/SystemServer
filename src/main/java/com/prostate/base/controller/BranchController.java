@@ -66,13 +66,6 @@ public class BranchController {
 		return  "base/dept/add";
 	}
 
-//	@GetMapping("/edit/{id}")
-//	@RequiresPermissions("base:dept:edit")
-//	String edit(@PathVariable("id") String id,Model model){
-//		BranchDO dept = branchService.get(id);
-//		model.addAttribute("dept", dept);
-//	    return "base/dept/edit";
-//	}
 
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("base:dept:edit")
@@ -95,12 +88,11 @@ public class BranchController {
 	@RequiresPermissions("base:dept:add")
 	public R save( @Validated(GroupWithoutID.class)BranchDO dept){
 		BranchDO deptByName=  branchService.getByName(dept.getBranchName());
-		BranchDO deptByNumber=  branchService.getByNumber(dept.getBranchNumber());
-		if (deptByName == null && deptByNumber == null){
+		if (deptByName == null ){
 			dept.setCreateUser(ShiroUtils.getUserId().toString());
 			dept.setCreateTime(new Date());
 			dept.setDelFlag("0");
-			if ("0".equalsIgnoreCase(dept.getParentBranchId())){
+			if (dept.getParentBranchId().equalsIgnoreCase("0")){
 				dept.setParentBranchId(null);
 			}
 			if(branchService.save(dept)>0){
@@ -120,11 +112,6 @@ public class BranchController {
 		if ( !deptDO.getBranchName().equalsIgnoreCase(dept.getBranchName())){
 			if (branchService.getByName(dept.getBranchName()) != null){
 				return R.error(20001,"名称重复");
-			}
-		}
-		if ( !deptDO.getBranchNumber().equalsIgnoreCase(dept.getBranchNumber())){
-			if (branchService.getByNumber(dept.getBranchNumber()) != null){
-				return R.error(20001,"编号重复");
 			}
 		}
 		if (dept.getParentBranchId().equalsIgnoreCase("")){
@@ -148,7 +135,6 @@ public class BranchController {
 		deptDO.setDeleteUser(ShiroUtils.getUserId().toString());
 		deptDO.setDeleteTime(new Date());
 		if(branchService.update(deptDO)>0){
-//		if(branchService.remove(id)>0){
 		return R.ok();
 		}
 		return R.error();

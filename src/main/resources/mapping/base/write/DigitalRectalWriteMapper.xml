@@ -3,58 +3,6 @@
 
 <mapper namespace="com.prostate.base.mapper.write.DigitalRectalWriteMapper">
 
-	<select id="get" resultType="com.prostate.base.domain.DigitalRectalDO">
-		select `id`,`parent_id`,`scale_title`,`scale_score`,`scale_type`,`scale_weight`,`order_weight`,`create_user`,`create_time`,`delete_user`,`delete_time`,`del_flag`
-		from scale_digital_rectal where id = #{value} and del_flag = '0'
-	</select>
-
-	<select id="list" resultType="com.prostate.base.domain.DigitalRectalDO">
-		select `id`,`parent_id`,`scale_title`,`scale_score`,`scale_type`,`scale_weight`,`order_weight`,`create_user`,`create_time`,`delete_user`,`delete_time`,`del_flag` from scale_digital_rectal
-        <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
-		  		  <if test="scaleTitle != null and scaleTitle != ''"> and scale_title = #{scaleTitle} </if>
-		  		  <if test="scaleScore != null and scaleScore != ''"> and scale_score = #{scaleScore} </if>
-		  		  <if test="scaleType != null and scaleType != ''"> and scale_type = #{scaleType} </if>
-		  		  <if test="scaleWeight != null and scaleWeight != ''"> and scale_weight = #{scaleWeight} </if>
-		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
-		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
-		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
-		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
-			and del_flag = '0'
-		  		</where>
-        <choose>
-            <when test="sort != null and sort.trim() != ''">
-                order by ${sort} ${order}
-            </when>
-			<otherwise>
-                order by order_weight
-			</otherwise>
-        </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
-	
- 	<select id="count" resultType="int">
-		select count(*) from scale_digital_rectal
-		 <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
-		  		  <if test="scaleTitle != null and scaleTitle != ''"> and scale_title = #{scaleTitle} </if>
-		  		  <if test="scaleScore != null and scaleScore != ''"> and scale_score = #{scaleScore} </if>
-		  		  <if test="scaleType != null and scaleType != ''"> and scale_type = #{scaleType} </if>
-		  		  <if test="scaleWeight != null and scaleWeight != ''"> and scale_weight = #{scaleWeight} </if>
-		  		  <if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
-		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
-		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-		  		  <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
-		  		  <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
-			 and del_flag = '0'
-		  		</where>
-	</select>
-	 
 	<insert id="save" parameterType="com.prostate.base.domain.DigitalRectalDO">
 		<selectKey keyProperty="id" resultType="string" order="BEFORE">
 			select replace(uuid(), '-', '') as id from dual

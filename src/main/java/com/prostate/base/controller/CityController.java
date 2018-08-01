@@ -1,5 +1,6 @@
 package com.prostate.base.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import com.prostate.base.domain.GroupID;
 import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.service.CityService;
 import com.prostate.base.vo.CityVO;
+import com.prostate.common.domain.Tree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -47,13 +49,21 @@ public class CityController {
 	@ResponseBody
 	@GetMapping("/list")
 	//@RequiresPermissions("base:city:city")
-	public PageUtils list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-        Query query = new Query(params);
-		List<CityDO> cityList = cityService.list(query);
-		int total = cityService.count(query);
-		PageUtils pageUtils = new PageUtils(cityList, total);
-		return pageUtils;
+	//public PageUtils list(@RequestParam Map<String, Object> params){
+//		//查询列表数据
+//        Query query = new Query(params);
+//		List<CityDO> cityList = cityService.list(query);
+//		int total = cityService.count(query);
+//		PageUtils pageUtils = new PageUtils(cityList, total);
+//		return pageUtils;
+//		Map<String, Object> query = new HashMap<>(16);
+//		List<CityDO> sysBranchList = cityService.list(query);
+		//return sysBranchList;
+	//}
+	public List<CityDO> list() {
+		Map<String, Object> query = new HashMap<>(16);
+		List<CityDO> sysBranchList = cityService.list(query);
+		return sysBranchList;
 	}
 
 
@@ -146,5 +156,18 @@ public class CityController {
 		cityVO.setCity(cityDOCity);
 		cityVO.setCounty(cityDOCounty);
 		return cityVO;
+	}
+
+	@GetMapping("/tree")
+	@ResponseBody
+	public Tree<CityDO> tree() {
+		Tree<CityDO> tree = new Tree<CityDO>();
+		tree = cityService.getTree();
+		return tree;
+	}
+
+	@GetMapping("/treeView")
+	String treeView() {
+		return   "base/dept/deptTree";
 	}
 }

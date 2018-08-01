@@ -17,7 +17,6 @@ public interface BranchService {
 	
 	BranchDO get(String id);
 
-	BranchDO getByNumber(String deptNumber);
 
 	BranchDO getByName(String deptName);
 	
@@ -35,5 +34,4 @@ public interface BranchService {
 
 	Tree<BranchDO> getTree();
 
-//	List<BranchDO> listByName(String name);
 }

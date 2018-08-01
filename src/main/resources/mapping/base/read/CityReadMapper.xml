@@ -3,22 +3,41 @@
 
 <mapper namespace="com.prostate.base.mapper.read.CityReadMapper">
 
+
+	<sql id="Base_Column_List">
+		 id  AS  id,parent_city_id  AS parentCityId ,city_name  AS  cityName,city_type  AS cityType ,order_weight AS  orderWeight,
+		 create_user  AS  createUser,create_time  AS  createTime,city_weight  AS  cityWeight,update_user AS  updateUser,
+		 update_time  AS  updateTime,delete_user  AS  deleteUser,delete_time  AS  deleteTime,del_flag  AS  delFlag
+		
+	</sql>
+	
+	
 	<select id="get" resultType="com.prostate.base.domain.CityDO">
-		select `id`,`parent_city_id`,`city_name`,`city_type`,`order_weight`,`create_user`,`create_time`,`city_weight`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-		from base_city where id = #{value} AND del_flag = '0'
+		select <include refid="Base_Column_List" />from base_city where id = #{value} AND del_flag = '0'
 	</select>
 
 	<!--新增根据子id查询父id的信息-->
 	<select id="getParent" resultType="com.prostate.base.domain.CityDO">
 		SELECT
-		p.id,p.parent_city_id , p.city_name , p.city_type , p.order_weight , p.create_user ,
-		p.create_time , p.city_weight , p.update_user , p.update_time , p.delete_user , p.delete_time , p.del_flag
+		p.id AS  id,
+		p.parent_city_id   AS parentCityId ,
+		p.city_name   AS  cityName,
+		p.city_type   AS cityType ,
+		p.order_weight AS  orderWeight ,
+		p.create_user  AS  createUser,
+		p.create_time   AS  createTime,
+		p.city_weight   AS  cityWeight,
+		p.update_user AS  updateUser ,
+		p.update_time  AS  updateTime,
+		 p.delete_user  AS  deleteUser,
+		 p.delete_time  AS  deleteTime,
+		 p.del_flag  AS  delFlag
 		FROM base_city p,base_city s WHERE  s.id = #{value} and p.id = s.parent_city_id AND p.del_flag = '0'
 	</select>
 
 	<!--新增根据父id查询子的信息-->
 	<select id="getChild" resultType="com.prostate.base.domain.CityDO">
-		select `id`,`parent_city_id`,`city_name`,`city_type`,`order_weight`,`create_user`,`create_time`,`city_weight`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_city
+		select <include refid="Base_Column_List" /> from base_city
 		<where>
 			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
@@ -55,7 +74,7 @@
 	<!--</select>-->
 
 	<select id="list" resultType="com.prostate.base.domain.CityDO">
-		select `id`,`parent_city_id`,`city_name`,`city_type`,`order_weight`,`create_user`,`create_time`,`city_weight`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_city
+		select <include refid="Base_Column_List" /> from base_city
 		<where>
 			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
@@ -103,69 +122,5 @@
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.prostate.base.domain.CityDO">
-		insert into base_city
-		(
-			`id`,
-			`parent_city_id`,
-			`city_name`,
-			`city_type`,
-			`order_weight`,
-			`create_user`,
-			`create_time`,
-			`city_weight`,
-			`update_user`,
-			`update_time`,
-			`delete_user`,
-			`delete_time`,
-			`del_flag`
-		)
-		values
-		(
-			#{id},
-			#{parentCityId},
-			#{cityName},
-			#{cityType},
-			#{orderWeight},
-			#{createUser},
-			#{createTime},
-			#{cityWeight},
-			#{updateUser},
-			#{updateTime},
-			#{deleteUser},
-			#{deleteTime},
-			#{delFlag}
-		)
-	</insert>
-
-	<update id="update" parameterType="com.prostate.base.domain.CityDO">
-		update base_city
-		<set>
-			<if test="parentCityId != null">`parent_city_id` = #{parentCityId}, </if>
-			<if test="cityName != null">`city_name` = #{cityName}, </if>
-			<if test="cityType != null">`city_type` = #{cityType}, </if>
-			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
-			<if test="createUser != null">`create_user` = #{createUser}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="cityWeight != null">`city_weight` = #{cityWeight}, </if>
-			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="deleteUser != null">`delete_user` = #{deleteUser}, </if>
-			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
-			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
-		</set>
-		where id = #{id}
-	</update>
-
-	<delete id="remove">
-		delete from base_city where id = #{value}
-	</delete>
-
-	<delete id="batchRemove">
-		delete from base_city where id in
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
 
 </mapper>

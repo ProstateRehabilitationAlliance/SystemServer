@@ -1,6 +1,7 @@
 package com.prostate.base.service;
 
 import com.prostate.base.domain.CityDO;
+import com.prostate.common.domain.Tree;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ public interface CityService {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+	Tree<CityDO> getTree();
 
 
 

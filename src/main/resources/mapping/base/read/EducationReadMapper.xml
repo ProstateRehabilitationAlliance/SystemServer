@@ -3,26 +3,39 @@
 
 <mapper namespace="com.prostate.base.mapper.read.EducationReadMapper">
 
+
+	<sql id="Base_Column_List">
+		 id AS id,
+			 education_name AS educationName,
+			 education_number AS educationNumber,
+			 order_weight AS orderWeight,
+			 create_user AS createUser,
+			 create_time AS createTime,
+			 update_user AS updateUser,
+			 update_time AS updateTime,
+			 delete_user AS deleteUser,
+			 delete_time AS deleteTime,
+			 del_flag  AS delFlag
+	</sql>
+	
+	
 	<!--根据id查询信息-->
 	<select id="get" resultType="com.prostate.base.domain.EducationDO">
-		select `id`,`education_name`,`education_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-			from base_education where id = #{value} AND del_flag = '0'
+		select <include refid="Base_Column_List" /> from base_education where id = #{value} AND del_flag = '0'
 	</select>
 
 <!--根据名称查询数据-->
 	<select id="getByName" resultType="com.prostate.base.domain.EducationDO">
-		select `id`,`education_name`,`education_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-		from base_education where education_name = #{value} AND del_flag = '0'
+		select <include refid="Base_Column_List" /> from base_education where education_name = #{value} AND del_flag = '0'
 	</select>
 
 	<!--根据编号查询数据-->
 	<select id="getByNumber" resultType="com.prostate.base.domain.EducationDO">
-		select `id`,`education_name`,`education_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-		from base_education where education_number = #{value} AND del_flag = '0'
+		select <include refid="Base_Column_List" /> from base_education where education_number = #{value} AND del_flag = '0'
 	</select>
 
 	<select id="list" resultType="com.prostate.base.domain.EducationDO">
-		select `id`,`education_name`,`education_number`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_education
+		select <include refid="Base_Column_List" /> from base_education
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="educationName != null and educationName != ''"> and education_name LIKE CONCAT(CONCAT('%', #{educationName}), '%')</if>
@@ -68,66 +81,6 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.prostate.base.domain.EducationDO">
-		<selectKey keyProperty="id" resultType="string" order="BEFORE">
-			select replace(uuid(), '-', '') as id from dual
-		</selectKey>
-		insert into base_education
-		(
-			`id`, 
-			`education_name`, 
-			`education_number`, 
-			`order_weight`, 
-			`create_user`, 
-			`create_time`, 
-			`update_user`, 
-			`update_time`, 
-			`delete_user`, 
-			`delete_time`, 
-			`del_flag`
-		)
-		values
-		(
-			#{id}, 
-			#{educationName}, 
-			#{educationNumber}, 
-			#{orderWeight}, 
-			#{createUser}, 
-			#{createTime}, 
-			#{updateUser}, 
-			#{updateTime}, 
-			#{deleteUser}, 
-			#{deleteTime}, 
-			#{delFlag}
-		)
-	</insert>
-	 
-	<update id="update" parameterType="com.prostate.base.domain.EducationDO">
-		update base_education 
-		<set>
-			<if test="educationName != null">`education_name` = #{educationName}, </if>
-			<if test="educationNumber != null">`education_number` = #{educationNumber}, </if>
-			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
-			<if test="createUser != null">`create_user` = #{createUser}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="deleteUser != null">`delete_user` = #{deleteUser}, </if>
-			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
-			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
-		</set>
-		where id = #{id}
-	</update>
 	
-	<delete id="remove">
-		delete from base_education where id = #{value}
-	</delete>
-	
-	<delete id="batchRemove">
-		delete from base_education where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
 
 </mapper>

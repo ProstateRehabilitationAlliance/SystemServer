@@ -3,23 +3,31 @@
 
 <mapper namespace="com.prostate.base.mapper.read.AnamnesisEatingDrugReadMapper">
 
+
+	<sql id="Base_Column_List">
+		 id AS id, eating_drug_name  AS eatingDrugName, spell_name  AS spellName, eating_drug_number  AS eatingDrugNumber, order_weight  AS orderWeight,
+		 create_name  AS createName, create_time  AS createTime, update_name  AS updateName,
+		 update_time  AS updateTime, delete_name AS  deleteName, delete_time  AS deleteTime, del_flag  AS delFlag
+	</sql>
+
+
 	<select id="get" resultType="com.prostate.base.domain.AnamnesisEatingDrugDO">
-		select `id`,`eating_drug_name`,`spell_name`,`eating_drug_number`,`order_weight`,`create_name`,`create_time`,`update_name`,`update_time`,`delete_name`,`delete_time`,`del_flag`
+		select <include refid="Base_Column_List" />
 			from base_anamnesis_eating_drug where id = #{value} and del_flag = '0'
 	</select>
 
 	<select id="getByName" resultType="com.prostate.base.domain.AnamnesisEatingDrugDO">
-		select `id`,`eating_drug_name`,`spell_name`,`eating_drug_number`,`order_weight`,`create_name`,`create_time`,`update_name`,`update_time`,`delete_name`,`delete_time`,`del_flag`
+		select <include refid="Base_Column_List" />
 		from base_anamnesis_eating_drug where eating_drug_name = #{value} and del_flag = '0'
 	</select>
 
 	<select id="getByNumber" resultType="com.prostate.base.domain.AnamnesisEatingDrugDO">
-		select `id`,`eating_drug_name`,`spell_name`,`eating_drug_number`,`order_weight`,`create_name`,`create_time`,`update_name`,`update_time`,`delete_name`,`delete_time`,`del_flag`
+		select <include refid="Base_Column_List" />
 		from base_anamnesis_eating_drug where eating_drug_number = #{value} and del_flag = '0'
 	</select>
 
 	<select id="list" resultType="com.prostate.base.domain.AnamnesisEatingDrugDO">
-		select `id`,`eating_drug_name`,`spell_name`,`eating_drug_number`,`order_weight`,`create_name`,`create_time`,`update_name`,`update_time`,`delete_name`,`delete_time`,`del_flag` from base_anamnesis_eating_drug
+		select <include refid="Base_Column_List" /> from base_anamnesis_eating_drug
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="eatingDrugName != null and eatingDrugName != ''"> and eating_drug_name LIKE CONCAT(CONCAT('%', #{eatingDrugName}), '%')</if>
@@ -37,11 +45,11 @@
 		  		  and del_flag = '0'
 		  		</where>
         <choose>
-            <when test="sort != null and sort.trim() != ''">
-                order by ${sort} ${order}
-            </when>
+            <!--<when test="sort != null and sort.trim() != ''">-->
+                <!--order by ${sort} ${order}-->
+            <!--</when>-->
 			<otherwise>
-                order by order_weight
+                order by order_weight ASC
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -69,69 +77,5 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.prostate.base.domain.AnamnesisEatingDrugDO">
-		<selectKey keyProperty="id" resultType="string" order="BEFORE">
-			select replace(uuid(), '-', '') as id from dual
-		</selectKey>
-		insert into base_anamnesis_eating_drug
-		(
-			`id`, 
-			`eating_drug_name`, 
-			`spell_name`, 
-			`eating_drug_number`, 
-			`order_weight`, 
-			`create_name`, 
-			`create_time`, 
-			`update_name`, 
-			`update_time`, 
-			`delete_name`, 
-			`delete_time`, 
-			`del_flag`
-		)
-		values
-		(
-			#{id}, 
-			#{eatingDrugName}, 
-			#{spellName}, 
-			#{eatingDrugNumber}, 
-			#{orderWeight}, 
-			#{createName}, 
-			#{createTime}, 
-			#{updateName}, 
-			#{updateTime}, 
-			#{deleteName}, 
-			#{deleteTime}, 
-			#{delFlag}
-		)
-	</insert>
-	 
-	<update id="update" parameterType="com.prostate.base.domain.AnamnesisEatingDrugDO">
-		update base_anamnesis_eating_drug 
-		<set>
-			<if test="eatingDrugName != null">`eating_drug_name` = #{eatingDrugName}, </if>
-			<if test="spellName != null">`spell_name` = #{spellName}, </if>
-			<if test="eatingDrugNumber != null">`eating_drug_number` = #{eatingDrugNumber}, </if>
-			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
-			<if test="createName != null">`create_name` = #{createName}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="updateName != null">`update_name` = #{updateName}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="deleteName != null">`delete_name` = #{deleteName}, </if>
-			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
-			<if test="delFlag != null">`del_flag` = #{delFlag} </if>
-		</set>
-		where id = #{id}
-	</update>
-	
-	<delete id="remove">
-		delete from base_anamnesis_eating_drug where id = #{value}
-	</delete>
-	
-	<delete id="batchRemove">
-		delete from base_anamnesis_eating_drug where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
 
 </mapper>

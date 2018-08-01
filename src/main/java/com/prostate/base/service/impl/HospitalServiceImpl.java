@@ -32,10 +32,10 @@ public class HospitalServiceImpl implements HospitalService {
 		return hospitalReadMapper.getByName(hospitalName);
 	}
 
-	@Override
-	public HospitalDO getByNumber(String hospitalNumber) {
-		return hospitalReadMapper.getByNumber(hospitalNumber);
-	}
+//	@Override
+//	public HospitalDO getByNumber(String hospitalNumber) {
+//		return hospitalReadMapper.getByNumber(hospitalNumber);
+//	}
 
 	@Override
 	public List<HospitalDO> list(Map<String, Object> map){

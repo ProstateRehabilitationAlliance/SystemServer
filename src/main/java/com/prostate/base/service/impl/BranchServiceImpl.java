@@ -26,10 +26,6 @@ public class BranchServiceImpl implements BranchService {
 	@Autowired
 	private BranchReadMapper deptReadMapper;
 
-	@Override
-	public BranchDO getByNumber(String deptNumber) {
-		return deptReadMapper.getByNumber(deptNumber);
-	}
 
 	@Override
 	public BranchDO getByName(String deptName) {

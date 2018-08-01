@@ -1,6 +1,7 @@
 package com.prostate.base.mapper.read;
 
 import com.prostate.base.domain.BranchDO;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2018-05-07 14:02:35
  */
+@Repository
 public interface BranchReadMapper {
 
 	BranchDO get(String id);
@@ -23,13 +25,6 @@ public interface BranchReadMapper {
 
 	int count(Map<String, Object> map);
 
-	int save(BranchDO branch);
-
-	int update(BranchDO branch);
-
-	int remove(String id);
-
-	int batchRemove(String[] ids);
 
 	List<BranchDO> listByName(String name);
 

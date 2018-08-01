@@ -10,7 +10,7 @@ function load() {
 			{
 				id : 'id',
 				code : 'id',
-                parentCode : 'parentDeptId',
+                parentCode : 'parentBranchId',
 				type : "GET", // 请求数据的ajax类型
 				url : prefix + '/list', // 请求数据的ajax的url
 				ajaxParams : {offset:0,limit:100}, // 请求数据的ajax的data属性
@@ -20,27 +20,25 @@ function load() {
 				expandAll : false, // 是否全部展开
 				// toolbar : '#exampleToolbar',
 				columns : [
-					// {
-					// 	title : '编号',
-					// 	field : 'id',
-					// 	visible : false,
-					// 	align : 'center',
-					// 	valign : 'center',
-					// 	width : '50px',
-					// 	checkbox : true
-					// },
+
 					{
-						field : 'deptName',
+						field : 'branchName',
 						title : '部门名称',
                         valign : 'center',
 						witth :20
 					},
                     {
-                        field : 'deptNumber',
-                        title : '部门编号',
+                        field : 'branchGrade',
+                        title : '科室等级',
                         valign : 'center',
                         witth :20
                     },
+					{
+						field : 'branchInform',
+							title : '科室简介',
+						valign : 'center',
+						witth :20
+					},
 					{
 						field : 'orderWeight',
 						title : '排序',

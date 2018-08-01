@@ -3,23 +3,36 @@
 
 <mapper namespace="com.prostate.base.mapper.read.DoctorTitleReadMapper">
 
+
+	<sql id="Base_Column_List">
+		 id AS id,
+			 doctor_title_number AS doctorTitleNumber,
+			 doctor_title_name AS doctorTitleName,
+			 order_weight AS orderWeight,
+			 create_user AS createUser,
+			 create_time AS createTime,
+			 update_user AS updateUser,
+			 update_time AS updateTime,
+			 delete_user AS deleteUser,
+			 delete_time AS deleteTime,
+			 del_flag  AS  delFlag
+	</sql>
+
+
 	<select id="get" resultType="com.prostate.base.domain.DoctorTitleDO">
-		select `id`,`doctor_title_number`,`doctor_title_name`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-			from base_doctor_title where id = #{value} and del_flag = '0'
+		select <include refid="Base_Column_List" />from base_doctor_title where id = #{value} and del_flag = '0'
 	</select>
 
 	<select id="getByName" resultType="com.prostate.base.domain.DoctorTitleDO">
-		select `id`,`doctor_title_number`,`doctor_title_name`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-		from base_doctor_title where doctor_title_name = #{value} and del_flag = '0'
+		select <include refid="Base_Column_List" />from base_doctor_title where doctor_title_name = #{value} and del_flag = '0'
 	</select>
 
 	<select id="getByNumber" resultType="com.prostate.base.domain.DoctorTitleDO">
-		select `id`,`doctor_title_number`,`doctor_title_name`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag`
-		from base_doctor_title where doctor_title_number = #{value} and del_flag = '0'
+		select <include refid="Base_Column_List" />from base_doctor_title where doctor_title_number = #{value} and del_flag = '0'
 	</select>
 
 	<select id="list" resultType="com.prostate.base.domain.DoctorTitleDO">
-		select `id`,`doctor_title_number`,`doctor_title_name`,`order_weight`,`create_user`,`create_time`,`update_user`,`update_time`,`delete_user`,`delete_time`,`del_flag` from base_doctor_title
+		select <include refid="Base_Column_List" /> from base_doctor_title
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="doctorTitleNumber != null and doctorTitleNumber != ''"> and doctor_title_number = #{doctorTitleNumber} </if>
@@ -65,66 +78,6 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.prostate.base.domain.DoctorTitleDO">
-		<selectKey keyProperty="id" resultType="string" order="BEFORE">
-			select replace(uuid(), '-', '') as id from dual
-		</selectKey>
-		insert into base_doctor_title
-		(
-			`id`, 
-			`doctor_title_number`, 
-			`doctor_title_name`, 
-			`order_weight`, 
-			`create_user`, 
-			`create_time`, 
-			`update_user`, 
-			`update_time`, 
-			`delete_user`, 
-			`delete_time`, 
-			`del_flag`
-		)
-		values
-		(
-			#{id}, 
-			#{doctorTitleNumber}, 
-			#{doctorTitleName}, 
-			#{orderWeight}, 
-			#{createUser}, 
-			#{createTime}, 
-			#{updateUser}, 
-			#{updateTime}, 
-			#{deleteUser}, 
-			#{deleteTime}, 
-			#{delFlag}
-		)
-	</insert>
-	 
-	<update id="update" parameterType="com.prostate.base.domain.DoctorTitleDO">
-		update base_doctor_title 
-		<set>
-			<if test="doctorTitleNumber != null">`doctor_title_number` = #{doctorTitleNumber}, </if>
-			<if test="doctorTitleName != null">`doctor_title_name` = #{doctorTitleName}, </if>
-			<if test="orderWeight != null">`order_weight` = #{orderWeight}, </if>
-			<if test="createUser != null">`create_user` = #{createUser}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="updateUser != null">`update_user` = #{updateUser}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="deleteUser != null">`delete_user` = #{deleteUser}, </if>
-			<if test="deleteTime != null">`delete_time` = #{deleteTime}, </if>
-			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
-		</set>
-		where id = #{id}
-	</update>
 	
-	<delete id="remove">
-		delete from base_doctor_title where id = #{value}
-	</delete>
-	
-	<delete id="batchRemove">
-		delete from base_doctor_title where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
 
 </mapper>

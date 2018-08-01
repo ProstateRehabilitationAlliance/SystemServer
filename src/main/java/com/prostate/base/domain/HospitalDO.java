@@ -26,9 +26,9 @@ public class HospitalDO implements Serializable {
 	//医院名称
 	@NotBlank(message =" 名称不能为空，且长度必须大于0" ,groups = {GroupWithoutID.class})
 	private String hospitalName;
-	//医院编号
-	@NotBlank(message =" 编号不能为空，且长度必须大于0" ,groups = {GroupWithoutID.class})
-	private String hospitalNumber;
+//	//医院编号
+//	@NotBlank(message =" 编号不能为空，且长度必须大于0" ,groups = {GroupWithoutID.class})
+//	private String hospitalNumber;
 	//医院别名
 	private String hospitalAlias;
 	//医院信息简介
@@ -84,18 +84,18 @@ public class HospitalDO implements Serializable {
 	public String getHospitalName() {
 		return hospitalName;
 	}
-	/**
-	 * 设置：医院编号
-	 */
-	public void setHospitalNumber(String hospitalNumber) {
-		this.hospitalNumber = hospitalNumber;
-	}
-	/**
-	 * 获取：医院编号
-	 */
-	public String getHospitalNumber() {
-		return hospitalNumber;
-	}
+//	/**
+//	 * 设置：医院编号
+//	 */
+//	public void setHospitalNumber(String hospitalNumber) {
+//		this.hospitalNumber = hospitalNumber;
+//	}
+//	/**
+//	 * 获取：医院编号
+//	 */
+//	public String getHospitalNumber() {
+//		return hospitalNumber;
+//	}
 	/**
 	 * 设置：医院别名
 	 */

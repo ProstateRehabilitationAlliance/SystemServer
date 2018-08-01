@@ -9,7 +9,6 @@ import com.prostate.base.domain.GroupID;
 import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.service.CityService;
 import com.prostate.base.service.HospitalService;
-import com.prostate.base.service.HospitalTypeService;
 import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +44,7 @@ public class HospitalController {
 	@Autowired
 	private CityService cityService;
 
-	@Autowired
-	private HospitalTypeService hospitalTypeService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("base:hospital:hospital")
 	String Hospital(){
@@ -64,7 +61,7 @@ public class HospitalController {
 		//将每个医院对象的类型id都替换为其具体的name,城市id替换为具体的城市信息
 		for (HospitalDO hospitalDO:hospitalList ) {
 			//先通过类型id查找具体的类型名称，然后将名称设到类型id上，都是String类型，投机取巧
-			hospitalDO.setTypeId(hospitalTypeService.get(hospitalDO.getTypeId()).getHospitalTypeName());
+//			hospitalDO.setTypeId(hospitalTypeService.get(hospitalDO.getTypeId()).getHospitalTypeName());
 			//县级信息
 			CityDO county =cityService.get(hospitalDO.getCityId());
 			//市信息
@@ -100,8 +97,9 @@ public class HospitalController {
 	@RequiresPermissions("base:hospital:add")
 	public R save( @Validated(GroupWithoutID.class)HospitalDO hospital){
 		HospitalDO hospitalDOByName = hospitalService.getByName(hospital.getHospitalName());
-		HospitalDO hospitalDOByNumber = hospitalService.getByNumber(hospital.getHospitalNumber());
-		if (hospitalDOByName == null && hospitalDOByNumber == null){
+		//HospitalDO hospitalDOByNumber = hospitalService.getByNumber(hospital.getHospitalNumber());
+		//if (hospitalDOByName == null && hospitalDOByNumber == null){
+		if (hospitalDOByName == null){
 			hospital.setCreateUser(ShiroUtils.getUserId().toString());
 			hospital.setCreateTime(new Date());
 			hospital.setDelFlag("0");
@@ -125,11 +123,11 @@ public class HospitalController {
 				return  R.error(20001,"名称重复");
 			}
 		}
-		if( !hospital.getHospitalNumber().equalsIgnoreCase(hospitalById.getHospitalNumber())){
-			if (hospitalService.getByNumber(hospital.getHospitalNumber()) != null){
-				return  R.error(20001,"编号重复");
-			}
-		}
+//		if( !hospital.getHospitalNumber().equalsIgnoreCase(hospitalById.getHospitalNumber())){
+//			if (hospitalService.getByNumber(hospital.getHospitalNumber()) != null){
+//				return  R.error(20001,"编号重复");
+//			}
+//		}
 		hospitalService.update(hospital);
 		return R.ok();
 	}

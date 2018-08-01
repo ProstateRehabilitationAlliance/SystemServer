@@ -27,9 +27,7 @@ public class BranchDO implements Serializable {
 	//科室名称
 	@NotBlank(message =" 名称不能为空，且长度必须大于0" ,groups = {GroupWithoutID.class})
 	private String branchName;
-	//科室编号
-	@NotBlank(message =" 编号不能为空，且长度必须大于0" ,groups = {GroupWithoutID.class})
-	private String branchNumber;
+
 	//科室等级
 	private String branchGrade;
 	//科室简介
@@ -89,18 +87,7 @@ public class BranchDO implements Serializable {
 	public String getBranchName() {
 		return branchName;
 	}
-	/**
-	 * 设置：科室编号
-	 */
-	public void setBranchNumber(String branchNumber) {
-		this.branchNumber = branchNumber;
-	}
-	/**
-	 * 获取：科室编号
-	 */
-	public String getBranchNumber() {
-		return branchNumber;
-	}
+
 	/**
 	 * 设置：科室等级
 	 */
@@ -239,8 +226,8 @@ public class BranchDO implements Serializable {
 		return "BranchDO{" +
 				"id='" + id + '\'' +
 				", parentBranchId='" + parentBranchId + '\'' +
-				", branchName='" + branchName + '\'' +
-				", branchNumber='" + branchNumber + '\'' +
+//				", branchName='" + branchName + '\'' +
+//				", branchNumber='" + branchNumber + '\'' +
 				", branchGrade='" + branchGrade + '\'' +
 				", branchInform='" + branchInform + '\'' +
 				", branchWeight=" + branchWeight +
