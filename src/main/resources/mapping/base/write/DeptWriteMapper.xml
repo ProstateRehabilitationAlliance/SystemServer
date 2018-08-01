@@ -14,8 +14,7 @@
 			`id`, 
 			`parent_branch_id`, 
 			`branch_name`, 
-			`branch_number`, 
-			`branch_grade`, 
+			`branch_grade`,
 			`branch_inform`, 
 			`branch_weight`, 
 			`order_weight`, 
@@ -32,8 +31,7 @@
 			#{id}, 
 			#{parentBranchId}, 
 			#{branchName}, 
-			#{branchNumber}, 
-			#{branchGrade}, 
+			#{branchGrade},
 			#{branchInform}, 
 			#{branchWeight}, 
 			#{orderWeight}, 
@@ -52,7 +50,6 @@
 		<set>
 			<if test="parentBranchId != null">`parent_branch_id` = #{parentBranchId}, </if>
 			<if test="branchName != null">`branch_name` = #{branchName}, </if>
-			<if test="branchNumber != null">`branch_number` = #{branchNumber}, </if>
 			<if test="branchGrade != null">`branch_grade` = #{branchGrade}, </if>
 			<if test="branchInform != null">`branch_inform` = #{branchInform}, </if>
 			<if test="branchWeight != null">`branch_weight` = #{branchWeight}, </if>
@@ -85,7 +82,6 @@
 			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentBranchId != null and parentBranchId != ''"> and parent_branch_id = #{parentBranchId} </if>
 			<if test="branchName != null and branchName != ''"> and branch_name = #{branchName} </if>
-			<if test="branchNumber != null and branchNumber != ''"> and branch_number = #{branchNumber} </if>
 			and (branch_grade = '1' or branch_grade = '0')
 			<if test="branchInform != null and branchInform != ''"> and branch_inform = #{branchInform} </if>
 			<if test="branchWeight != null and branchWeight != ''"> and branch_weight = #{branchWeight} </if>

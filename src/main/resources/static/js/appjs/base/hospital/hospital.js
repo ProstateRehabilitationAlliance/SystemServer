@@ -56,10 +56,10 @@ function load() {
 									field : 'hospitalName', 
 									title : '医院名称' 
 								},
-																{
-									field : 'hospitalNumber', 
-									title : '医院编号' 
-								},
+								// 								{
+								// 	field : 'hospitalNumber',
+								// 	title : '医院编号'
+								// },
 																{
 									field : 'hospitalAlias', 
 									title : '医院别名' 
@@ -82,16 +82,16 @@ function load() {
 								},
 																{
 									field : 'cityId',
-									title : '医院所在城市'
+									title : '医院所在城市ID'
 								},
-																{
-									field : 'activationFlag', 
-									title : '医院激活标记' 
-								},
-																{
-									field : 'orderWeight', 
-									title : '排序' 
-								},
+								// 								{
+								// 	field : 'activationFlag',
+								// 	title : '医院激活标记'
+								// },
+								// 								{
+								// 	field : 'orderWeight',
+								// 	title : '排序'
+								// },
 								// 								{
 								// 	field : 'createUser',
 								// 	title : '创建人ID(后台管理员)'

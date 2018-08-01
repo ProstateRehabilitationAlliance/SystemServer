@@ -42,7 +42,7 @@ public class BranchController {
 	@GetMapping()
 	@RequiresPermissions("base:dept:dept")
 	String Branch(){
-	    return "base/dept/dept";
+		return "base/dept/dept";
 	}
 	
 	@ResponseBody
@@ -71,7 +71,7 @@ public class BranchController {
 	@RequiresPermissions("base:dept:edit")
 	String edit(@PathVariable("id") String deptId, Model model) {
 		BranchDO sysBranch = branchService.get(deptId);
-		model.addAttribute("dept", sysBranch);
+		model.addAttribute("branch", sysBranch);
 		if(sysBranch.getParentBranchId() == null) {
 			model.addAttribute("parentBranchName", "无");
 		}else {

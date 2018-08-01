@@ -9,41 +9,35 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
-							<input id="id" name="id" th:value="${dept.id}"
+							<input id="id" name="id" th:value="${branch.id}"
 								class="hidden">
 							<div class="form-group">
 								<label class="col-sm-3 control-label ">上级部门：</label>
 								<div class="col-sm-8">
-								<input th:value="${parentDeptName}"
+								<input th:value="${parentBranchName}"
 										class="form-control" type="text" readonly="true" />
-									<input class="form-control hidden" type="text" id="parentDeptId" name="parentDeptId" th:value="${dept.parentDeptId}">
+									<input class="form-control hidden" type="text" id="parentBranchId" name="parentBranchId" th:value="${branch.parentBranchId}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">部门名称：</label>
 								<div class="col-sm-8">
-									<input id="deptName" name="deptName" th:value="${dept.deptName}"
+									<input id="branchName" name="branchName" th:value="${branch.branchName}"
 										class="form-control" type="text">
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">部门编号：</label>
-								<div class="col-sm-8">
-									<input id="deptNumber" name="deptNumber" th:value="${dept.deptNumber}"
-										   class="form-control" type="text">
-								</div>
-							</div>
+							<!---->
 							<div class="form-group">
 								<label class="col-sm-3 control-label">排序：</label>
 								<div class="col-sm-8">
-									<input id="orderNum" name="orderNum" th:value="${dept.orderWeight}"
+									<input id="orderNum" name="orderNum" th:value="${branch.orderWeight}"
 										class="form-control" type="text">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">状态：</label>
 								<div class="col-sm-8">
-									<input id="delFlag" name="delFlag" th:value="${dept.delFlag}"
+									<input id="delFlag" name="delFlag" th:value="${branch.delFlag}"
 										class="form-control" type="text">
 								</div>
 							</div>
