@@ -202,7 +202,8 @@ public class IpssManagerController {
 	public Tree<IpssDO> tree() {
 		Tree<IpssDO> tree = new Tree<IpssDO>();
 		tree = ipssManagerService.getTree();
-		//System.out.println("=========>"+tree);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println(tree);
 		return tree;
 	}
 

@@ -1,6 +1,7 @@
 package com.prostate.base.mapper.read;
 
 import com.prostate.base.domain.UrineFlowRateDO;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2018-06-05 09:27:00
  */
+@Repository
 public interface UrineFlowRateReadMapper {
 
 	UrineFlowRateDO get(String id);

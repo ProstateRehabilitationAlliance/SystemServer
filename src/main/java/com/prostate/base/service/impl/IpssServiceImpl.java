@@ -73,15 +73,9 @@ public class IpssServiceImpl implements IpssManagerService {
 			Map<String, Object> state = new HashMap<>(16);
 			state.put("opened", false);
 			state.put("selected_arr",false);
-
-			//state.put("mType", "dept");
 			tree.setState(state);
 			trees.add(tree);
-
-
-
 		}
-		System.out.println("========>"+trees);
 		Tree<IpssDO> t = BuildTree.build(trees);
 		return t;
 	}

@@ -86,7 +86,6 @@ public class ScaleManagerServiceImpl implements ScaleManagerService {
 
 
         }
-        System.out.println("========>"+trees);
         Tree<ScaleDO> t = BuildTree.build(trees);
         return t;
     }

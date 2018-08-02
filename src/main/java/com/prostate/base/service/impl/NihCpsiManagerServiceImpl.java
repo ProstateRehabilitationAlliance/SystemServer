@@ -83,7 +83,6 @@ public class NihCpsiManagerServiceImpl implements NihCpsiManagerService {
 
 
         }
-        System.out.println("========>"+trees);
         Tree<NihCpsiDO> t = BuildTree.build(trees);
         return t;
     }

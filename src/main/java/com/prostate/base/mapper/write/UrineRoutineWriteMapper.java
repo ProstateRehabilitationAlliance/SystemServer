@@ -1,6 +1,7 @@
 package com.prostate.base.mapper.write;
 
 import com.prostate.base.domain.UrineRoutineDO;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2018-06-04 10:40:25
  */
+@Repository
 public interface UrineRoutineWriteMapper {
 
 	UrineRoutineDO get(String id);

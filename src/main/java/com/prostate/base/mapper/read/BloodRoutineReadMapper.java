@@ -1,6 +1,7 @@
 package com.prostate.base.mapper.read;
 
 import com.prostate.base.domain.BloodRoutineDO;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2018-06-04 10:28:07
  */
+@Repository
 public interface BloodRoutineReadMapper {
 
 	BloodRoutineDO get(String id);

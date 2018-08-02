@@ -1,6 +1,7 @@
 package com.prostate.base.mapper.write;
 
 import com.prostate.base.domain.NihCpsiDO;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
  * @Description:
  * @Date: Created in 11:59 2018/5/21
  */
+@Repository
 public interface NihCpsiManagerWriteMapper {
     NihCpsiDO get(String id);
 

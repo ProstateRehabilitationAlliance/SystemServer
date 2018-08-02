@@ -1,10 +1,8 @@
 package com.prostate.base.controller;
 
-import com.prostate.base.domain.CityDO;
 import com.prostate.base.domain.GroupID;
 import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.domain.ScaleDO;
-import com.prostate.base.service.DistrictsAndCountiesManagerService;
 import com.prostate.base.service.ScaleManagerService;
 import com.prostate.common.annotation.Log;
 import com.prostate.common.domain.Tree;
@@ -45,7 +43,6 @@ public class ScaleManagerController {
     @GetMapping("")
     String user(Model model) {
 
-        System.out.println("++++++++++++++++++++1");
         return prefix + "/scaleManager";
     }
 
