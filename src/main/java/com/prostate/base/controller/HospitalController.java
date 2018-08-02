@@ -59,17 +59,17 @@ public class HospitalController {
         Query query = new Query(params);
 		List<HospitalDO> hospitalList = hospitalService.list(query);
 		//将每个医院对象的类型id都替换为其具体的name,城市id替换为具体的城市信息
-		for (HospitalDO hospitalDO:hospitalList ) {
-			//先通过类型id查找具体的类型名称，然后将名称设到类型id上，都是String类型，投机取巧
-//			hospitalDO.setTypeId(hospitalTypeService.get(hospitalDO.getTypeId()).getHospitalTypeName());
-			//县级信息
-			CityDO county =cityService.get(hospitalDO.getCityId());
-			//市信息
-			CityDO city = cityService.getParent(hospitalDO.getCityId());
-			//省级信息
-			CityDO province = cityService.getParent(city.getId());
-			hospitalDO.setCityId(province.getCityName()+"省（自治区/直辖市）"+city.getCityName()+"市"+county.getCityName());
-		}
+//		for (HospitalDO hospitalDO:hospitalList ) {
+//			//先通过类型id查找具体的类型名称，然后将名称设到类型id上，都是String类型，投机取巧
+////			hospitalDO.setTypeId(hospitalTypeService.get(hospitalDO.getTypeId()).getHospitalTypeName());
+//			//县级信息
+//			CityDO county =cityService.get(hospitalDO.getCityId());
+//			//市信息
+//			CityDO city = cityService.getParent(hospitalDO.getCityId());
+//			//省级信息
+//			CityDO province = cityService.getParent(city.getId());
+//			hospitalDO.setCityId(province.getCityName()+"省（自治区/直辖市）"+city.getCityName()+"市"+county.getCityName());
+//		}
 		int total = hospitalService.count(query);
 		PageUtils pageUtils = new PageUtils(hospitalList, total);
 		return pageUtils;

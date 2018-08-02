@@ -1,7 +1,7 @@
 $().ready(function() {
 	validateRule();
-    loadHosType();
-    loadProvince();
+    // loadHosType();
+    // loadProvince();
 });
 
 $.validator.setDefaults({

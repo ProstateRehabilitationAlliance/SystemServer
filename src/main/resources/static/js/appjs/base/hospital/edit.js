@@ -1,10 +1,10 @@
 $().ready(function() {
     validateRule();
-    loadAllType();
-    //加载所有的省级信息
-   loadAllProvince();
-    //从县级信息开始，回显数据
-    loadCounty();
+   //  loadAllType();
+   //  //加载所有的省级信息
+   // loadAllProvince();
+   //  //从县级信息开始，回显数据
+   //  loadCounty();
 
 });
 
