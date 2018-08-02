@@ -5,7 +5,7 @@
 
 
 	<sql id="Base_Column_List">
-		 id  AS  id,parent_city_id  AS parentCityId ,city_name  AS  cityName,city_type  AS cityType ,order_weight AS  orderWeight,
+		 id  AS  id, parent_city_id  AS parentCityId ,city_name  AS  cityName,city_type  AS cityType ,order_weight AS  orderWeight,
 		 create_user  AS  createUser,create_time  AS  createTime,city_weight  AS  cityWeight,update_user AS  updateUser,
 		 update_time  AS  updateTime,delete_user  AS  deleteUser,delete_time  AS  deleteTime,del_flag  AS  delFlag
 		
@@ -95,7 +95,7 @@
 				order by ${sort} ${order}
 			</when>
 			<otherwise>
-				order by id desc
+				order by order_weight
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">
@@ -120,6 +120,37 @@
 			<if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
 			and del_flag = '0'
 		</where>
+	</select>
+
+	<!--查找树形结构的-->
+	<select id="getTree" resultType="com.prostate.base.domain.CityDO">
+		select <include refid="Base_Column_List" /> from base_city
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
+			<if test="cityName != null and cityName != ''"> and city_name = #{cityName} </if>
+			and (city_type = '1' or city_type = '2'or city_type = '0')
+			<if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+			<if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="cityWeight != null and cityWeight != ''"> and city_weight = #{cityWeight} </if>
+			<if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+			<if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+			<if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
+			AND  del_flag = '0'
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by order_weight
+			</when>
+			<otherwise>
+				order by order_weight desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</select>
 
 

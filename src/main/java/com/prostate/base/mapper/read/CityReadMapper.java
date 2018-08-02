@@ -24,6 +24,7 @@ public interface CityReadMapper {
 	List<CityDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
-	
+
+	public List<CityDO> getTree(Map<String, Object> map);
 
 }

@@ -1,6 +1,5 @@
 package com.prostate.base.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,37 +38,33 @@ import com.prostate.common.utils.R;
 public class CityController {
 	@Autowired
 	private CityService cityService;
-	
+
+
 	@GetMapping()
 	@RequiresPermissions("base:city:city")
 	String City(){
 	    return "base/city/city";
 	}
 	
-	@ResponseBody
-	@GetMapping("/list")
-	//@RequiresPermissions("base:city:city")
-	//public PageUtils list(@RequestParam Map<String, Object> params){
-//		//查询列表数据
-//        Query query = new Query(params);
-//		List<CityDO> cityList = cityService.list(query);
-//		int total = cityService.count(query);
-//		PageUtils pageUtils = new PageUtils(cityList, total);
-//		return pageUtils;
-//		Map<String, Object> query = new HashMap<>(16);
-//		List<CityDO> sysBranchList = cityService.list(query);
-		//return sysBranchList;
-	//}
-	public List<CityDO> list() {
-		Map<String, Object> query = new HashMap<>(16);
-		List<CityDO> sysBranchList = cityService.list(query);
-		return sysBranchList;
+
+@GetMapping("/list")
+@ResponseBody
+PageUtils list(@RequestParam Map<String, Object> params) {
+	// 查询列表数据
+	Query query = new Query(params);
+	if(params.get("parentCityId")==null||params.get("parentCityId").equals("")){
+		query.put("cityType","1");
 	}
+	List<CityDO> cityDOS = cityService.list(query);
+	int total = cityService.count(query);
+	PageUtils pageUtil = new PageUtils(cityDOS, total);
+	return pageUtil;
+}
 
 
 	@ResponseBody
 	@GetMapping("/ChildList")
-	//@RequiresPermissions("base:city:city")
+	@RequiresPermissions("base:city:city")
 	public PageUtils getChild(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params);
@@ -163,6 +158,8 @@ public class CityController {
 	public Tree<CityDO> tree() {
 		Tree<CityDO> tree = new Tree<CityDO>();
 		tree = cityService.getTree();
+		System.out.println("=============================================");
+		System.out.println(tree);
 		return tree;
 	}
 
