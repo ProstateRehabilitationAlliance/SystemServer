@@ -205,8 +205,6 @@ public class UserController extends BaseController {
 	public Tree<DeptDO> tree() {
 		Tree<DeptDO> tree = new Tree<DeptDO>();
 		tree = userService.getTree();
-		System.out.println("===========================usertree=================================");
-		System.out.println(tree);
 		return tree;
 	}
 

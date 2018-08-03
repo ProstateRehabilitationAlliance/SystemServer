@@ -5,6 +5,7 @@ import com.prostate.base.mapper.write.CityWriteMapper;
 import com.prostate.base.service.CityService;
 import com.prostate.common.domain.Tree;
 import com.prostate.common.utils.BuildTree;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,32 +41,32 @@ public class CityServiceImpl implements CityService {
 	public List<CityDO> getChild(Map<String, Object> map) {
 		return cityReadMapper.getChild(map);
 	}
-	
+
 	@Override
 	public List<CityDO> list(Map<String, Object> map){
 		return cityReadMapper.list(map);
 	}
-	
+
 	@Override
 	public int count(Map<String, Object> map){
 		return cityReadMapper.count(map);
 	}
-	
+
 	@Override
 	public int save(CityDO city){
 		return cityWriteMapper.save(city);
 	}
-	
+
 	@Override
 	public int update(CityDO city){
 		return cityWriteMapper.update(city);
 	}
-	
+
 	@Override
 	public int remove(String id){
 		return cityWriteMapper.remove(id);
 	}
-	
+
 	@Override
 	public int batchRemove(String[] ids){
 		return cityWriteMapper.batchRemove(ids);
@@ -73,33 +74,24 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public Tree<CityDO> getTree() {
-
 		List<Tree<CityDO>> trees = new ArrayList<Tree<CityDO>>();
-		//查询所有的信息存入列表中。
-		List<CityDO> cityDOS = cityReadMapper.list(new HashMap<String,Object>(16));
-		//这里生成的都是区县级的节点信息
-		for (CityDO cityDO : cityDOS) {
-			//声明树形结构
+		List<CityDO> sysDepts = cityReadMapper.list(new HashMap<String,Object>(16));
+
+		for (CityDO sysDept : sysDepts) {
 			Tree<CityDO> tree = new Tree<CityDO>();
-			//每个树末节点的id
-			tree.setId(cityDO.getId().toString());
-			//每一个末节点的上级节点
-			tree.setParentId(cityDO.getParentCityId().toString());
-			//每个节点的文字信息
-			tree.setText(cityDO.getCityName());
-			//tree
-			//如果不是区县级，肯定有下级列表。
+			tree.setId(sysDept.getId().toString());
+			tree.setParentId(sysDept.getParentCityId().toString());
+			tree.setText(sysDept.getCityName());
 			Map<String, Object> state = new HashMap<>(16);
 			state.put("opened", true);
 			tree.setState(state);
-			//每一个树形结构都存入列表
 			trees.add(tree);
 		}
-
-
 		// 默认顶级菜单为０，根据数据库实际情况调整
 		Tree<CityDO> t = BuildTree.build(trees);
-		return t;
 
+		System.out.println("=============================================================");
+		System.out.println(t);
+		return t;
 	}
 }

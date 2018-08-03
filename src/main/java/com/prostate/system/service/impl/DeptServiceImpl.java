@@ -75,6 +75,8 @@ public class DeptServiceImpl implements DeptService {
 			tree.setState(state);
 			trees.add(tree);
 		}
+		System.out.println(".////////////////////////////////////");
+		System.out.println(trees.get(0));
 		// 默认顶级菜单为０，根据数据库实际情况调整
 		Tree<DeptDO> t = BuildTree.build(trees);
 		return t;

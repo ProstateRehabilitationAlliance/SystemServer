@@ -1,5 +1,6 @@
 package com.prostate.base.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,18 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.prostate.base.domain.CityDO;
-import com.prostate.common.utils.PageUtils;
-import com.prostate.common.utils.Query;
 import com.prostate.common.utils.R;
 
 /**
  * 城市表
- * 
+ *
  * @author chglee
  * @email 1992lcg@163.com
  * @date 2018-05-07 14:02:35
  */
- 
+
 @Controller
 @RequestMapping("/base/city")
 public class CityController {
@@ -45,37 +44,29 @@ public class CityController {
 	String City(){
 	    return "base/city/city";
 	}
-	
+
 
 @GetMapping("/list")
 @ResponseBody
-PageUtils list(@RequestParam Map<String, Object> params) {
-	// 查询列表数据
-	Query query = new Query(params);
-	if(params.get("parentCityId")==null||params.get("parentCityId").equals("")){
-		query.put("cityType","1");
-	}
-	List<CityDO> cityDOS = cityService.list(query);
-	int total = cityService.count(query);
-	PageUtils pageUtil = new PageUtils(cityDOS, total);
-	return pageUtil;
+public List<CityDO> list() {
+	Map<String, Object> query = new HashMap<>(16);
+	List<CityDO> sysBranchList = cityService.list(query);
+	return sysBranchList;
 }
+
 
 
 	@ResponseBody
 	@GetMapping("/ChildList")
-	@RequiresPermissions("base:city:city")
-	public PageUtils getChild(@RequestParam Map<String, Object> params){
-		//查询列表数据
-		Query query = new Query(params);
-		List<CityDO> cityList = cityService.getChild(query);
-		int total = cityService.count(query);
-		PageUtils pageUtils = new PageUtils(cityList, total);
-		return pageUtils;
+	public List<CityDO> ChildList(String parentCityId) {
+		Map<String, Object> query = new HashMap<>(16);
+		query.put("parentCityId",parentCityId);
+		List<CityDO> sysBranchList = cityService.getChild(query);
+		return sysBranchList;
 	}
 
 
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("base:city:add")
 	String add(){
@@ -89,7 +80,7 @@ PageUtils list(@RequestParam Map<String, Object> params) {
 		model.addAttribute("city", city);
 	    return "base/city/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
@@ -112,7 +103,7 @@ PageUtils list(@RequestParam Map<String, Object> params) {
 		cityService.update(city);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -125,7 +116,7 @@ PageUtils list(@RequestParam Map<String, Object> params) {
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -158,13 +149,11 @@ PageUtils list(@RequestParam Map<String, Object> params) {
 	public Tree<CityDO> tree() {
 		Tree<CityDO> tree = new Tree<CityDO>();
 		tree = cityService.getTree();
-		System.out.println("=============================================");
-		System.out.println(tree);
 		return tree;
 	}
 
 	@GetMapping("/treeView")
 	String treeView() {
-		return   "base/dept/deptTree";
+		return   "base/city/cityTree";
 	}
 }

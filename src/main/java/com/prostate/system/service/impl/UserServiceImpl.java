@@ -165,23 +165,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Tree<DeptDO> getTree() {
+        // 创建一个树形结构的集合
         List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
+        //读取所有的部门信息
         List<DeptDO> depts = deptReadMapper.list(new HashMap<String, Object>(16));
+        //读取所有的上级部门id存入一个数组
         Long[] pDepts = deptReadMapper.listParentDept();
+        //读取所有用户的部门id存入数组
         Long[] uDepts = userReadMapper.listAllDept();
+        //所有的id都存入集合并转为Long数组
         Long[] allDepts = (Long[]) ArrayUtils.addAll(pDepts, uDepts);
         for (DeptDO dept : depts) {
+            //如果Long数组包含dept的id信息，则跳过这次循序
             if (!ArrayUtils.contains(allDepts, dept.getDeptId())) {
                 continue;
             }
+            //创建一个树形结构
             Tree<DeptDO> tree = new Tree<DeptDO>();
+            //依次设置节点的id，父id，显示文本和一些状态信息
             tree.setId(dept.getDeptId().toString());
             tree.setParentId(dept.getParentId().toString());
             tree.setText(dept.getName());
+            //创建一个map集合，
             Map<String, Object> state = new HashMap<>(16);
             state.put("opened", true);
             state.put("mType", "dept");
             tree.setState(state);
+            //这个节点存入集合
             trees.add(tree);
         }
         List<UserDO> users = userReadMapper.list(new HashMap<String, Object>(16));

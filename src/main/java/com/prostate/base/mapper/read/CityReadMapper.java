@@ -27,4 +27,8 @@ public interface CityReadMapper {
 
 	public List<CityDO> getTree(Map<String, Object> map);
 
+	Long[] listParentCity();
+
+	Long[] listAllDept();
+
 }

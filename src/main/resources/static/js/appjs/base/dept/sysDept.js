@@ -1,4 +1,3 @@
-
 var prefix = "/base/dept"
 $(function() {
 	load();
