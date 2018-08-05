@@ -6,9 +6,6 @@
 
 	 
 	<insert id="save" parameterType="com.prostate.base.domain.DeptIllnessDO">
-		<selectKey keyProperty="id" resultType="string" order="BEFORE">
-			select replace(uuid(), '-', '') as id from dual
-		</selectKey>
 		insert into base_dept_illness
 		(
 			`id`, 

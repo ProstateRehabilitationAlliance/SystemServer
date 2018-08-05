@@ -16,6 +16,7 @@
 		select <include refid="Base_Column_List" />from base_city where id = #{value} AND del_flag = '0'
 	</select>
 
+	<!--新增根据子id查询父id的信息-->
 	<select id="getParent" resultType="com.prostate.base.domain.CityDO">
 		SELECT
 		p.id AS  id,
@@ -38,7 +39,18 @@
 	<select id="getChild" resultType="com.prostate.base.domain.CityDO">
 		select <include refid="Base_Column_List" /> from base_city
 		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="parentCityId != null and parentCityId != ''"> and parent_city_id = #{parentCityId} </if>
+			<if test="cityName != null and cityName != ''"> and city_name = #{cityName} </if>
+			<if test="cityType != null and cityType != ''"> and city_type = #{cityType} </if>
+			<if test="orderWeight != null and orderWeight != ''"> and order_weight = #{orderWeight} </if>
+			<if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			<if test="cityWeight != null and cityWeight != ''"> and city_weight = #{cityWeight} </if>
+			<if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+			<if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+			<if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
 			and del_flag = '0'
 		</where>
 		<choose>
@@ -46,7 +58,7 @@
 				order by ${sort} ${order}
 			</when>
 			<otherwise>
-				order by order_weight
+				order by id desc
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">

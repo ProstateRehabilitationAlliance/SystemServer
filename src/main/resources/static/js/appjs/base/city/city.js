@@ -1,62 +1,69 @@
 var prefix = "/base/city"
 $(function() {
-	//load();
-	var parentCityId = 'cc9e0348b3c311e7b77800163e08d49b';
-	loadCity(parentCityId);
+	load();
 });
 
-//加载城市信息
-function loadCity(parentCityId){
-    $.ajax({
-        url : prefix+"/ChildList/"+parentCityId,
-        type : "get",
-        success : function(result) {
-            if (result.code==20000) {
-            	$("#mycity").empty();
-                var cityList = result.data;
-                for (var i = 0;i < cityList.length;i++){
-                	var city = cityList[i];
-                    var cityName = city.cityName;
-                    var id = city.id;
-                    var orderWeight =  city.orderWeight;
-                    var parentCityId = city.parentCityId;
-                    var cityStr = '';
-                    cityStr+='<tr>';
-                    cityStr+='<td>'+cityName+'</td>';
-                    cityStr+='<td>'+orderWeight+'</td>';
-                    cityStr+='<td><a class="btn btn-primary btn-sm" title="编辑" onclick="edit(\''+ id+ '\')"><i class="fa fa-edit"></i></a>';
-                    cityStr+='<a class="btn btn-warning btn-sm" style="margin: 0px 1px" title="删除"  onclick="remove(\''+id+'\');"><i class="fa fa-remove"></i></a>';
-                    cityStr+='<a class="btn btn-success btn-sm" style="margin: 0px 1px" title="增加"  onclick="add(\''+id+'\');"><i class="fa fa-plus"></i></a>';
-                    cityStr+='<a class="btn btn-primary btn-sm" style="margin: 0px 1px" title="详情"  onclick="getchildren(\''+id+'\');"><i class="glyphicon glyphicon-list"></i></a>';
-                    cityStr+='</td>';
-                    cityStr+='</tr>';
-                    $("#mycity").append(cityStr);
+function load() {
+	$('#exampleTable')
+		.bootstrapTreeTable(
+			{
+				id : 'id',
+				code : 'id',
+				parentCode : 'parentCityId',
+				type : "GET", // 请求数据的ajax类型
+				url : prefix + '/list', // 请求数据的ajax的url
+				ajaxParams : {offset:0,limit:100}, // 请求数据的ajax的data属性
+				expandColumn : '0', // 在哪一列上面显示展开按钮
+				striped : true, // 是否各行渐变色
+				bordered : true, // 是否显示边框
+				expandAll : false, // 是否全部展开
+				// toolbar : '#exampleToolbar',
+				columns : [
 
-				}
-                loadBreadcrumb(parentCityId);
-            }else{
-                layer.msg("查询失败。");
-            }
-        }
-    });
-}
+													{
+						title : '城市名称',
+                      	field : 'cityName',
 
-function myReLoad() {
-    var parentCityId = 'cc9e0348b3c311e7b77800163e08d49b';
-    loadCity(parentCityId);
+					},
+													{
+						field : 'cityType',
+						title : '城市类型'
+					},
+													{
+						field : 'orderWeight',
+						title : '排序'
+					},
+													{
+						title : '操作',
+						field : 'id',
+						align : 'center',
+						formatter : function(value, row, index) {
+							var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
+									+ row.id
+									+ '\')"><i class="fa fa-edit"></i></a> ';
+							var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
+									+ row.id
+									+ '\')"><i class="fa fa-remove"></i></a> ';
+							var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
+									+ row.id
+									+ '\')"><i class="fa fa-key"></i></a> ';
+							return e + d ;
+						}
+					} ]
+				});
 }
-function add(id) {
-	if (id == null || id == ''){
-		id = 'cc9e0348b3c311e7b77800163e08d49b';
-	}
+function reLoad() {
+	$('#exampleTable').bootstrapTable('refresh');
+}
+function add() {
 	layer.open({
-        type : 2,
-        title : '增加',
-        maxmin : true,
-        shadeClose : false, // 点击遮罩关闭层
-        area : [ '800px', '520px' ],
-        content : prefix + '/add/'+id // iframe的url
-    });
+		type : 2,
+		title : '增加',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '520px' ],
+		content : prefix + '/add' // iframe的url
+	});
 }
 function edit(id) {
 	layer.open({
@@ -79,7 +86,7 @@ function remove(id) {
 				'id' : id
 			},
 			success : function(r) {
-				if (r.code==20000) {
+				if (r.code==0) {
 					layer.msg(r.msg);
 					reLoad();
 				}else{
@@ -90,30 +97,7 @@ function remove(id) {
 	})
 }
 
-function getchildren(id) {
-    loadCity(id);
-}
-
-//加载导航条====传入当前城市的ID和名称
-function loadBreadcrumb(id) {
-	//根据当前ID查询城市信息
-    $.ajax({
-        url : prefix+"/get/"+id,
-        type : "get",
-        success : function(r) {
-            if (r.code==20000) {
-               var city = r.data;
-              var cityName = city.cityName;
-              var cityType = city.cityType;
-              var parentCityId = city.parentCityId;
-              var Str = '';
-            	Str+='<li><a onclick="myReLoad();">中国</a></li>';
-
-                Str+='<li><a href="#">Library</a></li>';
-                Str+='<li class="active">'+cityName+'</li>';
-            }
-        }
-    });
+function resetPwd(id) {
 }
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
@@ -150,3 +134,7 @@ function batchRemove() {
 	});
 }
 
+
+function getChild(id) {
+	alert("zhadao"+id);
+}
