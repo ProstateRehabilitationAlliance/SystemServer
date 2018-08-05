@@ -1,5 +1,6 @@
 package com.prostate.base.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import com.prostate.base.domain.GroupWithoutID;
 import com.prostate.base.service.CityService;
 import com.prostate.base.vo.CityVO;
 import com.prostate.common.domain.Tree;
+import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -57,28 +59,51 @@ public List<CityDO> list() {
 
 
 	@ResponseBody
-	@GetMapping("/ChildList")
-	public List<CityDO> ChildList(String parentCityId) {
+	@GetMapping("/ChildList/{parentCityId}")
+	public Map<String, Object> ChildList(@PathVariable("parentCityId")String parentCityId) {
 		Map<String, Object> query = new HashMap<>(16);
 		query.put("parentCityId",parentCityId);
-		List<CityDO> sysBranchList = cityService.getChild(query);
-		return sysBranchList;
+		Map<String, Object> result = new HashMap<>(16);
+		List<CityDO> cityList = cityService.getChild(query);
+
+		if (cityList.isEmpty()){
+			result.put("code",20001);
+			result.put("msg","暂无数据");
+		}else {
+			result.put("code",20000);
+			result.put("data",cityList);
+			result.put("msg","查询成功");
+		}
+		return result;
 	}
 
 
 
-	@GetMapping("/add")
+	@GetMapping("/add/{id}")
 	@RequiresPermissions("base:city:add")
-	String add(){
-	    return "base/city/add";
+	String add(@PathVariable("id") String pId, Model model) {
+		model.addAttribute("pId", pId);
+		if (pId.equalsIgnoreCase("0")) {
+			model.addAttribute("pName", "无");
+		} else {
+			model.addAttribute("pName", cityService.get(pId).getCityName());
+			int type = Integer.parseInt(cityService.get(pId).getCityType())+1;
+			model.addAttribute("type", type+"");
+		}
+		return  "base/city/add";
 	}
-
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("base:city:edit")
 	String edit(@PathVariable("id") String id,Model model){
 		CityDO city = cityService.get(id);
 		model.addAttribute("city", city);
-	    return "base/city/edit";
+		if(city.getParentCityId() == null) {
+			model.addAttribute("parentCityName", "无");
+		}else {
+			CityDO cityDO  = cityService.get(city.getParentCityId());
+			model.addAttribute("parentCityName", cityDO.getCityName());
+		}
+		return  "base/city/edit";
 	}
 
 	/**
@@ -88,6 +113,9 @@ public List<CityDO> list() {
 	@PostMapping("/save")
 	@RequiresPermissions("base:city:add")
 	public R save(@Validated(GroupWithoutID.class) CityDO city){
+		city.setCreateTime(new Date());
+		city.setCreateUser(ShiroUtils.getUserId().toString());
+		city.setDelFlag("0");
 		if(cityService.save(city)>0){
 			return R.ok();
 		}
@@ -142,6 +170,24 @@ public List<CityDO> list() {
 		cityVO.setCity(cityDOCity);
 		cityVO.setCounty(cityDOCounty);
 		return cityVO;
+	}
+
+	@ResponseBody
+	@GetMapping("/get/{id}")
+	//@RequiresPermissions("base:city:city")
+	public Map get(@PathVariable("id")String id){
+		Map<String, Object> result = new HashMap<>(16);
+		CityDO city = cityService.get(id);
+
+		if (city == null ){
+			result.put("code",20001);
+			result.put("msg","暂无数据");
+		}else {
+			result.put("code",20000);
+			result.put("data",city);
+			result.put("msg","查询成功");
+		}
+		return result;
 	}
 
 	@GetMapping("/tree")
