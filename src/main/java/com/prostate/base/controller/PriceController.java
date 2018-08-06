@@ -73,7 +73,7 @@ public class PriceController {
 	@RequiresPermissions("base:price:add")
 	public R save( PriceDO price){
 		price.setCreateTime(new Date());
-		price.setCreateUser(ShiroUtils.getUserId().toString());
+//		price.setCreateUser(ShiroUtils.getUserId().toString());
 		if(priceService.save(price)>0){
 			return R.ok();
 		}

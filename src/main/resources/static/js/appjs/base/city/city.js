@@ -1,8 +1,10 @@
-var prefix = "/base/city"
+var prefix = "/base/city";
+var pid;
 $(function() {
 	//load();
 	var parentCityId = 'cc9e0348b3c311e7b77800163e08d49b';
 	loadCity(parentCityId);
+
 });
 
 //加载城市信息
@@ -39,13 +41,20 @@ function loadCity(parentCityId){
             }
         }
     });
+    //加载导航信息
+    loadBreadcrumb(parentCityId);
+	pid = parentCityId;
 }
 
-function myReLoad() {
-    var parentCityId = 'cc9e0348b3c311e7b77800163e08d49b';
+function myReLoad(id) {
+    if (id == null || id == ''){
+        id = 'cc9e0348b3c311e7b77800163e08d49b';
+    }
     loadCity(parentCityId);
 }
 function add(id) {
+	id=pid;
+	//这里需要获取当前城市的id
 	if (id == null || id == ''){
 		id = 'cc9e0348b3c311e7b77800163e08d49b';
 	}
@@ -98,20 +107,20 @@ function getchildren(id) {
 function loadBreadcrumb(id) {
 	//根据当前ID查询城市信息
     $.ajax({
-        url : prefix+"/get/"+id,
+        url : prefix+"/getById02/"+id,
         type : "get",
         success : function(r) {
-            if (r.code==20000) {
-               var city = r.data;
-              var cityName = city.cityName;
-              var cityType = city.cityType;
-              var parentCityId = city.parentCityId;
-              var Str = '';
-            	Str+='<li><a onclick="myReLoad();">中国</a></li>';
-
-                Str+='<li><a href="#">Library</a></li>';
-                Str+='<li class="active">'+cityName+'</li>';
-            }
+            // if (r.code==20000) {
+            //    var city = r.data;
+            //   var cityName = city.cityName;
+            //   var cityType = city.cityType;
+            //   var parentCityId = city.parentCityId;
+            //   var Str = '';
+            // 	Str+='<li><a onclick="myReLoad();">中国</a></li>';
+            //
+            //     Str+='<li><a href="#">Library</a></li>';
+            //     Str+='<li class="active">'+cityName+'</li>';
+            // }
         }
     });
 }

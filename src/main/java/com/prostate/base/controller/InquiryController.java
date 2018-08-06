@@ -85,7 +85,7 @@ public class InquiryController {
 	@RequiresPermissions("base:inquiry:add")
 	public R save( InquiryDO inquiry){
 		inquiry.setCreateTime(new Date());
-		inquiry.setCreateUser(ShiroUtils.getUserId().toString());
+//		inquiry.setCreateUser(ShiroUtils.getUserId().toString());
 		if(inquiryService.save(inquiry)>0){
 			return R.ok();
 		}

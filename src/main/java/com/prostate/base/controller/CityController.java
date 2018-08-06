@@ -1,9 +1,6 @@
 package com.prostate.base.controller;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.prostate.base.domain.GroupID;
 import com.prostate.base.domain.GroupWithoutID;
@@ -171,6 +168,35 @@ public List<CityDO> list() {
 		cityVO.setCounty(cityDOCounty);
 		return cityVO;
 	}
+
+
+
+	/**
+	 *@Author:      ykbian
+	 *@date_time:   2018/8/6 17:30
+	 *@Description:  根据不确定的cityId查询父级信息及祖父级
+	 *@param:
+	*/
+	@ResponseBody
+	@GetMapping("/getById02/{id}")
+	public Map getById02(@PathVariable("id") String id){
+		Map<String, Object> result = new HashMap<>(16);
+		List<CityDO> cityDOS = new ArrayList();
+		CityDO city;
+		String myId = id;
+		do {
+			city = cityService.get(myId);
+			myId = city.getParentCityId();
+			cityDOS.add(0,city);
+			System.out.println(">>>>>>>>>>>>"+city.getCityName());
+		}while (city.getParentCityId() != null || city.getParentCityId() == "");
+		System.out.println("========================================");
+		for (CityDO aDo:cityDOS) {
+			System.out.println(aDo.getCityName());
+		}
+		return null;
+	}
+
 
 	@ResponseBody
 	@GetMapping("/get/{id}")
