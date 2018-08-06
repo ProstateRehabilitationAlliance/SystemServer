@@ -50,7 +50,7 @@ function myReLoad(id) {
     if (id == null || id == ''){
         id = 'cc9e0348b3c311e7b77800163e08d49b';
     }
-    loadCity(parentCityId);
+    loadCity(id);
 }
 function add(id) {
 	id=pid;
@@ -110,17 +110,17 @@ function loadBreadcrumb(id) {
         url : prefix+"/getById02/"+id,
         type : "get",
         success : function(r) {
-            // if (r.code==20000) {
-            //    var city = r.data;
-            //   var cityName = city.cityName;
-            //   var cityType = city.cityType;
-            //   var parentCityId = city.parentCityId;
-            //   var Str = '';
-            // 	Str+='<li><a onclick="myReLoad();">中国</a></li>';
-            //
-            //     Str+='<li><a href="#">Library</a></li>';
-            //     Str+='<li class="active">'+cityName+'</li>';
-            // }
+            if (r.code==20000) {
+            	$("#daohang").empty();
+               var cityList = r.data;
+             	for (var i = 0;i <cityList.length;i++ ){
+             		var cityName = cityList[i].cityName;
+             		var id = cityList[i].id;
+             		var str = '';
+                	str +='<li><a onclick="myReLoad(\''+id+'\');">'+cityName+'</a></li>';
+                    $("#daohang").append(str);
+                }
+            }
         }
     });
 }

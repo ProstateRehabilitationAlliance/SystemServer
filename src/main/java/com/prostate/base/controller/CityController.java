@@ -187,14 +187,19 @@ public List<CityDO> list() {
 		do {
 			city = cityService.get(myId);
 			myId = city.getParentCityId();
+			//每次查询到的上级城市信息都存入list 的首位
 			cityDOS.add(0,city);
-			System.out.println(">>>>>>>>>>>>"+city.getCityName());
-		}while (city.getParentCityId() != null || city.getParentCityId() == "");
-		System.out.println("========================================");
-		for (CityDO aDo:cityDOS) {
-			System.out.println(aDo.getCityName());
+			//“中国”的父ID是空字符窜
+		}while (!city.getParentCityId().equalsIgnoreCase(""));
+		if (cityDOS == null ){
+			result.put("code",20001);
+			result.put("msg","暂无数据");
+		}else {
+			result.put("code",20000);
+			result.put("data",cityDOS);
+			result.put("msg","查询成功");
 		}
-		return null;
+		return result;
 	}
 
 
