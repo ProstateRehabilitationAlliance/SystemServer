@@ -36,12 +36,6 @@ import com.prostate.common.utils.R;
 public class InquiryController {
 
 
-//	会诊类型标签添加
-//	会诊类型标签修改
-//	会诊类型标签删除
-//	会诊类型标签列表查询
-//	会诊类型详情查询
-
 
 
 
