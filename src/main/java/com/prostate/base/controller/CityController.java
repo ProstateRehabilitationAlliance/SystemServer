@@ -189,7 +189,7 @@ public List<CityDO> list() {
 			myId = city.getParentCityId();
 			//每次查询到的上级城市信息都存入list 的首位
 			cityDOS.add(0,city);
-			//“中国”的父ID是空字符窜
+			//“中国”的父ID是空字符窜=======不具有复用性，
 		}while (!city.getParentCityId().equalsIgnoreCase(""));
 		if (cityDOS == null ){
 			result.put("code",20001);
