@@ -1,13 +1,14 @@
 $().ready(function() {
     validateRule();
 });
+//==========================================这个函数会对提交的表单进行拦截。
+// $.validator.setDefaults({
+//     submitHandler : function() {
+//         update();
+//     }
+// });
 
-$.validator.setDefaults({
-    submitHandler : function() {
-        update();
-    }
-});
-
+//同意认证申请
 function pass() {
     $.ajax({
         cache : true,
@@ -20,11 +21,10 @@ function pass() {
         },
         success : function(data) {
             if (data.code == 20000) {
-                parent.layer.msg("审核成功");
+                parent.layer.msg("认证成功");
                 parent.reLoad();
                 var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
                 parent.layer.close(index);
-
             } else {
                 parent.layer.alert(data.msg)
             }
@@ -33,6 +33,7 @@ function pass() {
     });
 }
 
+//拒绝认证申请
 function refuse() {
     $.ajax({
         cache : true,
