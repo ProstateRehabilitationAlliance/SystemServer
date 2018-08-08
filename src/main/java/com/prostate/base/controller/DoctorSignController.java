@@ -6,7 +6,6 @@ import java.util.Map;
 import com.prostate.base.service.BranchService;
 import com.prostate.base.service.DoctorTitleService;
 import com.prostate.base.service.HospitalService;
-import com.prostate.base.util.HttpUtil;
 import com.prostate.common.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +57,13 @@ public class DoctorSignController {
 	}
 
 
+
+	/**
+	 *@Author:      ykbian
+	 *@date_time:   2018/8/8 9:10
+	 *@Description:  查询待认证医生列表
+	 *@param:
+	*/
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("base:doctorSign:doctorSign")
@@ -66,7 +72,7 @@ public class DoctorSignController {
 		//查询列表数据
         Query query = new Query(params);
 		List<DoctorSignDO> signList = signService.list(query);
-		for (DoctorSignDO doctorSignDO: signList) {   //=================================可能会报空指针
+		for (DoctorSignDO doctorSignDO: signList) {   //=================================以下可能会报空指针
 //			//此处还应该查询查询医生信息
 			doctorSignDO.setDoctorId("医生姓名+"+doctorSignDO.getDoctorId());
 			//查询职称信息
@@ -90,15 +96,21 @@ public class DoctorSignController {
 
 
 
-	@GetMapping("/edit/{id}")
-	@RequiresPermissions("base:doctorSign:edit")
-	String edit(@PathVariable("id") String id,Model model){
-		DoctorSignDO sign = signService.get(id);
-		model.addAttribute("doctorSign", sign);
-	    return "base/doctorSign/edit";
-	}
+//	@GetMapping("/edit/{id}")
+//	@RequiresPermissions("base:doctorSign:edit")
+//	String edit(@PathVariable("id") String id,Model model){
+//		DoctorSignDO sign = signService.get(id);
+//		model.addAttribute("doctorSign", sign);
+//	    return "base/doctorSign/edit";
+//	}
 
 
+	/**
+	 *@Author:      ykbian
+	 *@date_time:   2018/8/8 9:09
+	 *@Description:   查询医生的详细信息
+	 *@param:
+	*/
 	@GetMapping("/details/{id}")
 	@RequiresPermissions("base:doctorSign:details")
 	String details(@PathVariable("id") String id,Model model){
@@ -139,20 +151,23 @@ public class DoctorSignController {
 	@ResponseBody
 	@RequestMapping("/pass")
 	@RequiresPermissions("base:doctorSign:edit")
-	public R pass( DoctorSignDO sign,String token){
+	public R pass( DoctorSignDO sign){
 
 		//获取当前用户的token信息
 		String userToken = ShiroUtils.getUserId().toString();
 
 		sign.setApproveStatus("1");
 		sign.setUpdateUser(userToken);
-		signService.update(sign);
-//			暂时先不发送短信
-//			String url = "http://192.168.0.222:8806/sms/sendProveSuccess";
-//			//获取医生电话信息=============================？doctorservice
-//			String phoneNumber = "17777835985";
-			//HttpUtil.sendSMS(phoneNumber,url);
+		if (signService.update(sign) > 0){
+			/**
+			 * 此处发短信
+			 *
+			 * */
 			return R.ok();
+		}else {
+			return R.error(20001,"操作失败");
+		}
+
 
 	}
 
@@ -167,28 +182,26 @@ public class DoctorSignController {
 	@ResponseBody
 	@RequestMapping("/refuse")
 	@RequiresPermissions("base:doctorSign:edit")
-	public R refuse( DoctorSignDO sign,String token){
+	public R refuse( DoctorSignDO sign){
 		//获取当前用户的token信息
 		String userToken = ShiroUtils.getUserId().toString();
 		sign.setUpdateUser(userToken);
 		sign.setApproveStatus("0");
 		if (signService.update(sign) > 0){
+			/**
+			 * 此处发短信
+			 *
+			 * */
 			return R.ok();
 		}else {
 			return R.error(20001,"操作失败");
 		}
-//			暂时先不发送短信
-//			String url = "http://192.168.0.222:8806/sms/sendProveSuccess";
-//			//获取医生电话信息=============================？doctorservice
-//			String phoneNumber = "17777835985";
-			//HttpUtil.sendSMS(phoneNumber,url);
-
-
 
 	}
 
 
 	/**
+	 * 
 	 * 删除
 	 */
 	@PostMapping( "/remove")
