@@ -3,6 +3,7 @@ package com.prostate.base.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.prostate.base.config.BaseConstant;
 import com.prostate.base.service.BranchService;
 import com.prostate.base.service.DoctorTitleService;
 import com.prostate.base.service.HospitalService;
@@ -38,15 +39,24 @@ public class DoctorSignController {
 	@Autowired
 	private DoctorSignService signService;
 
-
+	/**
+	 *  医生职称
+	 */
 	@Autowired
-	private DoctorTitleService doctorTitleService;   //职称信息
+	private DoctorTitleService doctorTitleService;
 
+	/**
+	 * 医院信息
+	 */
 	@Autowired
-	private HospitalService hospitalService;   //医院信息
+	private HospitalService hospitalService;
 
+
+	/**
+	 * 科室信息
+	 */
 	@Autowired
-	private BranchService branchService;   //科室信息
+	private BranchService branchService;
 
 
 
@@ -73,7 +83,9 @@ public class DoctorSignController {
         Query query = new Query(params);
 		List<DoctorSignDO> signList = signService.list(query);
 		for (DoctorSignDO doctorSignDO: signList) {   //=================================以下可能会报空指针
-//			//此处还应该查询查询医生信息
+		/**
+		 * 这里需要获取医生信息
+		 * */
 			doctorSignDO.setDoctorId("医生姓名+"+doctorSignDO.getDoctorId());
 			//查询职称信息
 			doctorSignDO.setTitleId(doctorTitleService.get(doctorSignDO.getTitleId()).getDoctorTitleName());
@@ -116,10 +128,14 @@ public class DoctorSignController {
 	String details(@PathVariable("id") String id,Model model){
 
 		DoctorSignDO doctorSignDO = signService.get(id);
-		if (doctorSignDO.getApproveStatus().equalsIgnoreCase("2")){
+		//把认证信息为“2”的医生状态都改写为“认证中”，便于前端展示
+		if (doctorSignDO.getApproveStatus().equalsIgnoreCase(BaseConstant.AUTHENTICATION_PROGRESS)){
 			doctorSignDO.setApproveStatus("认证中");
 		}
 		model.addAttribute("doctorSign", doctorSignDO);
+		/**
+		 * 这里需要获取医生信息
+		 * */
 		model.addAttribute("doctorId","此处显示医生姓名");
 		model.addAttribute("hospitalId",hospitalService.get(doctorSignDO.getHospitalId()).getHospitalName());
 		model.addAttribute("branchId",branchService.get(doctorSignDO.getBranchId()).getBranchName());
@@ -156,7 +172,7 @@ public class DoctorSignController {
 		//获取当前用户的token信息
 		String userToken = ShiroUtils.getUserId().toString();
 
-		sign.setApproveStatus("1");
+		sign.setApproveStatus(BaseConstant.AUTHENTICATION_SUCCESS);
 		sign.setUpdateUser(userToken);
 		if (signService.update(sign) > 0){
 			/**
@@ -186,7 +202,7 @@ public class DoctorSignController {
 		//获取当前用户的token信息
 		String userToken = ShiroUtils.getUserId().toString();
 		sign.setUpdateUser(userToken);
-		sign.setApproveStatus("0");
+		sign.setApproveStatus(BaseConstant.AUTHENTICATION_FAILED);
 		if (signService.update(sign) > 0){
 			/**
 			 * 此处发短信
