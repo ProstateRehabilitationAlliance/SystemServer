@@ -1,16 +1,16 @@
-package com.prostate.base.service.impl;
+package com.prostate.user.service.impl;
 
 
-import com.prostate.base.mapper.read.DoctorSingReadMapper;
-import com.prostate.base.mapper.write.DoctorSingWriteMapper;
+import com.prostate.user.mapper.read.DoctorSingReadMapper;
+import com.prostate.user.mapper.write.DoctorSingWriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.domain.DoctorSignDO;
-import com.prostate.base.service.DoctorSignService;
+import com.prostate.user.entity.DoctorSignDO;
+import com.prostate.user.service.DoctorSignService;
 
 
 

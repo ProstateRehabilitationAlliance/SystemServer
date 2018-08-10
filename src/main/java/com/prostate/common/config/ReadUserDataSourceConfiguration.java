@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  * 读操作数据源
  */
 @Configuration
-@MapperScan(basePackages = "com.prostate.base.mapper.read", sqlSessionTemplateRef  = "readUserSqlSessionTemplate")
+@MapperScan(basePackages = "com.prostate.user.mapper.read", sqlSessionTemplateRef  = "readUserSqlSessionTemplate")
 public class ReadUserDataSourceConfiguration {
 
     @Value("${spring.datasource.readUser.driver-class-name}")
@@ -34,7 +34,7 @@ public class ReadUserDataSourceConfiguration {
     private String password;
 
 
-    @Bean(name = "readBaseDataSource")
+    @Bean(name = "readUserDataSource")
     public DataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(this.driverClassName);
@@ -44,21 +44,21 @@ public class ReadUserDataSourceConfiguration {
         return dataSource;
     }
 
-    @Bean(name = "readBaseSqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("readBaseDataSource") DataSource dataSource) throws Exception {
+    @Bean(name = "readUserSqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("readUserDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/user/read/*.xml"));
         return bean.getObject();
     }
 
-    @Bean(name = "readBaseTransactionManager")
-    public DataSourceTransactionManager transactionManager(@Qualifier("readBaseDataSource") DataSource dataSource) {
+    @Bean(name = "readUserTransactionManager")
+    public DataSourceTransactionManager transactionManager(@Qualifier("readUserDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "readBaseSqlSessionTemplate")
-    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("readBaseSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    @Bean(name = "readUserSqlSessionTemplate")
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("readUserSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

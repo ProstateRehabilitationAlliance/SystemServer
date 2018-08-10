@@ -21,20 +21,20 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = "com.prostate.user.mapper.write", sqlSessionTemplateRef  = "writeUserSqlSessionTemplate")
 public class WriteUserDataSourceConfiguration {
 
-    @Value("${spring.datasource.writeUse.driver-class-name}")
+    @Value("${spring.datasource.writeUser.driver-class-name}")
     private String driverClassName;
 
-    @Value("${spring.datasource.writeUse.url}")
+    @Value("${spring.datasource.writeUser.url}")
     private String url;
 
-    @Value("${spring.datasource.writeUse.username}")
+    @Value("${spring.datasource.writeUser.username}")
     private String username;
 
-    @Value("${spring.datasource.writeUse.password}")
+    @Value("${spring.datasource.writeUser.password}")
     private String password;
 
 
-    @Bean(name = "writeBaseDataSource")
+    @Bean(name = "writeUserDataSource")
     public DataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(this.driverClassName);
@@ -44,21 +44,21 @@ public class WriteUserDataSourceConfiguration {
         return dataSource;
     }
 
-    @Bean(name = "writeBaseSqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("writeBaseDataSource") DataSource dataSource) throws Exception {
+    @Bean(name = "writeUserSqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("writeUserDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/user/write/*.xml"));
         return bean.getObject();
     }
 
-    @Bean(name = "writeBaseTransactionManager")
-    public DataSourceTransactionManager transactionManager(@Qualifier("writeBaseDataSource") DataSource dataSource) {
+    @Bean(name = "writeUserTransactionManager")
+    public DataSourceTransactionManager transactionManager(@Qualifier("writeUserDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "writeBaseSqlSessionTemplate")
-    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("writeBaseSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    @Bean(name = "writeUserSqlSessionTemplate")
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("writeUserSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

@@ -1,29 +1,26 @@
-package com.prostate.base.controller;
+package com.prostate.user.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import com.prostate.base.config.BaseConstant;
+import com.prostate.base.domain.BranchDO;
+import com.prostate.base.domain.DoctorTitleDO;
+import com.prostate.base.domain.HospitalDO;
+import com.prostate.user.config.BaseConstant;
+import com.prostate.user.entity.DoctorSignDO;
 import com.prostate.base.service.BranchService;
+import com.prostate.user.service.DoctorSignService;
 import com.prostate.base.service.DoctorTitleService;
 import com.prostate.base.service.HospitalService;
-import com.prostate.common.utils.ShiroUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.prostate.base.domain.DoctorSignDO;
-import com.prostate.base.service.DoctorSignService;
 import com.prostate.common.utils.PageUtils;
 import com.prostate.common.utils.Query;
 import com.prostate.common.utils.R;
+import com.prostate.common.utils.ShiroUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 医生认证信息表
@@ -34,7 +31,7 @@ import com.prostate.common.utils.R;
  */
 
 @Controller
-@RequestMapping("/base/doctorSign")
+@RequestMapping("/user/doctorSign")
 public class DoctorSignController {
 	@Autowired
 	private DoctorSignService signService;
@@ -61,9 +58,9 @@ public class DoctorSignController {
 
 
 	@GetMapping()
-	@RequiresPermissions("base:doctorSign:doctorSign")
+	@RequiresPermissions("user:doctorSign:doctorSign")
 	String Sign(){
-	    return "base/doctorSign/doctorSign";
+	    return "user/doctorSign/doctorSign";
 	}
 
 
@@ -76,24 +73,32 @@ public class DoctorSignController {
 	*/
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("base:doctorSign:doctorSign")
+	@RequiresPermissions("user:doctorSign:doctorSign")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//此处查询的都是未处理的订单信息
 		//查询列表数据
-        Query query = new Query(params);
+		System.out.println("=================");
+
+		Query query = new Query(params);
 		List<DoctorSignDO> signList = signService.list(query);
 		for (DoctorSignDO doctorSignDO: signList) {   //=================================以下可能会报空指针
 		/**
 		 * 这里需要获取医生信息
 		 * */
-			doctorSignDO.setDoctorId("医生姓名+"+doctorSignDO.getDoctorId());
-			//查询职称信息
-			doctorSignDO.setTitleId(doctorTitleService.get(doctorSignDO.getTitleId()).getDoctorTitleName());
-			//查询医院信息
-			doctorSignDO.setHospitalId(hospitalService.get(doctorSignDO.getHospitalId()).getHospitalName());
-			//查询科室信息
-			doctorSignDO.setBranchId(branchService.get(doctorSignDO.getBranchId()).getBranchName());
-
+			//doctorSignDO.setDoctorId("医生姓名+"+doctorSignDO.getDoctorId());
+			//将所有的id都变为文字信息
+			DoctorTitleDO title = doctorTitleService.get(doctorSignDO.getTitleId());
+			HospitalDO hospital = hospitalService.get(doctorSignDO.getHospitalId());
+			BranchDO branchDO = branchService.get(doctorSignDO.getBranchId());
+			if(title != null){
+				doctorSignDO.setTitleId(title.getDoctorTitleName());
+			}
+			if(hospital != null){
+				doctorSignDO.setHospitalId(hospital.getHospitalName());
+			}
+			if(branchDO != null){
+				doctorSignDO.setBranchId(branchDO.getBranchName());
+			}
 		}
 		int total = signService.count(query);
 		PageUtils pageUtils = new PageUtils(signList, total);
@@ -101,9 +106,9 @@ public class DoctorSignController {
 	}
 
 	@GetMapping("/add")
-	@RequiresPermissions("base:doctorSign:add")
+	@RequiresPermissions("user:doctorSign:add")
 	String add(){
-	    return "base/doctorSign/add";
+	    return "user/doctorSign/add";
 	}
 
 
@@ -124,7 +129,7 @@ public class DoctorSignController {
 	 *@param:
 	*/
 	@GetMapping("/details/{id}")
-	@RequiresPermissions("base:doctorSign:details")
+	@RequiresPermissions("user:doctorSign:details")
 	String details(@PathVariable("id") String id,Model model){
 
 		DoctorSignDO doctorSignDO = signService.get(id);
@@ -136,11 +141,21 @@ public class DoctorSignController {
 		/**
 		 * 这里需要获取医生信息
 		 * */
+
 		model.addAttribute("doctorId","此处显示医生姓名");
-		model.addAttribute("hospitalId",hospitalService.get(doctorSignDO.getHospitalId()).getHospitalName());
-		model.addAttribute("branchId",branchService.get(doctorSignDO.getBranchId()).getBranchName());
-		model.addAttribute("titleId",doctorTitleService.get(doctorSignDO.getTitleId()).getDoctorTitleName());
-		return "base/doctorSign/details";
+		DoctorTitleDO title = doctorTitleService.get(doctorSignDO.getTitleId());
+		HospitalDO hospital = hospitalService.get(doctorSignDO.getHospitalId());
+		BranchDO branchDO = branchService.get(doctorSignDO.getBranchId());
+		if(title != null){
+			model.addAttribute("titleId",title.getDoctorTitleName());
+		}
+		if(hospital != null){
+			model.addAttribute("hospitalId",hospital.getHospitalName());
+		}
+		if(branchDO != null){
+			model.addAttribute("branchId",branchDO.getBranchName());
+		}
+		return "user/doctorSign/details";
 	}
 
 
@@ -150,7 +165,7 @@ public class DoctorSignController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("base:doctorSign:add")
+	@RequiresPermissions("user:doctorSign:add")
 	public R save( DoctorSignDO sign){
 		if(signService.save(sign)>0){
 			return R.ok();
@@ -166,12 +181,11 @@ public class DoctorSignController {
 	*/
 	@ResponseBody
 	@RequestMapping("/pass")
-	@RequiresPermissions("base:doctorSign:edit")
+	@RequiresPermissions("user:doctorSign:edit")
 	public R pass( DoctorSignDO sign){
 
 		//获取当前用户的token信息
 		String userToken = ShiroUtils.getUserId().toString();
-
 		sign.setApproveStatus(BaseConstant.AUTHENTICATION_SUCCESS);
 		sign.setUpdateUser(userToken);
 		if (signService.update(sign) > 0){
@@ -197,7 +211,7 @@ public class DoctorSignController {
 	*/
 	@ResponseBody
 	@RequestMapping("/refuse")
-	@RequiresPermissions("base:doctorSign:edit")
+	@RequiresPermissions("user:doctorSign:edit")
 	public R refuse( DoctorSignDO sign){
 		//获取当前用户的token信息
 		String userToken = ShiroUtils.getUserId().toString();
@@ -222,7 +236,7 @@ public class DoctorSignController {
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	@RequiresPermissions("base:doctorSign:remove")
+	@RequiresPermissions("user:doctorSign:remove")
 	public R remove( String id){
 		if(signService.remove(id)>0){
 		return R.ok();
@@ -235,7 +249,7 @@ public class DoctorSignController {
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("base:doctorSign:batchRemove")
+	@RequiresPermissions("user:doctorSign:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] ids){
 		signService.batchRemove(ids);
 		return R.ok();

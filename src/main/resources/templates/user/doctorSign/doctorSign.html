@@ -39,23 +39,23 @@
 				var s_resetPwd_h = 'hidden';
 			</script>
 		</div>
-		<div shiro:hasPermission="base:doctorSign:details">
+		<div shiro:hasPermission="user:doctorSign:details">
 			<script type="text/javascript">
 				s_edit_h = '';
 			</script>
 		</div>
-		<div shiro:hasPermission="base:doctorSign:remove">
+		<div shiro:hasPermission="user:doctorSign:remove">
 			<script type="text/javascript">
 				var s_remove_h = '';
 			</script>
 		</div>
-		<div shiro:hasPermission="base:doctorSign:resetPwd">
+		<div shiro:hasPermission="user:doctorSign:resetPwd">
 			<script type="text/javascript">
 				var s_resetPwd_h = '';
 			</script>
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/base/doctorSign/sign.js"></script>
+	<script type="text/javascript" src="/js/appjs/user/doctorSign/sign.js"></script>
 </body>
 </html>

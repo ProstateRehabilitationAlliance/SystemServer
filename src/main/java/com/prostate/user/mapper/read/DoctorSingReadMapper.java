@@ -1,11 +1,10 @@
-package com.prostate.base.mapper.read;
+package com.prostate.user.mapper.read;
 
 
 import java.util.List;
 import java.util.Map;
 
-import com.prostate.base.domain.DoctorSignDO;
-import org.apache.ibatis.annotations.Mapper;
+import com.prostate.user.entity.DoctorSignDO;
 import org.springframework.stereotype.Repository;
 
 /**

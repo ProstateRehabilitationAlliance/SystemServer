@@ -1,4 +1,4 @@
-package com.prostate.base.domain;
+package com.prostate.user.entity;
 
 import java.io.Serializable;
 import java.util.Date;

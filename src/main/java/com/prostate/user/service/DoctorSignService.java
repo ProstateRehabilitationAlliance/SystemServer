@@ -1,6 +1,6 @@
-package com.prostate.base.service;
+package com.prostate.user.service;
 
-import com.prostate.base.domain.DoctorSignDO;
+import com.prostate.user.entity.DoctorSignDO;
 
 import java.util.List;
 import java.util.Map;

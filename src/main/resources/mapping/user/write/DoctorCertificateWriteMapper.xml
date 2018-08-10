@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mapping.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.prostate.base.mapper.write.DoctorSingWriteMapper">
+<mapper namespace="com.prostate.user.mapper.write.DoctorSingWriteMapper">
 
 
 	 
-	<insert id="save" parameterType="com.prostate.base.domain.DoctorSignDO">
+	<insert id="save" parameterType="com.prostate.user.entity.DoctorSignDO">
 		<selectKey keyProperty="id" resultType="string" order="BEFORE">
 			select replace(uuid(), '-', '') as id from dual
 		</selectKey>
@@ -53,7 +53,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.prostate.base.domain.DoctorSignDO">
+	<update id="update" parameterType="com.prostate.user.entity.DoctorSignDO">
 		update doctor_sign 
 		<set>
 			<if test="doctorId != null">`doctor_id` = #{doctorId}, </if>
