@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan(basePackages = "com.prostate.user.mapper.write", sqlSessionTemplateRef  = "writeUserSqlSessionTemplate")
-public class WriteBaseDataSourceConfiguration {
+public class WriteUserDataSourceConfiguration {
 
     @Value("${spring.datasource.writeUse.driver-class-name}")
     private String driverClassName;

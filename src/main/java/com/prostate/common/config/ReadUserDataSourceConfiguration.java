@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan(basePackages = "com.prostate.base.mapper.read", sqlSessionTemplateRef  = "readUserSqlSessionTemplate")
-public class ReadBaseDataSourceConfiguration {
+public class ReadUserDataSourceConfiguration {
 
     @Value("${spring.datasource.readUser.driver-class-name}")
     private String driverClassName;
