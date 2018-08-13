@@ -121,7 +121,7 @@ public class DoctorCountController {
         int[] click = clickCountDoctorService.countThisWeek(doctorId);
         //关注人数数组
         int[] focus = focusCountDoctorService.countThisWeek(doctorId);
-        map.put("name","医生姓名");
+        map.put("name",doctorDetailsService.get(doctorId).getDoctorName());
         map.put("dates",dates);
         map.put("inquriy",inquriy);
         map.put("click",click);
@@ -156,7 +156,7 @@ public class DoctorCountController {
         int[] click = clickCountDoctorService.countThisMooth(doctorId);
         //关注人数数组
         int[] focus = focusCountDoctorService.countThisMooth(doctorId);
-        map.put("name","医生姓名");
+        map.put("name",doctorDetailsService.get(doctorId).getDoctorName());
         map.put("dates",dates);
         map.put("inquriy",inquriy);
         map.put("click",click);
@@ -193,7 +193,7 @@ public class DoctorCountController {
         int[] click = clickCountDoctorService.countThisYear(doctorId);
         //关注人数数组
         int[] focus = focusCountDoctorService.countThisYear(doctorId);
-        map.put("name","医生姓名");
+        map.put("name",doctorDetailsService.get(doctorId).getDoctorName());
         map.put("dates",dates);
         map.put("inquriy",inquriy);
         map.put("click",click);
