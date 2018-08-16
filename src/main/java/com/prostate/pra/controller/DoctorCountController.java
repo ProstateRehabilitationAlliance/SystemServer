@@ -51,6 +51,7 @@ public class DoctorCountController {
     */
     @Autowired
     private DoctorDetailsService doctorDetailsService;
+
     @GetMapping()
     @RequiresPermissions("pra:countDoctor:countDoctor")
     String CountDoctor(){
@@ -67,7 +68,7 @@ public class DoctorCountController {
         int total = doctorDetailsService.count(query);
         List<DoctorDetailDO> doctorDetailDOS = doctorDetailsService.list(query);
         for (DoctorDetailDO doctorDetailDO:doctorDetailDOS) {
-            String doctorId = doctorDetailDO.getDoctorId();
+            String doctorId = doctorDetailDO.getId();
             CountDoctorVO countDoctorVO01 = new CountDoctorVO();
             countDoctorVO01.setClickCount(clickCountDoctorService.countByDoctorId(doctorId));
             countDoctorVO01.setFocusCount(focusCountDoctorService.countByDoctorId(doctorId));
