@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  * 写操作 数据源
  */
 @Configuration
-@MapperScan(basePackages = {"com.prostate.system.mapper.write"}, sqlSessionTemplateRef  = "writeSysSqlSessionTemplate")
+@MapperScan(basePackages = {"com.prostate.system.mapper.master"}, sqlSessionTemplateRef  = "writeSysSqlSessionTemplate")
 public class WriteSysDataSourceConfiguration {
 
     @Value("${spring.datasource.writeSys.driver-class-name}")
@@ -50,7 +50,7 @@ public class WriteSysDataSourceConfiguration {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("writeSysDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/system/write/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/system/master/*.xml"));
         return bean.getObject();
     }
 

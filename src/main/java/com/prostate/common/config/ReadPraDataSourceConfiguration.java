@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  * 读操作数据源
  */
 @Configuration
-@MapperScan(basePackages = "com.prostate.pra.mapper.read", sqlSessionTemplateRef  = "readPraSqlSessionTemplate")
+@MapperScan(basePackages = "com.prostate.pra.mapper.slaver", sqlSessionTemplateRef  = "readPraSqlSessionTemplate")
 public class ReadPraDataSourceConfiguration {
 
     @Value("${spring.datasource.readPra.driver-class-name}")
@@ -48,7 +48,7 @@ public class ReadPraDataSourceConfiguration {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("readPraDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/pra/read/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/pra/slaver/*.xml"));
         return bean.getObject();
     }
 

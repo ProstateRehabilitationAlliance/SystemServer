@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  * 读操作数据源
  */
 @Configuration
-@MapperScan(basePackages = "com.prostate.base.mapper.read", sqlSessionTemplateRef  = "readBaseSqlSessionTemplate")
+@MapperScan(basePackages = "com.prostate.base.mapper.slaver", sqlSessionTemplateRef  = "readBaseSqlSessionTemplate")
 public class ReadBaseDataSourceConfiguration {
 
     @Value("${spring.datasource.readBase.driver-class-name}")
@@ -48,7 +48,7 @@ public class ReadBaseDataSourceConfiguration {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("readBaseDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/base/read/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/base/slaver/*.xml"));
         return bean.getObject();
     }
 

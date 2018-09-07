@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 /**
  */
 @Configuration
-@MapperScan(basePackages = "com.prostate.user.mapper.write", sqlSessionTemplateRef  = "writeUserSqlSessionTemplate")
+@MapperScan(basePackages = "com.prostate.user.mapper.master", sqlSessionTemplateRef  = "writeUserSqlSessionTemplate")
 public class WriteUserDataSourceConfiguration {
 
     @Value("${spring.datasource.writeUser.driver-class-name}")
@@ -48,7 +48,7 @@ public class WriteUserDataSourceConfiguration {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("writeUserDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/user/write/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/user/master/*.xml"));
         return bean.getObject();
     }
 
